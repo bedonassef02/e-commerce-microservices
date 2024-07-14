@@ -6,3 +6,8 @@ export const RMQ_URL: string = 'amqp://localhost:5672';
 
 export const CATEGORY_QUEUE: string = 'categories-queue';
 export const PRODUCT_QUEUE: string = 'products-queue';
+
+export declare enum Role {
+  USER = 'user',
+  ADMIN = 'admin',
+}
