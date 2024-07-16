@@ -21,7 +21,7 @@ export class UpdateCategoryHandler
         if (existingCategory && existingCategory.id.toString() !== command.id) {
           throw new RpcException({
             status: HttpStatus.CONFLICT,
-            error: 'Category name already exists',
+            error: 'Category name already exists or not found',
           });
         }
 

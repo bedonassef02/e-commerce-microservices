@@ -35,7 +35,7 @@ export class CategoryController {
 
   @MessagePattern({ cmd: 'update' })
   async update(@Payload() data: any): Promise<Category> {
-    const { id, updateCategoryDto } = { ...data };
+    const { id = null, updateCategoryDto = null } = { ...data };
     return this.commandBus.execute(
       new UpdateCategoryCommand(id, updateCategoryDto),
     );

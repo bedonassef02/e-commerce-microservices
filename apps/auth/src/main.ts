@@ -1,16 +1,15 @@
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
-import { RMQ_URL, USER_QUEUE } from '@app/common/utils/constants';
-import { UserModule } from './user.module';
-
+import { AUTH_QUEUE, RMQ_URL } from '@app/common/utils/constants';
+import { AuthModule } from './auth.module';
 async function bootstrap() {
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
-    UserModule,
+    AuthModule,
     {
       transport: Transport.RMQ,
       options: {
         urls: [RMQ_URL],
-        queue: USER_QUEUE,
+        queue: AUTH_QUEUE,
       },
     },
   );

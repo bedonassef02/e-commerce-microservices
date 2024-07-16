@@ -1,4 +1,4 @@
-import { Controller, Body, Param } from '@nestjs/common';
+import { Controller, Body } from '@nestjs/common';
 import { CreateProductDto } from '@app/common/dto/product/create-product.dto';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { GetProductsQuery } from './queries/impl/get-products.query';
@@ -26,20 +26,20 @@ export class ProductController {
   }
 
   @MessagePattern({ cmd: 'findById' })
-  findOne(@Param('id') id: string) {
+  findOne(id: string) {
     return this.queryBus.execute(new GetProductQuery(id));
   }
 
   @MessagePattern({ cmd: 'update' })
   update(@Payload() data: any) {
-    const { id, updateProductDto } = { ...data };
+    const { id = null, updateProductDto = null } = { ...data };
     return this.commandBus.execute(
       new UpdateProductCommand(id, updateProductDto),
     );
   }
 
   @MessagePattern({ cmd: 'remove' })
-  remove(@Param('id') id: string) {
+  remove(id: string) {
     return this.commandBus.execute(new RemoveProductCommand(id));
   }
 }

@@ -31,10 +31,12 @@ export class CategoryController {
   async findAll() {
     return this.categoryService.send({ cmd: 'findAll' }, {});
   }
+
   @Get(':id')
   findById(@Param('id') id: string) {
     return this.categoryService.send({ cmd: 'findById' }, id);
   }
+
   @Patch(':id')
   async update(
     @Param('id', ParseMongoIdPipe) id: string,
@@ -47,8 +49,6 @@ export class CategoryController {
 
   @Delete(':id')
   async remove(@Param('id', ParseMongoIdPipe) id: string) {
-    return this.categoryService
-      .send({ cmd: 'remove', id }, {})
-      .pipe(timeout(5000));
+    return this.categoryService.send({ cmd: 'remove' }, id).pipe(timeout(5000));
   }
 }
