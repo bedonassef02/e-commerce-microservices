@@ -13,7 +13,7 @@ import { PRODUCT_SERVICE } from '@app/common/utils/constants';
 import { ClientProxy } from '@nestjs/microservices';
 import { CreateProductDto } from '@app/common/dto/product/create-product.dto';
 import { UpdateProductDto } from '@app/common/dto/product/update-product.dto';
-import { RpcExceptionInterceptor } from '@app/common/utils/exception/rpc-exception.filter.';
+import { RpcExceptionInterceptor } from '@app/common/utils/exception/rpc-exception.filter';
 
 @UseInterceptors(RpcExceptionInterceptor)
 @Controller('product')

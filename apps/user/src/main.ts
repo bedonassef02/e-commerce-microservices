@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { RMQ_URL, USER_QUEUE } from '@app/common/utils/constants';
 import { UserModule } from './user.module';
+import { LoggingInterceptor } from '@app/common/middlewares/logging.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
@@ -14,6 +15,8 @@ async function bootstrap() {
       },
     },
   );
+
+  app.useGlobalInterceptors(new LoggingInterceptor());
   app.listen();
 }
 bootstrap();

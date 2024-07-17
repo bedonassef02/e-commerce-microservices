@@ -6,6 +6,7 @@ import { RMQ_URL, USER_QUEUE, USER_SERVICE } from '@app/common/utils/constants';
 import { CqrsModule } from '@nestjs/cqrs';
 import { authHandlers } from './commands';
 import { CommonModule } from '@app/common';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -21,6 +22,10 @@ import { CommonModule } from '@app/common';
         },
       },
     ]),
+    JwtModule.register({
+      secret: 'secret',
+      signOptions: { expiresIn: '60s' },
+    }),
   ],
   controllers: [AuthController],
   providers: [AuthService, ...authHandlers],

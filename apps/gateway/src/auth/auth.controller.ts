@@ -11,7 +11,7 @@ import { AUTH_SERVICE } from '@app/common/utils/constants';
 import { ClientProxy } from '@nestjs/microservices';
 import { LoginDto } from '@app/common/dto/auth/login.dto';
 import { RegisterDto } from '@app/common/dto/auth/register.dto';
-import { RpcExceptionInterceptor } from '@app/common/utils/exception/rpc-exception.filter.';
+import { RpcExceptionInterceptor } from '@app/common/utils/exception/rpc-exception.filter';
 
 @UseInterceptors(RpcExceptionInterceptor)
 @Controller('auth')
@@ -23,6 +23,7 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @Post('login')
   login(@Body() loginDto: LoginDto) {
+    console.log({ loginDto });
     return this.authService.send({ cmd: 'login' }, loginDto);
   }
 

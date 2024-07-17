@@ -15,7 +15,7 @@ import { ClientProxy } from '@nestjs/microservices';
 import { timeout } from 'rxjs';
 import { CreateCategoryDto } from '@app/common/dto/category/create-category.dto';
 import { UpdateCategoryDto } from '@app/common/dto/category/update-category.dto';
-import { RpcExceptionInterceptor } from '@app/common/utils/exception/rpc-exception.filter.';
+import { RpcExceptionInterceptor } from '@app/common/utils/exception/rpc-exception.filter';
 
 @UseInterceptors(RpcExceptionInterceptor)
 @Controller('category')
