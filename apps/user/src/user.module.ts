@@ -5,14 +5,16 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { CommonModule } from '@app/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from './entities/user.entity';
+import { userHandlers } from './commands';
+import { userQueries } from './queries';
 
 @Module({
   imports: [
-    CqrsModule,
     CommonModule,
+    CqrsModule,
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
   ],
   controllers: [UserController],
-  providers: [UserService],
+  providers: [UserService, ...userQueries, ...userHandlers],
 })
 export class UserModule {}

@@ -1,10 +1,24 @@
-export const MessagePatterns = {
-  CREATE_PRODUCT: 'create_product',
-  UPDATE_PRODUCT: 'update_product',
-  DELETE_PRODUCT: 'delete_product',
-  GET_PRODUCTS: 'get_products',
-  CREATE_CATEGORY: 'create_category',
-  UPDATE_CATEGORY: 'update_category',
-  DELETE_CATEGORY: 'delete_category',
-  GET_CATEGORIES: 'getCategories',
+import {
+  CATEGORY_QUEUE,
+  CATEGORY_SERVICE,
+  PRODUCT_QUEUE,
+  PRODUCT_SERVICE,
+  USER_QUEUE,
+  USER_SERVICE,
+} from '@app/common/utils/constants';
+import { MessagePatterns } from '@app/common/utils/types/message-pattern.interface';
+
+export const UserMP: MessagePatterns = {
+  NAME: USER_SERVICE,
+  QUEUE: USER_QUEUE,
+};
+
+export const CategoryMP: MessagePatterns = {
+  NAME: CATEGORY_SERVICE,
+  QUEUE: CATEGORY_QUEUE,
+};
+
+export const ProductMP: MessagePatterns = {
+  NAME: PRODUCT_SERVICE,
+  QUEUE: PRODUCT_QUEUE,
 };

@@ -2,10 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from './entities/user.entity';
 import { Model } from 'mongoose';
-import { from, map, Observable } from 'rxjs';
-import * as bcrypt from 'bcryptjs';
+import { from, Observable } from 'rxjs';
 import { CreateUserDto } from '@app/common/dto/user/create-user.dto';
-import { plainToClass } from 'class-transformer';
+import { hash } from '@app/common/helpers/password.helper';
 
 @Injectable()
 export class UserService {
@@ -13,8 +12,8 @@ export class UserService {
     @InjectModel(User.name) private readonly userModel: Model<User>,
   ) {}
 
-  async create(user: CreateUserDto): Promise<User> {
-    user.password = await bcrypt.hash(user.password, 10);
+  create(user: CreateUserDto) {
+    user.password = hash(user.password);
     return this.userModel.create(user);
   }
 
@@ -22,20 +21,7 @@ export class UserService {
     return from(this.userModel.findById(id));
   }
 
-  findByEmail(email: string): Observable<User> {
-    return from(this.userModel.findOne({ email }));
-  }
-
-  async validateUser(email: string, password: string): Promise<any> {
-    return from(
-      this.findByEmail(email).pipe(
-        map(async (user: User) => {
-          if (user && (await bcrypt.compare(password, user.password))) {
-            return plainToClass(CreateUserDto, user);
-          }
-          return null;
-        }),
-      ),
-    );
+  findByEmail(email: string): Promise<User> {
+    return this.userModel.findOne({ email });
   }
 }

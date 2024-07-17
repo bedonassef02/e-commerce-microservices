@@ -1,10 +1,12 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { CreateProductCommand } from '../impl/create-product.command';
-import { ClientProxy, RpcException } from '@nestjs/microservices';
-import { HttpStatus, Inject } from '@nestjs/common';
+import { ClientProxy } from '@nestjs/microservices';
+import { Inject } from '@nestjs/common';
 import { CATEGORY_SERVICE } from '@app/common/utils/constants';
-import { catchError, of, switchMap, throwError } from 'rxjs';
+import { switchMap, of, lastValueFrom } from 'rxjs';
 import { ProductService } from '../../product.service';
+import { throwException } from '@app/common/utils/exception/throw-excpetion';
+import { Commands } from '@app/common/utils/types/crud.interface';
 
 @CommandHandler(CreateProductCommand)
 export class CreateProductHandler
@@ -16,27 +18,15 @@ export class CreateProductHandler
   ) {}
 
   async execute(command: CreateProductCommand): Promise<any> {
-    return new Promise((resolve, reject) => {
+    return lastValueFrom(
       this.categoryService
-        .send({ cmd: 'findById' }, command.createProductDto.category)
+        .send(Commands.FIND_BY_ID, command.createProductDto.category)
         .pipe(
           switchMap(() => {
             return of(this.productService.create(command.createProductDto));
           }),
-          catchError((err) => {
-            return throwError(
-              () =>
-                new RpcException({
-                  status: HttpStatus.NOT_FOUND,
-                  error: 'Category not found',
-                }),
-            );
-          }),
-        )
-        .subscribe({
-          next: (result) => resolve(result),
-          error: (err) => reject(err),
-        });
-    });
+          throwException,
+        ),
+    );
   }
 }

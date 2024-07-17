@@ -15,7 +15,8 @@ import { ClientProxy } from '@nestjs/microservices';
 import { timeout } from 'rxjs';
 import { CreateCategoryDto } from '@app/common/dto/category/create-category.dto';
 import { UpdateCategoryDto } from '@app/common/dto/category/update-category.dto';
-import { RpcExceptionInterceptor } from '@app/common/utils/exception/rpc-exception.filter.';
+import { RpcExceptionInterceptor } from '@app/common/utils/exception/rpc-exception.filter';
+import { Commands } from '@app/common/utils/types/crud.interface';
 
 @UseInterceptors(RpcExceptionInterceptor)
 @Controller('category')
@@ -24,31 +25,31 @@ export class CategoryController {
 
   @Post()
   async create(@Body() createCategoryDto: CreateCategoryDto) {
-    return this.categoryService.send({ cmd: 'create' }, createCategoryDto);
+    return this.categoryService.send(Commands.CREATE, createCategoryDto);
   }
 
   @Get()
   async findAll() {
-    return this.categoryService.send({ cmd: 'findAll' }, {});
+    return this.categoryService.send(Commands.FIND_ALL, {});
   }
+
   @Get(':id')
   findById(@Param('id') id: string) {
-    return this.categoryService.send({ cmd: 'findById' }, id);
+    return this.categoryService.send(Commands.FIND_BY_ID, id);
   }
+
   @Patch(':id')
   async update(
     @Param('id', ParseMongoIdPipe) id: string,
     @Body() updateCategoryDto: UpdateCategoryDto,
   ) {
     return this.categoryService
-      .send({ cmd: 'update' }, { id, updateCategoryDto })
+      .send(Commands.UPDATE, { id, updateCategoryDto })
       .pipe(timeout(5000));
   }
 
   @Delete(':id')
   async remove(@Param('id', ParseMongoIdPipe) id: string) {
-    return this.categoryService
-      .send({ cmd: 'remove', id }, {})
-      .pipe(timeout(5000));
+    return this.categoryService.send(Commands.DELETE, id).pipe(timeout(5000));
   }
 }

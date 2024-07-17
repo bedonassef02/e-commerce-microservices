@@ -1,23 +1,32 @@
 import { Controller } from '@nestjs/common';
-import { UserService } from './user.service';
 import { MessagePattern } from '@nestjs/microservices';
 import { CreateUserDto } from '@app/common/dto/user/create-user.dto';
+import { CommandBus, QueryBus } from '@nestjs/cqrs';
+import { CreateUserCommand } from './commands/impl/create-user.command';
+import { GetUserByIdCommand } from './queries/impl/get-user-by-id.command';
+import { GetUserByEmailCommand } from './queries/impl/get-user-by-email.command';
+import { from, Observable } from 'rxjs';
+import { User } from './entities/user.entity';
 
 @Controller()
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly commandBus: CommandBus,
+    private readonly queryBus: QueryBus,
+  ) {}
 
   @MessagePattern({ cmd: 'create' })
   create(user: CreateUserDto) {
-    return this.userService.create(user);
+    return this.commandBus.execute(new CreateUserCommand(user));
   }
 
   @MessagePattern({ cmd: 'findById' })
   findById(id: string) {
-    return this.userService.findById(id);
+    return this.queryBus.execute(new GetUserByIdCommand(id));
   }
+
   @MessagePattern({ cmd: 'findByEmail' })
-  findByEmail(email: string) {
-    return this.userService.findByEmail(email);
+  findByEmail(email: string): Observable<User> {
+    return from(this.queryBus.execute(new GetUserByEmailCommand(email)));
   }
 }
