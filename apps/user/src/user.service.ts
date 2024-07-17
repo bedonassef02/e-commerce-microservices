@@ -4,7 +4,7 @@ import { User } from './entities/user.entity';
 import { Model } from 'mongoose';
 import { from, Observable } from 'rxjs';
 import { CreateUserDto } from '@app/common/dto/user/create-user.dto';
-import { compare, hash } from '@app/common/helpers/password.helper';
+import { hash } from '@app/common/helpers/password.helper';
 
 @Injectable()
 export class UserService {
@@ -12,7 +12,7 @@ export class UserService {
     @InjectModel(User.name) private readonly userModel: Model<User>,
   ) {}
 
-  async create(user: CreateUserDto): Promise<User> {
+  create(user: CreateUserDto) {
     user.password = hash(user.password);
     return this.userModel.create(user);
   }
@@ -23,14 +23,5 @@ export class UserService {
 
   findByEmail(email: string): Promise<User> {
     return this.userModel.findOne({ email });
-  }
-
-  async validateUser(email: string, password: string): Promise<any> {
-    const user = await this.findByEmail(email);
-    if (user && compare(password, user.password)) {
-      const { password, ...result } = { ...user };
-      return result;
-    }
-    return null;
   }
 }

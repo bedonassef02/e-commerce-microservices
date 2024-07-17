@@ -6,28 +6,15 @@ import { Product, ProductSchema } from './entities/product.entity';
 import { CqrsModule } from '@nestjs/cqrs';
 import { productQueries } from './queries';
 import { productCommands } from './commands';
-import { CommonModule } from '@app/common';
-import { ClientsModule, Transport } from '@nestjs/microservices';
-import {
-  CATEGORY_QUEUE,
-  CATEGORY_SERVICE,
-  RMQ_URL,
-} from '@app/common/utils/constants';
+import { CategoryMP, CommonModule } from '@app/common';
+import { ClientsModule } from '@nestjs/microservices';
+import { registerClient } from '@app/common/helpers/register-client.helper';
 
 @Module({
   imports: [
     CommonModule,
     CqrsModule,
-    ClientsModule.register([
-      {
-        name: CATEGORY_SERVICE,
-        transport: Transport.RMQ,
-        options: {
-          urls: [RMQ_URL],
-          queue: CATEGORY_QUEUE,
-        },
-      },
-    ]),
+    ClientsModule.register([registerClient(CategoryMP)]),
     MongooseModule.forFeature([{ name: Product.name, schema: ProductSchema }]),
   ],
   controllers: [ProductController],

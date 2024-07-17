@@ -1,23 +1,12 @@
 import { Module } from '@nestjs/common';
 import { ProductController } from './product.controller';
 import { CqrsModule } from '@nestjs/cqrs';
-import { ClientsModule, Transport } from '@nestjs/microservices';
-import { PRODUCT_SERVICE } from '@app/common/utils/constants';
+import { ClientsModule } from '@nestjs/microservices';
+import { registerClient } from '@app/common/helpers/register-client.helper';
+import { ProductMP } from '@app/common';
 
 @Module({
-  imports: [
-    CqrsModule,
-    ClientsModule.register([
-      {
-        name: PRODUCT_SERVICE,
-        transport: Transport.RMQ,
-        options: {
-          urls: ['amqp://localhost:5672'],
-          queue: 'products-queue',
-        },
-      },
-    ]),
-  ],
+  imports: [CqrsModule, ClientsModule.register([registerClient(ProductMP)])],
   controllers: [ProductController],
 })
 export class ProductModule {}

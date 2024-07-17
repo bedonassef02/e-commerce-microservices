@@ -6,6 +6,7 @@ import { switchMap, of, lastValueFrom } from 'rxjs';
 import { ProductService } from '../../product.service';
 import { UpdateProductCommand } from '../impl/update-product.command';
 import { throwException } from '@app/common/utils/exception/throw-excpetion';
+import { Commands } from '@app/common/utils/types/crud.interface';
 
 @CommandHandler(UpdateProductCommand)
 export class UpdateProductHandler
@@ -19,7 +20,7 @@ export class UpdateProductHandler
   async execute(command: UpdateProductCommand): Promise<any> {
     return lastValueFrom(
       this.categoryService
-        .send({ cmd: 'findById' }, command.updateProductDto.category)
+        .send(Commands.FIND_BY_ID, command.updateProductDto.category)
         .pipe(
           switchMap(() => {
             return of(

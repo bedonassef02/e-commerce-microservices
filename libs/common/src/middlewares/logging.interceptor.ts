@@ -1,4 +1,3 @@
-// logging.interceptor.ts
 import {
   Injectable,
   NestInterceptor,
@@ -20,8 +19,11 @@ export class LoggingInterceptor implements NestInterceptor {
 
     this.logger.log(`Incoming message: ${JSON.stringify(data)}`);
 
-    return next
-      .handle()
-      .pipe(tap(() => this.logger.log(`Response time: ${Date.now() - now}ms`)));
+    return next.handle().pipe(
+      tap((response) => {
+        this.logger.log({ response });
+        this.logger.log(`Response time: ${Date.now() - now}ms`);
+      }),
+    );
   }
 }
