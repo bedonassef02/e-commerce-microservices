@@ -17,6 +17,11 @@ export class LoggingInterceptor implements NestInterceptor {
     const ctx = context.switchToRpc();
     const data = ctx.getData();
 
+    // Get the handler (method) name
+    const handler = context.getHandler();
+    const handlerName = handler.name;
+
+    this.logger.log(`Function called: ${handlerName}`);
     this.logger.log(`Incoming message: ${JSON.stringify(data)}`);
 
     return next.handle().pipe(

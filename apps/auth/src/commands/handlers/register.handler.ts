@@ -2,12 +2,24 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { AuthService } from '../../auth.service';
 import { RegisterCommand } from '../impl/register.command';
 import { throwException } from '@app/common/utils/exception/throw-excpetion';
+import { TokenService } from '../../utils/token.service';
+import { map } from 'rxjs';
+import { UserDocument } from '../../../../user/src/entities/user.entity';
 
 @CommandHandler(RegisterCommand)
 export class RegisterHandler implements ICommandHandler<RegisterCommand> {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly tokenService: TokenService,
+  ) {}
 
   async execute(command: RegisterCommand) {
-    return this.authService.register(command.registerDto).pipe(throwException);
+    return this.authService.register(command.registerDto).pipe(
+      map((user: UserDocument) => {
+        const token = this.tokenService.generate(user);
+        return { token };
+      }),
+      throwException,
+    );
   }
 }

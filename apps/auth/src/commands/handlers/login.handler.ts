@@ -1,14 +1,23 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { LoginCommand } from '../impl/login.command';
+import { map, Observable } from 'rxjs';
+import { User, UserDocument } from '../../../../user/src/entities/user.entity';
 import { AuthService } from '../../auth.service';
-import { Observable } from 'rxjs';
-import { User } from '../../../../user/src/entities/user.entity';
+import { TokenService } from '../../utils/token.service';
 
 @CommandHandler(LoginCommand)
 export class LoginHandler implements ICommandHandler<LoginCommand> {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly tokenService: TokenService,
+  ) {}
 
-  async execute(command: LoginCommand): Promise<Observable<User>> {
-    return this.authService.login(command.loginDto);
+  async execute(command: LoginCommand): Promise<Observable<any>> {
+    return this.authService.login(command.loginDto).pipe(
+      map((user: UserDocument) => {
+        const token = this.tokenService.generate(user);
+        return { token };
+      }),
+    );
   }
 }
