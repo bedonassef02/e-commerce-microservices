@@ -1,4 +1,6 @@
 import {
+  CART_QUEUE,
+  CART_SERVICE,
   CATEGORY_QUEUE,
   CATEGORY_SERVICE,
   PRODUCT_QUEUE,
@@ -21,4 +23,9 @@ export const CategoryMP: MessagePatterns = {
 export const ProductMP: MessagePatterns = {
   NAME: PRODUCT_SERVICE,
   QUEUE: PRODUCT_QUEUE,
+};
+
+export const CartMP: MessagePatterns = {
+  NAME: CART_SERVICE,
+  QUEUE: CART_QUEUE,
 };

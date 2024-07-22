@@ -1,0 +1,35 @@
+import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Order } from './entities/order.entity';
+import { Model } from 'mongoose';
+import { CreateOrderDto } from '@app/common/dto/order/create-order.dto';
+import { from, Observable } from 'rxjs';
+
+@Injectable()
+export class OrderService {
+  constructor(
+    @InjectModel(Order.name) private readonly orderModel: Model<Order>,
+  ) {}
+  create(orderDto: CreateOrderDto): Observable<Order> {
+    return from(this.orderModel.create(orderDto));
+  }
+
+  findAll(): Observable<Order[]> {
+    return from(this.orderModel.find().exec());
+  }
+
+  findById(id: string): Observable<Order | null> {
+    return from(this.orderModel.findById(id).exec());
+  }
+  update(id: string, updateOrderDto: CreateOrderDto): Observable<Order> {
+    return from(
+      this.orderModel.findByIdAndUpdate(id, updateOrderDto, {
+        new: true,
+      }),
+    );
+  }
+
+  remove(id: string): Observable<Order> {
+    return from(this.orderModel.findByIdAndDelete(id));
+  }
+}
