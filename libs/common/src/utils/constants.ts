@@ -12,6 +12,7 @@ export const PRODUCT_QUEUE: string = 'products-queue';
 
 export const USER_QUEUE: string = 'users-queue';
 export const AUTH_QUEUE: string = 'auth-queue';
+export const ORDER_QUEUE: string = 'order-queue';
 
 export enum Role {
   USER = 'user',

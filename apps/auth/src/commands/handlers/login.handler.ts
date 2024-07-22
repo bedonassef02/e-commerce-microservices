@@ -1,9 +1,9 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { LoginCommand } from '../impl/login.command';
 import { map, Observable } from 'rxjs';
-import { User, UserDocument } from '../../../../user/src/entities/user.entity';
+import { UserDocument } from '../../../../user/src/entities/user.entity';
 import { AuthService } from '../../auth.service';
-import { TokenService } from '../../utils/token.service';
+import { TokenService } from '@app/common/services/token.service';
 
 @CommandHandler(LoginCommand)
 export class LoginHandler implements ICommandHandler<LoginCommand> {

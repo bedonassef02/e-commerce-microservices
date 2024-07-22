@@ -7,7 +7,6 @@ import { authHandlers } from './commands';
 import { CommonModule, UserMP } from '@app/common';
 import { JwtModule } from '@nestjs/jwt';
 import { registerClient } from '@app/common/helpers/register-client.helper';
-import { TokenService } from './utils/token.service';
 
 @Module({
   imports: [
@@ -20,6 +19,6 @@ import { TokenService } from './utils/token.service';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, TokenService, ...authHandlers],
+  providers: [AuthService, ...authHandlers],
 })
 export class AuthModule {}
