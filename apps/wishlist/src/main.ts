@@ -3,7 +3,7 @@ import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { RMQ_URL } from '@app/common/utils/constants/constants';
 import { LoggingInterceptor } from '@app/common/middlewares/logging.interceptor';
 import { WishlistModule } from './wishlist.module';
-import { PRODUCT_QUEUE } from '@app/common/utils/constants/queue.constants';
+import { WISHLIST_QUEUE } from '@app/common/utils/constants/queue.constants';
 
 async function bootstrap() {
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
@@ -12,7 +12,7 @@ async function bootstrap() {
       transport: Transport.RMQ,
       options: {
         urls: [RMQ_URL],
-        queue: PRODUCT_QUEUE,
+        queue: WISHLIST_QUEUE,
       },
     },
   );

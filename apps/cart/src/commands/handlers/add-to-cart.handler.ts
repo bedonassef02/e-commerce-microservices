@@ -24,9 +24,6 @@ export class AddToCartHandler implements ICommandHandler<AddToCartCommand> {
           switchMap(() => {
             return this.cartService.findUserCart(command.cartDto.user).pipe(
               map((cart: CartDocument) => {
-                if (!cart) {
-                  return this.cartService.create(command.cartDto);
-                }
                 return this.cartService.update(cart, command.cartDto);
               }),
             );

@@ -12,19 +12,11 @@ export class CartService {
     @InjectModel(Cart.name) private readonly cartModel: Model<CartDocument>,
   ) {}
 
-  create(cartDto: CartDto): Observable<Cart> {
-    return from(
-      this.cartModel.create({
-        user: cartDto.user,
-        products: cartDto.product
-          ? [{ product: cartDto.product, quantity: cartDto.quantity }]
-          : [],
-      }),
-    );
+  create(user: string): Observable<Cart> {
+    return from(this.cartModel.create({ user: user, products: [] }));
   }
 
   findUserCart(user: string): Observable<Cart> {
-    console.log({ user });
     return from(this.cartModel.findOne({ user }));
   }
 
