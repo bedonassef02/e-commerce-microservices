@@ -3,6 +3,8 @@ import {
   CART_SERVICE,
   CATEGORY_QUEUE,
   CATEGORY_SERVICE,
+  ORDER_QUEUE,
+  ORDER_SERVICE,
   PRODUCT_QUEUE,
   PRODUCT_SERVICE,
   USER_QUEUE,
@@ -28,4 +30,9 @@ export const ProductMP: MessagePatterns = {
 export const CartMP: MessagePatterns = {
   NAME: CART_SERVICE,
   QUEUE: CART_QUEUE,
+};
+
+export const OrderMP: MessagePatterns = {
+  NAME: ORDER_SERVICE,
+  QUEUE: ORDER_QUEUE,
 };

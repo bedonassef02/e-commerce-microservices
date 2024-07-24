@@ -5,6 +5,7 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { CommonModule } from '@app/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Order, OrderSchema } from './entities/order.entity';
+import { orderQueries } from './queries';
 
 @Module({
   imports: [
@@ -18,6 +19,6 @@ import { Order, OrderSchema } from './entities/order.entity';
     ]),
   ],
   controllers: [OrderController],
-  providers: [OrderService],
+  providers: [OrderService, ...orderQueries],
 })
 export class OrderModule {}

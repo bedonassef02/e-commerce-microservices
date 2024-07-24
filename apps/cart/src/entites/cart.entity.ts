@@ -1,11 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
 import { HydratedDocument } from 'mongoose';
-
-type CartProduct = {
-  product: string;
-  quantity: number;
-};
+import { CartProduct } from '../utils/product-cart';
 
 export type CartDocument = HydratedDocument<Cart>;
 

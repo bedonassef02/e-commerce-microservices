@@ -1,5 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, HydratedDocument, Types } from 'mongoose';
+import mongoose from 'mongoose';
+import { OrderStatus } from '../utils/order-status';
+import { OrderProduct } from '../utils/order-product';
 
 export type OrderDocument = HydratedDocument<Order>;
 
@@ -8,25 +11,23 @@ export class Order extends Document {
   @Prop({ type: Types.ObjectId, ref: 'User', required: true })
   user: Types.ObjectId;
 
-  @Prop({ type: [{ type: Types.ObjectId, ref: 'Product' }], required: true })
-  products: Types.ObjectId[];
+  @Prop([
+    {
+      product: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
+      quantity: { type: Number, default: 1 },
+      price: { type: Number, default: 0 },
+    },
+  ])
+  products: OrderProduct[];
 
   @Prop({ required: true })
   totalPrice: number;
 
-  @Prop({ required: true })
-  status: string;
+  @Prop({ type: String, enum: OrderStatus, required: true })
+  status: OrderStatus;
 
   @Prop({ required: true })
   address: string;
-
-  @Prop({ default: false })
-  deleted: boolean;
 }
 
 export const OrderSchema = SchemaFactory.createForClass(Order);
-
-OrderSchema.pre(/^find/, function (next) {
-  this.where({ deleted: { $ne: true } });
-  next();
-});

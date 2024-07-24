@@ -14,8 +14,8 @@ export class OrderService {
     return from(this.orderModel.create(orderDto));
   }
 
-  findAll(): Observable<Order[]> {
-    return from(this.orderModel.find().exec());
+  findAll(user: string): Observable<Order[]> {
+    return from(this.orderModel.find({ user }).exec());
   }
 
   findById(id: string): Observable<Order | null> {

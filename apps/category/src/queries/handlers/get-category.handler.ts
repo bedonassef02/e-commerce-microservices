@@ -3,8 +3,7 @@ import { Category } from '../../entities/category.entity';
 import { from, map, Observable } from 'rxjs';
 import { GetCategoryQuery } from '../impl/get-category.query';
 import { CategoryService } from '../../category.service';
-import { RpcException } from '@nestjs/microservices';
-import { HttpStatus } from '@nestjs/common';
+import { notFoundException } from '@app/common/utils/exception/not-found.exception';
 
 @QueryHandler(GetCategoryQuery)
 export class GetCategoryHandler implements IQueryHandler<GetCategoryQuery> {
@@ -16,10 +15,7 @@ export class GetCategoryHandler implements IQueryHandler<GetCategoryQuery> {
         if (category) {
           return category;
         }
-        throw new RpcException({
-          status: HttpStatus.NOT_FOUND,
-          error: 'Category not found',
-        });
+        notFoundException(Category.name);
       }),
     );
   }

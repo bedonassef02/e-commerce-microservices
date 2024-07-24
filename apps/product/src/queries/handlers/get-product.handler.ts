@@ -3,8 +3,7 @@ import { from, map } from 'rxjs';
 import { ProductService } from '../../product.service';
 import { Product } from '../../entities/product.entity';
 import { GetProductQuery } from '../impl/get-product.query';
-import { HttpStatus } from '@nestjs/common';
-import { RpcException } from '@nestjs/microservices';
+import { notFoundException } from '@app/common/utils/exception/not-found.exception';
 
 @QueryHandler(GetProductQuery)
 export class GetProductHandler implements IQueryHandler<GetProductQuery> {
@@ -16,10 +15,7 @@ export class GetProductHandler implements IQueryHandler<GetProductQuery> {
         if (product) {
           return product;
         }
-        throw new RpcException({
-          status: HttpStatus.NOT_FOUND,
-          message: 'Product not found',
-        });
+        notFoundException(Product.name);
       }),
     );
   }

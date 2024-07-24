@@ -5,33 +5,41 @@ import { Commands } from '@app/common/utils/types/crud.interface';
 import { CreateOrderDto } from '@app/common/dto/order/create-order.dto';
 import { Order } from './entities/order.entity';
 import { Observable } from 'rxjs';
+import { FindOrderDto } from '@app/common/dto/order/find-order.dto';
+import { CommandBus, QueryBus } from '@nestjs/cqrs';
+import { GetOrderQuery } from './queries/impl/get-order.query';
+import { GetOrdersQuery } from './queries/impl/get-orders.query';
 
 @Controller()
 export class OrderController {
-  constructor(private readonly orderService: OrderService) {}
+  constructor(
+    private readonly commandBus: CommandBus,
+    private readonly queryBus: QueryBus,
+  ) {}
 
-  @MessagePattern(Commands.CREATE)
-  create(orderDto: CreateOrderDto): Observable<Order> {
-    return this.orderService.create(orderDto);
-  }
+  // @MessagePattern(Commands.CREATE)
+  // create(orderDto: CreateOrderDto): Observable<Order> {
+  //   return this.orderService.create(orderDto);
+  // }
 
   @MessagePattern(Commands.FIND_ALL)
-  findAll(): Observable<Order[]> {
-    return this.orderService.findAll();
+  findAll(user: string) {
+    console.log({user})
+    return this.queryBus.execute(new GetOrdersQuery(user));
   }
 
   @MessagePattern(Commands.FIND_BY_ID)
-  findById(id: string): Observable<Order | null> {
-    return this.orderService.findById(id);
+  findById(orderDto: FindOrderDto) {
+    return this.queryBus.execute(new GetOrderQuery(orderDto));
   }
 
-  @MessagePattern(Commands.UPDATE)
-  update(id: string, updateOrderDto: CreateOrderDto): Observable<Order> {
-    return this.orderService.update(id, updateOrderDto);
-  }
+  // @MessagePattern(Commands.UPDATE)
+  // update(id: string, updateOrderDto: CreateOrderDto): Observable<Order> {
+  //   return this.orderService.update(id, updateOrderDto);
+  // }
 
-  @MessagePattern(Commands.DELETE)
-  remove(id: string): Observable<Order> {
-    return this.orderService.remove(id);
-  }
+  // @MessagePattern(Commands.DELETE)
+  // remove(id: string): Observable<Order> {
+  //   return this.orderService.remove(id);
+  // }
 }

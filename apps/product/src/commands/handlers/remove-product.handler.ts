@@ -3,8 +3,7 @@ import { ProductService } from '../../product.service';
 import { RemoveProductCommand } from '../impl/remove-product.command';
 import { from, map, Observable } from 'rxjs';
 import { Product } from '../../entities/product.entity';
-import { RpcException } from '@nestjs/microservices';
-import { HttpStatus } from '@nestjs/common';
+import { notFoundException } from '@app/common/utils/exception/not-found.exception';
 
 @CommandHandler(RemoveProductCommand)
 export class RemoveProductHandler
@@ -18,10 +17,8 @@ export class RemoveProductHandler
         if (product) {
           return product;
         }
-        throw new RpcException({
-          status: HttpStatus.NOT_FOUND,
-          error: 'Product not found',
-        });
+
+        notFoundException(Product.name);
       }),
     );
   }
