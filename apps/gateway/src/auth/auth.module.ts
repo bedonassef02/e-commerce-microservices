@@ -2,9 +2,11 @@ import { Module } from '@nestjs/common';
 import { AuthController } from './auth.controller';
 import { CqrsModule } from '@nestjs/cqrs';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { AUTH_QUEUE, AUTH_SERVICE, RMQ_URL } from '@app/common/utils/constants';
+import { RMQ_URL } from '@app/common/utils/constants/constants';
 import { PassportModule } from '@nestjs/passport';
 import { CommonModule } from '@app/common';
+import { AUTH_SERVICE } from '@app/common/utils/constants/service.constants';
+import { AUTH_QUEUE } from '@app/common/utils/constants/queue.constants';
 
 @Module({
   imports: [

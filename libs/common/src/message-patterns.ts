@@ -1,16 +1,21 @@
+import {} from '@app/common/utils/constants/constants';
+import { MessagePatterns } from '@app/common/utils/types/message-pattern.interface';
+import {
+  CART_SERVICE,
+  CATEGORY_SERVICE,
+  ORDER_SERVICE,
+  PRODUCT_SERVICE,
+  USER_SERVICE,
+  WISHLIST_SERVICE,
+} from '@app/common/utils/constants/service.constants';
 import {
   CART_QUEUE,
-  CART_SERVICE,
   CATEGORY_QUEUE,
-  CATEGORY_SERVICE,
   ORDER_QUEUE,
-  ORDER_SERVICE,
   PRODUCT_QUEUE,
-  PRODUCT_SERVICE,
   USER_QUEUE,
-  USER_SERVICE,
-} from '@app/common/utils/constants';
-import { MessagePatterns } from '@app/common/utils/types/message-pattern.interface';
+  WISHLIST_QUEUE,
+} from '@app/common/utils/constants/queue.constants';
 
 export const UserMP: MessagePatterns = {
   NAME: USER_SERVICE,
@@ -35,4 +40,9 @@ export const CartMP: MessagePatterns = {
 export const OrderMP: MessagePatterns = {
   NAME: ORDER_SERVICE,
   QUEUE: ORDER_QUEUE,
+};
+
+export const WishlistMP: MessagePatterns = {
+  NAME: WISHLIST_SERVICE,
+  QUEUE: WISHLIST_QUEUE,
 };

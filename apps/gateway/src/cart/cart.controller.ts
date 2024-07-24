@@ -8,7 +8,7 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { CART_SERVICE } from '@app/common/utils/constants';
+import { CART_SERVICE } from '@app/common/utils/constants/service.constants';
 import { ClientProxy } from '@nestjs/microservices';
 import { Commands } from '@app/common/utils/types/crud.interface';
 import { CartDto } from '@app/common/dto/cart/cart.dto';

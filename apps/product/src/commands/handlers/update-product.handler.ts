@@ -1,12 +1,12 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { ClientProxy } from '@nestjs/microservices';
 import { Inject } from '@nestjs/common';
-import { CATEGORY_SERVICE } from '@app/common/utils/constants';
 import { switchMap, of, lastValueFrom } from 'rxjs';
 import { ProductService } from '../../product.service';
 import { UpdateProductCommand } from '../impl/update-product.command';
 import { throwException } from '@app/common/utils/exception/throw-excpetion';
 import { Commands } from '@app/common/utils/types/crud.interface';
+import { CATEGORY_SERVICE } from '@app/common/utils/constants/service.constants';
 
 @CommandHandler(UpdateProductCommand)
 export class UpdateProductHandler

@@ -11,7 +11,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ParseMongoIdPipe } from '@app/common/pipes/parse-mongo-id.pipe';
-import { CATEGORY_SERVICE } from '@app/common/utils/constants';
+import { CATEGORY_SERVICE } from '@app/common/utils/constants/service.constants';
 import { ClientProxy } from '@nestjs/microservices';
 import { timeout } from 'rxjs';
 import { CreateCategoryDto } from '@app/common/dto/category/create-category.dto';

@@ -9,12 +9,12 @@ import {
   Inject,
   UseInterceptors,
 } from '@nestjs/common';
-import { PRODUCT_SERVICE } from '@app/common/utils/constants';
 import { ClientProxy } from '@nestjs/microservices';
 import { CreateProductDto } from '@app/common/dto/product/create-product.dto';
 import { UpdateProductDto } from '@app/common/dto/product/update-product.dto';
 import { RpcExceptionInterceptor } from '@app/common/utils/exception/rpc-exception.filter';
 import { Commands } from '@app/common/utils/types/crud.interface';
+import { PRODUCT_SERVICE } from '@app/common/utils/constants/service.constants';
 
 @UseInterceptors(RpcExceptionInterceptor)
 @Controller('product')

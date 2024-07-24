@@ -4,7 +4,7 @@ import { LoginDto } from '@app/common/dto/auth/login.dto';
 import { RegisterDto } from '@app/common/dto/auth/register.dto';
 import { CommandBus } from '@nestjs/cqrs';
 import { RegisterCommand } from './commands/impl/register.command';
-import { USER_SERVICE } from '@app/common/utils/constants';
+import { USER_SERVICE } from '@app/common/utils/constants/service.constants';
 import { LoginCommand } from './commands/impl/login.command';
 
 @Controller()

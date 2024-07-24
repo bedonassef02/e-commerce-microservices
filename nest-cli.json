@@ -81,6 +81,15 @@
       "compilerOptions": {
         "tsConfigPath": "apps/cart/tsconfig.app.json"
       }
+    },
+    "wishlist": {
+      "type": "application",
+      "root": "apps/wishlist",
+      "entryFile": "main",
+      "sourceRoot": "apps/wishlist/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/wishlist/tsconfig.app.json"
+      }
     }
   }
 }

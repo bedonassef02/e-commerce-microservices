@@ -1,17 +1,12 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { from, lastValueFrom, map, Observable, of, switchMap } from 'rxjs';
+import { lastValueFrom, map, switchMap } from 'rxjs';
 import { AddToCartCommand } from '../impl/add-to-cart.command';
 import { CartService } from '../../cart.service';
 import { CartDocument } from '../../entites/cart.entity';
-import { HttpStatus, Inject } from '@nestjs/common';
-import {
-  CATEGORY_SERVICE,
-  PRODUCT_QUEUE,
-  PRODUCT_SERVICE,
-} from '@app/common/utils/constants';
-import { ClientProxy, RpcException } from '@nestjs/microservices';
+import { Inject } from '@nestjs/common';
+import { PRODUCT_SERVICE } from '@app/common/utils/constants/service.constants';
+import { ClientProxy } from '@nestjs/microservices';
 import { Commands } from '@app/common/utils/types/crud.interface';
-import { Product } from '../../../../product/src/entities/product.entity';
 import { throwException } from '@app/common/utils/exception/throw-excpetion';
 
 @CommandHandler(AddToCartCommand)

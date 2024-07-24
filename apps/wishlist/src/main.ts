@@ -2,21 +2,20 @@ import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { RMQ_URL } from '@app/common/utils/constants/constants';
 import { LoggingInterceptor } from '@app/common/middlewares/logging.interceptor';
-import { CartModule } from './cart.module';
-import { CART_QUEUE } from '@app/common/utils/constants/queue.constants';
+import { WishlistModule } from './wishlist.module';
+import { PRODUCT_QUEUE } from '@app/common/utils/constants/queue.constants';
 
 async function bootstrap() {
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
-    CartModule,
+    WishlistModule,
     {
       transport: Transport.RMQ,
       options: {
         urls: [RMQ_URL],
-        queue: CART_QUEUE,
+        queue: PRODUCT_QUEUE,
       },
     },
   );
-
   app.useGlobalInterceptors(new LoggingInterceptor());
   app.listen();
 }

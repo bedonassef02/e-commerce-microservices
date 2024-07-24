@@ -1,10 +1,6 @@
 import { Controller } from '@nestjs/common';
-import { OrderService } from './order.service';
 import { MessagePattern } from '@nestjs/microservices';
 import { Commands } from '@app/common/utils/types/crud.interface';
-import { CreateOrderDto } from '@app/common/dto/order/create-order.dto';
-import { Order } from './entities/order.entity';
-import { Observable } from 'rxjs';
 import { FindOrderDto } from '@app/common/dto/order/find-order.dto';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { GetOrderQuery } from './queries/impl/get-order.query';
@@ -24,7 +20,7 @@ export class OrderController {
 
   @MessagePattern(Commands.FIND_ALL)
   findAll(user: string) {
-    console.log({user})
+    console.log({ user });
     return this.queryBus.execute(new GetOrdersQuery(user));
   }
 

@@ -1,7 +1,7 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { GetUserCartQuery } from '../impl/get-user-cart.query';
 import { CartService } from '../../cart.service';
-import { map, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Cart } from '../../entites/cart.entity';
 
 @QueryHandler(GetUserCartQuery)

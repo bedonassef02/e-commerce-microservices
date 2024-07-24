@@ -1,6 +1,6 @@
 import { HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { LoginDto } from '@app/common/dto/auth/login.dto';
-import { USER_SERVICE } from '@app/common/utils/constants';
+import { USER_SERVICE } from '@app/common/utils/constants/service.constants';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { map, Observable } from 'rxjs';
 import { RegisterDto } from '@app/common/dto/auth/register.dto';

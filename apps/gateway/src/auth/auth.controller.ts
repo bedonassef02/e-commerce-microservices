@@ -7,7 +7,7 @@ import {
   Post,
   UseInterceptors,
 } from '@nestjs/common';
-import { AUTH_SERVICE } from '@app/common/utils/constants';
+import { AUTH_SERVICE } from '@app/common/utils/constants/service.constants';
 import { ClientProxy } from '@nestjs/microservices';
 import { LoginDto } from '@app/common/dto/auth/login.dto';
 import { RegisterDto } from '@app/common/dto/auth/register.dto';
