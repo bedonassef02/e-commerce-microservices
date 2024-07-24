@@ -5,7 +5,6 @@ import {
   HttpStatus,
   Inject,
   Post,
-  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { AUTH_SERVICE } from '@app/common/utils/constants';
@@ -14,7 +13,6 @@ import { LoginDto } from '@app/common/dto/auth/login.dto';
 import { RegisterDto } from '@app/common/dto/auth/register.dto';
 import { RpcExceptionInterceptor } from '@app/common/utils/exception/rpc-exception.filter';
 import { Observable } from 'rxjs';
-import { AuthGuard } from '@app/common/guards/auth.guard';
 
 @UseInterceptors(RpcExceptionInterceptor)
 @Controller('auth')
@@ -24,7 +22,6 @@ export class AuthController {
   ) {}
 
   @HttpCode(HttpStatus.OK)
-  @UseGuards(AuthGuard)
   @Post('login')
   login(@Body() loginDto: LoginDto): Observable<any> {
     return this.authService.send({ cmd: 'login' }, loginDto);

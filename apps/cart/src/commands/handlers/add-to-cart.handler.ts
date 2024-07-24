@@ -1,36 +1,43 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { map, Observable } from 'rxjs';
+import { from, lastValueFrom, map, Observable, of, switchMap } from 'rxjs';
 import { AddToCartCommand } from '../impl/add-to-cart.command';
 import { CartService } from '../../cart.service';
-import { Cart, CartDocument } from '../../entites/cart.entity';
+import { CartDocument } from '../../entites/cart.entity';
+import { HttpStatus, Inject } from '@nestjs/common';
+import {
+  CATEGORY_SERVICE,
+  PRODUCT_QUEUE,
+  PRODUCT_SERVICE,
+} from '@app/common/utils/constants';
+import { ClientProxy, RpcException } from '@nestjs/microservices';
+import { Commands } from '@app/common/utils/types/crud.interface';
+import { Product } from '../../../../product/src/entities/product.entity';
+import { throwException } from '@app/common/utils/exception/throw-excpetion';
 
 @CommandHandler(AddToCartCommand)
 export class AddToCartHandler implements ICommandHandler<AddToCartCommand> {
-  constructor(private readonly cartService: CartService) {}
+  constructor(
+    private readonly cartService: CartService,
+    @Inject(PRODUCT_SERVICE) private productService: ClientProxy,
+  ) {}
 
-  async execute(command: AddToCartCommand) {
-    return this.cartService.findUserCart(command.cartDto.user).pipe(
-      map((cart: CartDocument) => {
-        if (!cart) {
-          return this.cartService.create(command.cartDto);
-        } else {
-          return this.cartService
-            .productIndex(cart, command.cartDto.product)
-            .pipe(
-              map((index: number) => {
-                if (index === -1) {
-                  cart.products.push({
-                    product: command.cartDto.product,
-                    quantity: 1,
-                  });
-                } else {
-                  cart.products[index].quantity += command.cartDto.quantity;
+  async execute(command: AddToCartCommand): Promise<any> {
+    return lastValueFrom(
+      this.productService
+        .send(Commands.FIND_BY_ID, command.cartDto.product)
+        .pipe(
+          switchMap(() => {
+            return this.cartService.findUserCart(command.cartDto.user).pipe(
+              map((cart: CartDocument) => {
+                if (!cart) {
+                  return this.cartService.create(command.cartDto);
                 }
-                return cart.save();
+                return this.cartService.update(cart, command.cartDto);
               }),
             );
-        }
-      }),
+          }),
+          throwException,
+        ),
     );
   }
 }
