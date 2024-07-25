@@ -8,7 +8,7 @@ export class Category extends Document {
   @Prop({ required: true, unique: true })
   name: string;
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Category' })
-  patent: string;
+  parent: string;
   @Prop()
   description: string;
 }
