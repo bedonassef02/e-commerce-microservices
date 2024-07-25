@@ -11,11 +11,9 @@ export class ClearCartHandler implements ICommandHandler<ClearCartCommand> {
   async execute(command: ClearCartCommand): Promise<Observable<CartDocument>> {
     return from(this.cartService.findUserCart(command.user)).pipe(
       map((cart: CartDocument) => {
-        if (cart) {
-          cart.products = [];
-          cart.save();
-          return cart;
-        }
+        cart.products = [];
+        cart.save();
+        return cart;
       }),
     );
   }

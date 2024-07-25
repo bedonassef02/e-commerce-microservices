@@ -18,15 +18,12 @@ export class RemoveFromCartHandler
   ): Promise<Observable<CartDocument>> {
     return from(this.cartService.findUserCart(command.cartDto.user)).pipe(
       map((cart: CartDocument) => {
-        if (cart) {
-          const index: number = productIndex(cart, command.cartDto.product);
-          if (index === -1) {
-            notFoundException(Product.name);
-          }
-          cart.products.splice(index, 1);
-          cart.save();
-          return cart;
+        const index: number = productIndex(cart, command.cartDto.product);
+        if (index === -1) {
+          notFoundException(Product.name);
         }
+        cart.products.splice(index, 1);
+        cart.save();
         return cart;
       }),
     );
