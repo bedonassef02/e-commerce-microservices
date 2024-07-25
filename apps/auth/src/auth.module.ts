@@ -15,7 +15,7 @@ import { registerClient } from '@app/common/helpers/register-client.helper';
     ClientsModule.register([registerClient(UserMP)]),
     JwtModule.register({
       secret: 'secret',
-      signOptions: { expiresIn: '60s' },
+      signOptions: { expiresIn: '60d' },
     }),
   ],
   controllers: [AuthController],

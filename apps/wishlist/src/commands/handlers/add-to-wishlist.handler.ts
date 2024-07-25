@@ -12,34 +12,41 @@ import { notFoundException } from '@app/common/utils/exception/not-found.excepti
 import { Product } from '../../../../product/src/entities/product.entity';
 
 @CommandHandler(AddToWishlistCommand)
-export class AddToWishlistHandler implements ICommandHandler<AddToWishlistCommand> {
+export class AddToWishlistHandler
+  implements ICommandHandler<AddToWishlistCommand>
+{
   constructor(
     private readonly wishlistService: WishlistService,
     @Inject(PRODUCT_SERVICE) private productService: ClientProxy,
-  ) {
-  }
+  ) {}
 
   async execute(command: AddToWishlistCommand) {
     return lastValueFrom(
-      this.productService.send(Commands.FIND_BY_ID, command.wishlistDto.product).pipe(
-        map(() => {
-          return this.wishlistService.findByUserId(command.wishlistDto.user).pipe(
-            map((wishlist: WishlistDocument) => {
-              const isExist = wishlist.products.find((p)=> p == command.wishlistDto.product)
-              if(isExist){
-                throw new RpcException({
-                  status: HttpStatus.CONFLICT,
-                  message: 'Product already in wishlist',
-                })
-              }
-              wishlist.products.push(command.wishlistDto.product);
-              wishlist.save();
-              return wishlist;
-            }),
-          );
-        }),
-        throwException,
-      ),
+      this.productService
+        .send(Commands.FIND_BY_ID, command.wishlistDto.product)
+        .pipe(
+          map(() => {
+            return this.wishlistService
+              .findByUserId(command.wishlistDto.user)
+              .pipe(
+                map((wishlist: WishlistDocument) => {
+                  const isExist = wishlist.products.find(
+                    (p) => p == command.wishlistDto.product,
+                  );
+                  if (isExist) {
+                    throw new RpcException({
+                      status: HttpStatus.CONFLICT,
+                      message: 'Product already in wishlist',
+                    });
+                  }
+                  wishlist.products.push(command.wishlistDto.product);
+                  wishlist.save();
+                  return wishlist;
+                }),
+              );
+          }),
+          throwException,
+        ),
     );
   }
 }
