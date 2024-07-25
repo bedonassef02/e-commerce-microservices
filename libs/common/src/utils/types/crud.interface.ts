@@ -5,7 +5,6 @@ const ItemCommands = {
   FIND_BY_USER: { cmd: 'findByUser' },
 };
 
-
 export const Commands = {
   FIND_ALL: { cmd: 'findAll' },
   FIND_BY_ID: { cmd: 'findById' },

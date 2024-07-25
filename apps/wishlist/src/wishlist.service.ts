@@ -10,18 +10,21 @@ export class WishlistService {
   constructor(
     @InjectModel(Wishlist.name) private readonly wishlistModel: Model<Wishlist>,
   ) {}
-  create(user: string):Observable<Wishlist> {
+  create(user: string): Observable<Wishlist> {
     return from(this.wishlistModel.create({ user }));
   }
 
-  findByUserId(user:string):Observable<WishlistDocument>{
-    return from(this.wishlistModel.findOne({user}));
+  findByUserId(user: string): Observable<WishlistDocument> {
+    return from(this.wishlistModel.findOne({ user }));
   }
 
-  update(wishlist: WishlistDocument, product: string): Observable<WishlistDocument> {
+  update(
+    wishlist: WishlistDocument,
+    product: string,
+  ): Observable<WishlistDocument> {
     wishlist.products.push(product);
     return from(wishlist.save()).pipe(
-      map((updatedWishlist: WishlistDocument) => updatedWishlist)
+      map((updatedWishlist: WishlistDocument) => updatedWishlist),
     );
   }
 }

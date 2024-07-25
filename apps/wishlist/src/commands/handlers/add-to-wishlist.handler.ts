@@ -10,9 +10,13 @@ import { throwException } from '@app/common/utils/exception/throw-excpetion';
 import { WishlistDocument } from '../../entities/wishlist.entity';
 
 @CommandHandler(AddToWishlistCommand)
-export class AddToWishlistHandler implements ICommandHandler<AddToWishlistCommand> {
-  constructor(private readonly wishlistService: WishlistService,
-  @Inject(PRODUCT_SERVICE) private productService: ClientProxy) {}
+export class AddToWishlistHandler
+  implements ICommandHandler<AddToWishlistCommand>
+{
+  constructor(
+    private readonly wishlistService: WishlistService,
+    @Inject(PRODUCT_SERVICE) private productService: ClientProxy,
+  ) {}
 
   async execute(command: AddToWishlistCommand) {
     return lastValueFrom(
@@ -20,15 +24,22 @@ export class AddToWishlistHandler implements ICommandHandler<AddToWishlistComman
         .send(Commands.FIND_BY_ID, command.wishlistDto.product)
         .pipe(
           switchMap(() => {
-            return this.wishlistService.findByUserId(command.wishlistDto.user).pipe(
-              map((wishlist: WishlistDocument) => {
-                const isExist = wishlist.products.find((p)=> p == command.wishlistDto.product)
-                if(isExist){
-                  return wishlist;
-                }
-                return this.wishlistService.update(wishlist, command.wishlistDto.product)
-              }),
-            );
+            return this.wishlistService
+              .findByUserId(command.wishlistDto.user)
+              .pipe(
+                map((wishlist: WishlistDocument) => {
+                  const isExist = wishlist.products.find(
+                    (p) => p == command.wishlistDto.product,
+                  );
+                  if (isExist) {
+                    return wishlist;
+                  }
+                  return this.wishlistService.update(
+                    wishlist,
+                    command.wishlistDto.product,
+                  );
+                }),
+              );
           }),
           throwException,
         ),

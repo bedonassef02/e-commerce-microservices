@@ -6,16 +6,18 @@ import { ClearWishlistCommand } from '../impl/clear-wishlist.command';
 import { WishlistDocument } from '../../entities/wishlist.entity';
 
 @CommandHandler(ClearWishlistCommand)
-export class ClearWishlistHandler implements ICommandHandler<ClearWishlistCommand> {
+export class ClearWishlistHandler
+  implements ICommandHandler<ClearWishlistCommand>
+{
   constructor(private readonly wishlistService: WishlistService) {}
 
   async execute(command: ClearWishlistCommand) {
     return from(this.wishlistService.findByUserId(command.user)).pipe(
-      map((wishlist:WishlistDocument)=>{
+      map((wishlist: WishlistDocument) => {
         wishlist.products = [];
         wishlist.save();
         return wishlist;
-      })
+      }),
     );
   }
 }

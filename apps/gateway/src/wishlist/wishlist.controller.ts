@@ -1,7 +1,14 @@
-import { Body, Controller, Delete, Get, Inject, Post, UseGuards, UseInterceptors } from '@nestjs/common';
 import {
-  WISHLIST_SERVICE,
-} from '@app/common/utils/constants/service.constants';
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Inject,
+  Post,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
+import { WISHLIST_SERVICE } from '@app/common/utils/constants/service.constants';
 import { ClientProxy } from '@nestjs/microservices';
 import { Commands } from '@app/common/utils/types/crud.interface';
 import { RpcExceptionInterceptor } from '@app/common/utils/exception/rpc-exception.filter';
@@ -21,7 +28,7 @@ export class WishlistController {
   }
 
   @Post()
-  add(@User('id') user: string,@Body() wishlistDto:WishlistDto){
+  add(@User('id') user: string, @Body() wishlistDto: WishlistDto) {
     wishlistDto.user = user;
     return this.wishlistService.send(Commands.Wishlist.ADD, wishlistDto);
   }

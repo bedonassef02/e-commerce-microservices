@@ -13,21 +13,27 @@ import { notFoundException } from '@app/common/utils/exception/not-found.excepti
 import { Product } from '../../../../product/src/entities/product.entity';
 
 @CommandHandler(RemoveFromWishlistCommand)
-export class RemoveFromWishlistHandler implements ICommandHandler<RemoveFromWishlistCommand> {
-  constructor(private readonly wishlistService: WishlistService,
-  @Inject(PRODUCT_SERVICE) private productService: ClientProxy) {}
+export class RemoveFromWishlistHandler
+  implements ICommandHandler<RemoveFromWishlistCommand>
+{
+  constructor(
+    private readonly wishlistService: WishlistService,
+    @Inject(PRODUCT_SERVICE) private productService: ClientProxy,
+  ) {}
 
   async execute(command: RemoveFromWishlistCommand) {
     return this.wishlistService.findByUserId(command.wishlistDto.user).pipe(
-      map((wishlist: WishlistDocument)=>{
-        const index = wishlist.products.findIndex(p => p == command.wishlistDto.product);
+      map((wishlist: WishlistDocument) => {
+        const index = wishlist.products.findIndex(
+          (p) => p == command.wishlistDto.product,
+        );
         if (index === -1) {
           notFoundException(Product.name);
         }
         wishlist.products.splice(index, 1);
         wishlist.save();
         return wishlist;
-      })
-    )
+      }),
+    );
   }
 }

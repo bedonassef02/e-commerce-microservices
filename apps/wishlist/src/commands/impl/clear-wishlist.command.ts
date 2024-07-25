@@ -1,3 +1,3 @@
-export class  ClearWishlistCommand{
+export class ClearWishlistCommand {
   constructor(public readonly user: string) {}
 }
