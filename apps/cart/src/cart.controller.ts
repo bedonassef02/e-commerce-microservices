@@ -4,7 +4,7 @@ import { Commands } from '@app/common/utils/types/crud.interface';
 import { CartDto } from '@app/common/dto/cart/cart.dto';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { AddToCartCommand } from './commands/impl/add-to-cart.command';
-import { GetUserCartQuery } from './queries/impl/get-user-cart.query';
+import { GetCartQuery } from './queries/impl/get-cart.query';
 import { ClearCartCommand } from './commands/impl/clear-cart.command';
 import { RemoveFromCartCommand } from './commands/impl/remove-from-cart.command';
 import { CreateCartCommand } from './commands/impl/create-cart.command';
@@ -26,6 +26,8 @@ export class CartController {
     return this.commandBus.execute(new ClearCartCommand(user));
   }
 
+  // TODO: update quantity
+
   @MessagePattern(Commands.Cart.REMOVE)
   remove(cartDto: CartDto) {
     return this.commandBus.execute(new RemoveFromCartCommand(cartDto));
@@ -34,7 +36,7 @@ export class CartController {
   @MessagePattern(Commands.Cart.FIND_BY_USER)
   findOne(user: string) {
     console.log({ user });
-    return this.queryBus.execute(new GetUserCartQuery(user));
+    return this.queryBus.execute(new GetCartQuery(user));
   }
 
   @MessagePattern(Commands.CREATE)

@@ -7,6 +7,8 @@ import { Wishlist, WishlistSchema } from './entities/wishlist.entity';
 import { CqrsModule } from '@nestjs/cqrs';
 import { ClientsModule } from '@nestjs/microservices';
 import { registerClient } from '@app/common/helpers/register-client.helper';
+import { wishlistQueries } from './queries';
+import { wishlistHandlers } from './commands';
 
 @Module({
   imports: [
@@ -18,6 +20,6 @@ import { registerClient } from '@app/common/helpers/register-client.helper';
     ]),
   ],
   controllers: [WishlistController],
-  providers: [WishlistService],
+  providers: [WishlistService, ...wishlistQueries, ...wishlistHandlers],
 })
 export class WishlistModule {}

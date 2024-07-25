@@ -6,13 +6,11 @@ import { map, Observable } from 'rxjs';
 import { RegisterDto } from '@app/common/dto/auth/register.dto';
 import { User } from '../../user/src/entities/user.entity';
 import { compare } from '@app/common/helpers/password.helper';
-import { TokenService } from '@app/common/services/token.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     @Inject(USER_SERVICE) private readonly userService: ClientProxy,
-    private readonly tokenService: TokenService,
   ) {}
 
   login(loginDto: LoginDto): Observable<User> {

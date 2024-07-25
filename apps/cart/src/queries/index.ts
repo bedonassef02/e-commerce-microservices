@@ -1,3 +1,3 @@
-import { GetUserCartHandler } from './handlers/get-user-cart.handler';
+import { GetCartHandler } from './handlers/get-cart.handler';
 
-export const cartQueries = [GetUserCartHandler];
+export const cartQueries = [GetCartHandler];

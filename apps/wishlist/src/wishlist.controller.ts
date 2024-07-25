@@ -1,14 +1,44 @@
 import { Controller } from '@nestjs/common';
-import { WishlistService } from './wishlist.service';
 import { MessagePattern } from '@nestjs/microservices';
 import { Commands } from '@app/common/utils/types/crud.interface';
+import { CartDto } from '@app/common/dto/cart/cart.dto';
+import { CommandBus, QueryBus } from '@nestjs/cqrs';
+import { AddToWishlistCommand } from './commands/impl/add-to-wishlist.command';
+import { GetWishlistQuery } from './queries/impl/get-wishlist.query';
+import { CreateWishlistCommand } from './commands/impl/create-wishlist.command';
+import { ClearWishlistCommand } from './commands/impl/clear-wishlist.command';
+import { RemoveFromWishlistCommand } from './commands/impl/remove-from-wishlist.command';
+import { WishlistDto } from '@app/common/dto/wishlist/wishlist.dto';
 
 @Controller()
 export class WishlistController {
-  constructor(private readonly wishlistService: WishlistService) {}
+  constructor(
+    private readonly commandBus: CommandBus,
+    private readonly queryBus: QueryBus,
+  ) {}
+
+  @MessagePattern(Commands.Wishlist.ADD)
+  add(wishlistDto: WishlistDto) {
+    return this.commandBus.execute(new AddToWishlistCommand(wishlistDto));
+  }
+
+  @MessagePattern(Commands.Wishlist.CLEAR)
+  clear(user: string) {
+    return this.commandBus.execute(new ClearWishlistCommand(user));
+  }
+
+  @MessagePattern(Commands.Wishlist.REMOVE)
+  remove(wishlistDto: WishlistDto) {
+    return this.commandBus.execute(new RemoveFromWishlistCommand(wishlistDto));
+  }
+
+  @MessagePattern(Commands.Wishlist.FIND_BY_USER)
+  findOne(user: string) {
+    return this.queryBus.execute(new GetWishlistQuery(user));
+  }
 
   @MessagePattern(Commands.CREATE)
   create(user: string) {
-    return this.wishlistService.create(user);
+    return this.commandBus.execute(new CreateWishlistCommand(user));
   }
 }
