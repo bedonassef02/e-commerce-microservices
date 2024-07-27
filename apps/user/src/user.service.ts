@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from './entities/user.entity';
 import { Model } from 'mongoose';
-import { from, Observable } from 'rxjs';
+import { from, map, Observable } from 'rxjs';
 import { CreateUserDto } from '@app/common/dto/user/create-user.dto';
 import { hash } from '@app/common/helpers/password.helper';
 
@@ -22,6 +22,6 @@ export class UserService {
   }
 
   findByEmail(email: string): Observable<User> {
-    return from(this.userModel.findOne({ email }).exec());
+    return from(this.userModel.findOne({ email }));
   }
 }
