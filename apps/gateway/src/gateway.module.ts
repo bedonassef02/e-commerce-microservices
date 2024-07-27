@@ -14,6 +14,7 @@ import { WishlistModule } from './wishlist/wishlist.module';
     CartModule,
     OrderModule,
     WishlistModule,
+    // TODO: Brand
   ],
 })
 export class GatewayModule {}

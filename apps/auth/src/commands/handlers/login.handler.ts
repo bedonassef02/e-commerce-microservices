@@ -15,7 +15,7 @@ export class LoginHandler implements ICommandHandler<LoginCommand> {
   async execute(command: LoginCommand): Promise<Observable<any>> {
     return this.authService.login(command.loginDto).pipe(
       map((user: UserDocument) => {
-        const token = this.tokenService.generate(user);
+        const token: string = this.tokenService.generate(user);
         return { token };
       }),
     );

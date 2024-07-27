@@ -5,7 +5,9 @@ import { Model } from 'mongoose';
 import { from, Observable } from 'rxjs';
 import { CreateCategoryDto } from '@app/common/dto/category/create-category.dto';
 import { UpdateCategoryDto } from '@app/common/dto/category/update-category.dto';
-
+import { CategoryQuery } from '@app/common/utils/features/category.query';
+import { CategoryFilter } from '@app/common/utils/types/category/category-filter.type';
+import { PaginationResponse } from '@app/common/utils/types/pagination-response.type';
 @Controller()
 export class CategoryService {
   constructor(
@@ -16,8 +18,8 @@ export class CategoryService {
     return from(this.categoryModel.create(createCategoryDto));
   }
 
-  findAll(): Observable<Category[]> {
-    return from(this.categoryModel.find().exec());
+  findAll(query: CategoryQuery) {
+    return from(this.handleQuery(query));
   }
 
   findByName(name: string): Observable<Category | null> {
@@ -41,5 +43,27 @@ export class CategoryService {
 
   remove(id: string): Observable<Category> {
     return from(this.categoryModel.findByIdAndDelete(id));
+  }
+
+  private handleQuery(query: CategoryQuery): Promise<Category[]> {
+    return this.categoryModel
+      .find(this.filter(query))
+      .select(query.fields)
+      .limit(query.limit)
+      .skip(query.skip)
+      .sort(query.sort)
+      .exec();
+  }
+
+  countDocuments(query: CategoryQuery): Observable<number> {
+    return from(this.categoryModel.countDocuments(this.handleQuery(query)));
+  }
+
+  private filter(query: CategoryQuery): CategoryFilter {
+    const filter: CategoryFilter = {};
+    if (query.parent) {
+      filter.parent = query.parent;
+    }
+    return filter;
   }
 }

@@ -9,6 +9,7 @@ import {
   Inject,
   UseInterceptors,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { ParseMongoIdPipe } from '@app/common/pipes/parse-mongo-id.pipe';
 import { CATEGORY_SERVICE } from '@app/common/utils/constants/service.constants';
@@ -19,6 +20,7 @@ import { UpdateCategoryDto } from '@app/common/dto/category/update-category.dto'
 import { RpcExceptionInterceptor } from '@app/common/utils/exception/rpc-exception.filter';
 import { Commands } from '@app/common/utils/types/crud.interface';
 import { AuthGuard } from '@app/common/guards/auth.guard';
+import { CategoryQuery } from '@app/common/utils/features/category.query';
 
 @UseInterceptors(RpcExceptionInterceptor)
 @Controller('category')
@@ -32,8 +34,8 @@ export class CategoryController {
 
   @Get()
   @UseGuards(AuthGuard)
-  async findAll() {
-    return this.categoryService.send(Commands.FIND_ALL, {});
+  async findAll(@Query() query: CategoryQuery) {
+    return this.categoryService.send(Commands.FIND_ALL, query);
   }
 
   @Get(':id')
