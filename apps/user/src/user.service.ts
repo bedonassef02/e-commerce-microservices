@@ -22,6 +22,6 @@ export class UserService {
   }
 
   findByEmail(email: string): Observable<User> {
-    return from(this.userModel.findOne({ email }));
+    return from(this.userModel.findOne({ email }).exec());
   }
 }

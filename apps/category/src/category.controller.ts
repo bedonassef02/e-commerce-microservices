@@ -9,6 +9,7 @@ import { CreateCategoryDto } from '@app/common/dto/category/create-category.dto'
 import { GetCategoriesQuery } from './queries/impl/get-categories.query';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { Commands } from '@app/common/utils/types/crud.interface';
+import { CategoryQuery } from '@app/common/utils/features/category.query';
 
 @Controller()
 export class CategoryController {
@@ -25,8 +26,8 @@ export class CategoryController {
   }
 
   @MessagePattern(Commands.FIND_ALL)
-  async findAll() {
-    return this.queryBus.execute(new GetCategoriesQuery());
+  async findAll(query: CategoryQuery) {
+    return this.queryBus.execute(new GetCategoriesQuery(query));
   }
 
   @MessagePattern(Commands.FIND_BY_ID)
