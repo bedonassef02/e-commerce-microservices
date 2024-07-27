@@ -1,6 +1,7 @@
 import * as bcrypt from 'bcryptjs';
 
 export function compare(password: string, hashedPassword: string) {
+  console.log({password, hashedPassword});
   return bcrypt.compareSync(password, hashedPassword);
 }
 

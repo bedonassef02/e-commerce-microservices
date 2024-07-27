@@ -1,11 +1,11 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { GetCategoriesQuery } from '../impl/get-categories.query';
 import { CategoryService } from '../../category.service';
-import { CategoryQuery } from '@app/common/utils/features/category.query';
 import { CategoryFilter } from '@app/common/utils/types/category/category-filter.type';
 import { PaginationResponse } from '@app/common/utils/types/pagination-response.type';
 import { Category } from '../../entities/category.entity';
 import { map, switchMap } from 'rxjs';
+import { CategoryQuery } from '@app/common/utils/features/category.query';
 
 @QueryHandler(GetCategoriesQuery)
 export class GetCategoriesHandler implements IQueryHandler<GetCategoriesQuery> {
