@@ -6,6 +6,9 @@ import { UpdateCategoryCommand } from '../impl/update-category.command';
 import { CategoryService } from '../../category.service';
 import { RpcException } from '@nestjs/microservices';
 import { notFoundException } from '@app/common/utils/exception/not-found.exception';
+import { RpcNotFoundException } from '@app/common/exceptions/rpc-not-found-exception';
+import { RpcConflictException } from '@app/common/exceptions/rpc-conflict-exception';
+import { RpcBadRequestException } from '@app/common/exceptions/rpc-bad-request-exception';
 
 @CommandHandler(UpdateCategoryCommand)
 export class UpdateCategoryHandler
@@ -19,10 +22,7 @@ export class UpdateCategoryHandler
     const category$ = from(this.categoryService.findByName(name)).pipe(
       mergeMap((existingCategory: Category | undefined) => {
         if (existingCategory && existingCategory.id.toString() !== command.id) {
-          throw new RpcException({
-            status: HttpStatus.CONFLICT,
-            error: 'Category name already exists',
-          });
+          throw new RpcConflictException('Category name');
         }
 
         if (parent) {
@@ -32,10 +32,9 @@ export class UpdateCategoryHandler
                 notFoundException('Parent category');
               }
               if (parentCategory.id === command.id) {
-                throw new RpcException({
-                  status: HttpStatus.CONFLICT,
-                  error: 'Cannot set a category as its own parent',
-                });
+                throw new RpcBadRequestException(
+                  'Cannot set a category as its own parent',
+                );
               }
               return this.updateCategory(command.id, command.updateCategoryDto);
             }),
@@ -46,7 +45,7 @@ export class UpdateCategoryHandler
       }),
       map((category: Category) => {
         if (!category) {
-          notFoundException('Category ID');
+          throw new RpcNotFoundException(Category.name);
         }
         return category;
       }),

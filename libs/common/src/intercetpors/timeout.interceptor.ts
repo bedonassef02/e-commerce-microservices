@@ -18,8 +18,7 @@ export class TimeoutInterceptor implements NestInterceptor {
       catchError((err) => {
         if (err instanceof TimeoutError) {
           const service = context.getClass().name.replace('Controller', '');
-          const handlerName = context.getHandler().name;
-          const message = `Request to ${service} timed out after 5 seconds. The service might be experiencing issues or could be down. Please check the service status and try again.`;
+          const message = `Request to ${service} timed out after 5 seconds.`;
           this.logger.error(message);
           return throwError(() => new RequestTimeoutException(message));
         }
