@@ -5,6 +5,7 @@ import { RemoveCategoryCommand } from '../impl/remove-category.command';
 import { HttpStatus } from '@nestjs/common';
 import { CategoryService } from '../../category.service';
 import { RpcException } from '@nestjs/microservices';
+import { RpcNotFoundException } from '@app/common/exceptions/rpc-not-found-exception';
 
 @CommandHandler(RemoveCategoryCommand)
 export class RemoveCategoryHandler
@@ -16,10 +17,7 @@ export class RemoveCategoryHandler
     const category$ = from(this.categoryService.remove(command.id)).pipe(
       map((category: Category) => {
         if (!category) {
-          throw new RpcException({
-            status: HttpStatus.NOT_FOUND,
-            error: 'Category not found',
-          });
+          throw new RpcNotFoundException(Category.name);
         }
         return category;
       }),

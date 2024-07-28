@@ -16,6 +16,7 @@
       "entryFile": "main",
       "sourceRoot": "apps/category/src",
       "compilerOptions": {
+        "builder":"swc" ,
         "tsConfigPath": "apps/category/tsconfig.app.json"
       }
     },
@@ -25,6 +26,7 @@
       "entryFile": "main",
       "sourceRoot": "apps/gateway/src",
       "compilerOptions": {
+        "builder":"swc" ,
         "tsConfigPath": "apps/gateway/tsconfig.app.json"
       }
     },
@@ -34,6 +36,7 @@
       "entryFile": "index",
       "sourceRoot": "libs/common/src",
       "compilerOptions": {
+        "builder":"swc" ,
         "tsConfigPath": "libs/common/tsconfig.lib.json"
       }
     },
@@ -43,6 +46,7 @@
       "entryFile": "main",
       "sourceRoot": "apps/product/src",
       "compilerOptions": {
+        "builder":"swc" ,
         "tsConfigPath": "apps/product/tsconfig.app.json"
       }
     },
@@ -52,6 +56,7 @@
       "entryFile": "main",
       "sourceRoot": "apps/user/src",
       "compilerOptions": {
+        "builder":"swc" ,
         "tsConfigPath": "apps/user/tsconfig.app.json"
       }
     },
@@ -61,6 +66,7 @@
       "entryFile": "main",
       "sourceRoot": "apps/auth/src",
       "compilerOptions": {
+        "builder":"swc" ,
         "tsConfigPath": "apps/auth/tsconfig.app.json"
       }
     },
@@ -70,6 +76,7 @@
       "entryFile": "main",
       "sourceRoot": "apps/order/src",
       "compilerOptions": {
+        "builder":"swc" ,
         "tsConfigPath": "apps/order/tsconfig.app.json"
       }
     },
@@ -79,6 +86,7 @@
       "entryFile": "main",
       "sourceRoot": "apps/cart/src",
       "compilerOptions": {
+        "builder":"swc" ,
         "tsConfigPath": "apps/cart/tsconfig.app.json"
       }
     },
@@ -88,6 +96,7 @@
       "entryFile": "main",
       "sourceRoot": "apps/wishlist/src",
       "compilerOptions": {
+        "builder":"swc" ,
         "tsConfigPath": "apps/wishlist/tsconfig.app.json"
       }
     }

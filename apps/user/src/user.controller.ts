@@ -26,7 +26,7 @@ export class UserController {
   }
 
   @MessagePattern({ cmd: 'findByEmail' })
-  findByEmail(email: string){
+  findByEmail(email: string) {
     return this.queryBus.execute(new GetUserByEmailCommand(email));
   }
 }

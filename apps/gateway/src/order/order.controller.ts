@@ -13,6 +13,7 @@ import { ClientProxy } from '@nestjs/microservices';
 import { Commands } from '@app/common/utils/types/crud.interface';
 import { User } from '@app/common/decorators/user.decorator';
 import { FindOrderDto } from '@app/common/dto/order/find-order.dto';
+import { ParseMongoIdPipe } from '@app/common/pipes/parse-mongo-id.pipe';
 
 @UseInterceptors(RpcExceptionInterceptor)
 @UseGuards(AuthGuard)
@@ -26,7 +27,10 @@ export class OrderController {
   }
 
   @Get(':id')
-  findById(@User('id') user: string, @Param('id') order: string) {
+  findById(
+    @User('id') user: string,
+    @Param('id', ParseMongoIdPipe) order: string,
+  ) {
     const orderDto: FindOrderDto = { order, user };
     return this.orderService.send(Commands.FIND_BY_ID, orderDto);
   }

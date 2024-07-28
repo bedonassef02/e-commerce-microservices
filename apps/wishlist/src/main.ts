@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { RMQ_URL } from '@app/common/utils/constants/constants';
-import { LoggingInterceptor } from '@app/common/middlewares/logging.interceptor';
+import { LoggingInterceptor } from '@app/common/intercetpors/logging.interceptor';
 import { WishlistModule } from './wishlist.module';
 import { WISHLIST_QUEUE } from '@app/common/utils/constants/queue.constants';
 

@@ -6,6 +6,8 @@ import { HttpStatus } from '@nestjs/common';
 import { CategoryService } from '../../category.service';
 import { RpcException } from '@nestjs/microservices';
 import { notFoundException } from '@app/common/utils/exception/not-found.exception';
+import { RpcNotFoundException } from '@app/common/exceptions/rpc-not-found-exception';
+import { RpcConflictException } from '@app/common/exceptions/rpc-conflict-exception';
 
 @CommandHandler(CreateCategoryCommand)
 export class CreateCategoryHandler
@@ -19,17 +21,14 @@ export class CreateCategoryHandler
     const category$ = from(this.categoryService.findByName(name)).pipe(
       mergeMap((existingCategory: Category | undefined) => {
         if (existingCategory) {
-          throw new RpcException({
-            status: HttpStatus.CONFLICT,
-            error: 'Category name already exists',
-          });
+          throw new RpcConflictException('Category name');
         }
 
         if (parent) {
           return from(this.categoryService.findById(parent)).pipe(
             mergeMap((parentCategory: Category | undefined) => {
               if (!parentCategory) {
-                notFoundException('Parent category');
+                throw new RpcNotFoundException('Parent Category');
               }
               return from(
                 this.categoryService.create(command.createCategoryDto),

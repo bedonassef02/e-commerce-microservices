@@ -10,7 +10,7 @@ export class GetUserByEmailHandler
 {
   constructor(private readonly userService: UserService) {}
 
-  async execute(query: GetUserByEmailCommand){
+  async execute(query: GetUserByEmailCommand) {
     return from(this.userService.findByEmail(query.email));
   }
 }

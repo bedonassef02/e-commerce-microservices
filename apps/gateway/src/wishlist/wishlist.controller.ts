@@ -15,7 +15,6 @@ import { RpcExceptionInterceptor } from '@app/common/utils/exception/rpc-excepti
 import { AuthGuard } from '@app/common/guards/auth.guard';
 import { User } from '@app/common/decorators/user.decorator';
 import { WishlistDto } from '@app/common/dto/wishlist/wishlist.dto';
-import { CartDto } from '@app/common/dto/cart/cart.dto';
 
 @UseInterceptors(RpcExceptionInterceptor)
 @UseGuards(AuthGuard)

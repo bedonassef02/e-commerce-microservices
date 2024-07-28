@@ -2,7 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { ProductModule } from './product.module';
 import { RMQ_URL } from '@app/common/utils/constants/constants';
-import { LoggingInterceptor } from '@app/common/middlewares/logging.interceptor';
+import { LoggingInterceptor } from '@app/common/intercetpors/logging.interceptor';
 import { PRODUCT_QUEUE } from '@app/common/utils/constants/queue.constants';
 
 async function bootstrap() {

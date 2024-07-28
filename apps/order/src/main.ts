@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { ORDER_QUEUE, RMQ_URL } from '@app/common/utils/constants/constants';
-import { LoggingInterceptor } from '@app/common/middlewares/logging.interceptor';
+import { LoggingInterceptor } from '@app/common/intercetpors/logging.interceptor';
 import { OrderModule } from './order.module';
 
 async function bootstrap() {
