@@ -8,8 +8,8 @@ const ItemCommands = {
 const Auth = {
   FIND_BY_EMAIL: { cmd: 'findByEmail' },
   LOGIN: { cmd: 'login' },
-  REGISTER: { cmd:'register' },
-}
+  REGISTER: { cmd: 'register' },
+};
 export const Commands = {
   FIND_ALL: { cmd: 'findAll' },
   FIND_BY_ID: { cmd: 'findById' },

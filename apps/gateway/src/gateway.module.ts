@@ -5,6 +5,8 @@ import { AuthModule } from './auth/auth.module';
 import { CartModule } from './cart/cart.module';
 import { OrderModule } from './order/order.module';
 import { WishlistModule } from './wishlist/wishlist.module';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { TimeoutInterceptor } from '@app/common/intercetpors/timeout.interceptor';
 
 @Module({
   imports: [
@@ -15,6 +17,12 @@ import { WishlistModule } from './wishlist/wishlist.module';
     OrderModule,
     WishlistModule,
     // TODO: Brand
+  ],
+  providers: [
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: TimeoutInterceptor,
+    },
   ],
 })
 export class GatewayModule {}
