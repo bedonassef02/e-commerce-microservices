@@ -27,7 +27,10 @@
       "sourceRoot": "apps/gateway/src",
       "compilerOptions": {
         "builder": "swc",
-        "tsConfigPath": "apps/gateway/tsconfig.app.json"
+        "tsConfigPath": "apps/gateway/tsconfig.app.json",
+        "assets": [
+          { "include": "i18n/**/*", "watchAssets": true }
+        ]
       }
     },
     "common": {

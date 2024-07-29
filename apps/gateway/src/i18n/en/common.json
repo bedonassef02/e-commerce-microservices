@@ -1,0 +1,13 @@
+{
+  "services":{
+    "Auth": "Auth",
+    "Cart": "Cart",
+    "Category": "Category",
+    "Coupon": "Coupon",
+    "Product": "Product",
+    "Order": "Order",
+    "User": "User",
+    "Wishlist": "Wishlist"
+  },
+  "timeout-exception": "Request to {service} timed out after 5 seconds."
+}

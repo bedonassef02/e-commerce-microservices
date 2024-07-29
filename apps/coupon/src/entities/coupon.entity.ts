@@ -1,26 +1,23 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { HydratedDocument } from 'mongoose';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-export type CouponDocument = HydratedDocument<Coupon>;
-
-@Schema({ timestamps: true })
+@Entity()
 export class Coupon {
-  @Prop({ unique: true })
+  @PrimaryGeneratedColumn()
+  id: number;
+  @Column({ unique: true })
   code: string;
-  @Prop()
+  @Column()
   discount: number;
-  @Prop()
+  @Column()
   minPurchaseAmount: number;
-  @Prop({ default: 0 })
+  @Column({ default: 0 })
   usageCount: number;
-  @Prop()
+  @Column()
   usageLimitPerCustomer: number;
-  @Prop({ default: 100 })
+  @Column({ default: 100 })
   usageLimit: number;
-  @Prop({ default: true })
+  @Column({ default: true })
   isActive: boolean;
-  @Prop()
+  @Column()
   expirationDate: Date;
 }
-
-export const CouponSchema = SchemaFactory.createForClass(Coupon);

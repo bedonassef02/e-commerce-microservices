@@ -1,0 +1,13 @@
+{
+  "services": {
+    "Auth": "التوثيق",
+    "Cart": "عربة التسوق",
+    "Category": "الفئة",
+    "Coupon": "القسيمة",
+    "Product": "المنتج",
+    "Order": "الطلب",
+    "User": "المستخدم",
+    "Wishlist": "قائمة الرغبات"
+  },
+  "timeout-exception": "انتهت مهلة الطلب إلى {service} بعد 5 ثوانٍ."
+}

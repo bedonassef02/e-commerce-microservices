@@ -2,7 +2,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { DynamicModule } from '@nestjs/common';
 
-export function registerJwt(): DynamicModule{
+export function registerJwt(): DynamicModule {
   return JwtModule.registerAsync({
     imports: [ConfigModule],
     inject: [ConfigService],
@@ -10,5 +10,5 @@ export function registerJwt(): DynamicModule{
       secret: configService.get<string>('JWT_SECRET'),
       signOptions: { expiresIn: '30d' },
     }),
-  })
+  });
 }

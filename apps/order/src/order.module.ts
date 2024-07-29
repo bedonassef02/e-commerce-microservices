@@ -6,11 +6,13 @@ import { CommonModule } from '@app/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Order, OrderSchema } from './entities/order.entity';
 import { orderQueries } from './queries';
+import { connectToMongo } from '@app/common/utils/modules/connect-to-mongo.helper';
 
 @Module({
   imports: [
     CqrsModule,
     CommonModule,
+    connectToMongo(Order.name),
     MongooseModule.forFeature([
       {
         name: Order.name,

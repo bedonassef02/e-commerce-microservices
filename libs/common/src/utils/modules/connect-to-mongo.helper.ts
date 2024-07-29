@@ -10,5 +10,5 @@ export function connectToMongo(name: string): DynamicModule {
     useFactory: (configService: ConfigService) => ({
       uri: `${configService.get<string>(DATABASE_URI)}/${name}`,
     }),
-  })
+  });
 }

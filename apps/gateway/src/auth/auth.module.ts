@@ -7,10 +7,13 @@ import { PassportModule } from '@nestjs/passport';
 import { CommonModule } from '@app/common';
 import { AUTH_SERVICE } from '@app/common/utils/constants/service.constants';
 import { AUTH_QUEUE } from '@app/common/utils/constants/queue.constants';
+import { registerI18n } from '@app/common/utils/modules/register-i18n.helper';
+import { CustomI18nService } from '../utils/services/custom-i18n.service';
 
 @Module({
   imports: [
     CqrsModule,
+    registerI18n(),
     PassportModule,
     CommonModule,
     ClientsModule.register([
@@ -25,5 +28,6 @@ import { AUTH_QUEUE } from '@app/common/utils/constants/queue.constants';
     ]),
   ],
   controllers: [AuthController],
+  providers: [CustomI18nService],
 })
 export class AuthModule {}

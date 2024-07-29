@@ -4,18 +4,20 @@ import { CouponService } from './coupon.service';
 import { CommonModule, CouponMP } from '@app/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { ClientsModule } from '@nestjs/microservices';
-import { registerClient } from '@app/common/helpers/register-client.helper';
-import { MongooseModule } from '@nestjs/mongoose';
-import { Coupon, CouponSchema } from './entities/coupon.entity';
+import { registerClient } from '@app/common/utils/helpers/register-client.helper';
+import { Coupon } from './entities/coupon.entity';
 import { couponQueries } from './queries';
 import { couponHandlers } from './commands';
+import { connectToMysql } from '@app/common/utils/modules/connect-to-mysql.helper';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
   imports: [
-    CommonModule,
     CqrsModule,
+    CommonModule,
+    connectToMysql(Coupon.name, [Coupon]),
+    TypeOrmModule.forFeature([Coupon]),
     ClientsModule.register([registerClient(CouponMP)]),
-    MongooseModule.forFeature([{ name: Coupon.name, schema: CouponSchema }]),
   ],
   controllers: [CouponController],
   providers: [CouponService, ...couponQueries, ...couponHandlers],

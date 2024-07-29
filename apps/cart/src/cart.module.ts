@@ -8,11 +8,13 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { cartHandlers } from './commands';
 import { cartQueries } from './queries';
 import { ClientsModule } from '@nestjs/microservices';
-import { registerClient } from '@app/common/helpers/register-client.helper';
+import { registerClient } from '@app/common/utils/helpers/register-client.helper';
+import { connectToMongo } from '@app/common/utils/modules/connect-to-mongo.helper';
 
 @Module({
   imports: [
     CommonModule,
+    connectToMongo(Cart.name),
     CqrsModule,
     ClientsModule.register([registerClient(ProductMP)]),
     MongooseModule.forFeature([{ name: Cart.name, schema: CartSchema }]),
