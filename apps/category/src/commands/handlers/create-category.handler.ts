@@ -2,10 +2,7 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { CreateCategoryCommand } from '../impl/create-category.command';
 import { Category } from '../../entities/category.entity';
 import { from, lastValueFrom, mergeMap } from 'rxjs';
-import { HttpStatus } from '@nestjs/common';
 import { CategoryService } from '../../category.service';
-import { RpcException } from '@nestjs/microservices';
-import { notFoundException } from '@app/common/utils/exception/not-found.exception';
 import { RpcNotFoundException } from '@app/common/exceptions/rpc-not-found-exception';
 import { RpcConflictException } from '@app/common/exceptions/rpc-conflict-exception';
 

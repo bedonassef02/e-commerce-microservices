@@ -8,6 +8,7 @@ import { registerClient } from '@app/common/helpers/register-client.helper';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Coupon, CouponSchema } from './entities/coupon.entity';
 import { couponQueries } from './queries';
+import { couponHandlers } from './commands';
 
 @Module({
   imports: [
@@ -17,6 +18,6 @@ import { couponQueries } from './queries';
     MongooseModule.forFeature([{ name: Coupon.name, schema: CouponSchema }]),
   ],
   controllers: [CouponController],
-  providers: [CouponService, ...couponQueries],
+  providers: [CouponService, ...couponQueries, ...couponHandlers],
 })
 export class CouponModule {}
