@@ -5,4 +5,6 @@ export const CART_SERVICE: string = 'CART_SERVICE';
 export const USER_SERVICE: string = 'USER_SERVICE';
 export const AUTH_SERVICE: string = 'AUTH_SERVICE';
 export const ORDER_SERVICE: string = 'ORDER_SERVICE';
+
 export const WISHLIST_SERVICE: string = 'WISHLIST_SERVICE';
+export const COUPON_SERVICE: string = 'COUPON_SERVICE';
