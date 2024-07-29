@@ -3,6 +3,7 @@ import { MessagePatterns } from '@app/common/utils/types/message-pattern.interfa
 import {
   CART_SERVICE,
   CATEGORY_SERVICE,
+  COUPON_SERVICE,
   ORDER_SERVICE,
   PRODUCT_SERVICE,
   USER_SERVICE,
@@ -11,6 +12,7 @@ import {
 import {
   CART_QUEUE,
   CATEGORY_QUEUE,
+  COUPON_QUEUE,
   ORDER_QUEUE,
   PRODUCT_QUEUE,
   USER_QUEUE,
@@ -45,4 +47,9 @@ export const OrderMP: MessagePatterns = {
 export const WishlistMP: MessagePatterns = {
   NAME: WISHLIST_SERVICE,
   QUEUE: WISHLIST_QUEUE,
+};
+
+export const CouponMP: MessagePatterns = {
+  NAME: COUPON_SERVICE,
+  QUEUE: COUPON_QUEUE,
 };
