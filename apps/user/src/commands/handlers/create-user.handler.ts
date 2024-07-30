@@ -1,8 +1,7 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { UserService } from '../../user.service';
 import { CreateUserCommand } from '../impl/create-user.command';
-import { HttpStatus, Logger } from '@nestjs/common';
-import { RpcException } from '@nestjs/microservices';
+import { Logger } from '@nestjs/common';
 import { UserDocument } from '../../entities/user.entity';
 import { firstValueFrom, map } from 'rxjs';
 import { USER_QUEUE } from '@app/common/utils/constants/queue.constants';
