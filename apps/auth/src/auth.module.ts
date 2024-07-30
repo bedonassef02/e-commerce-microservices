@@ -5,7 +5,6 @@ import { ClientsModule } from '@nestjs/microservices';
 import { CqrsModule } from '@nestjs/cqrs';
 import { authHandlers } from './commands';
 import { CommonModule, UserMP } from '@app/common';
-import { JwtModule } from '@nestjs/jwt';
 import { registerClient } from '@app/common/utils/helpers/register-client.helper';
 import { registerJwt } from '@app/common/utils/modules/register-jwt.helper';
 import { TokenService } from '@app/common/services/token.service';

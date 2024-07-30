@@ -1,4 +1,9 @@
-import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import {
+  CanActivate,
+  ExecutionContext,
+  Injectable,
+  Type,
+} from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { Reflector } from '@nestjs/core';
 import {
@@ -15,11 +20,11 @@ export class RoleGuard implements CanActivate {
     return roles.some((role) => role === userRole);
   }
 
-  private isPublic(handler: Function): boolean {
+  private isPublic(handler: any): boolean {
     return this.reflector.get<boolean>(PUBLIC_KEY, handler);
   }
 
-  private getRoles(handler: Function): string[] {
+  private getRoles(handler: any): string[] {
     return this.reflector.get<string[]>(ROLES_KEY, handler);
   }
 

@@ -2,7 +2,10 @@ import { Processor, WorkerHost } from '@nestjs/bullmq';
 import { USER_QUEUE } from '@app/common/utils/constants/queue.constants';
 import { Job } from 'bullmq';
 import { ClientProxy } from '@nestjs/microservices';
-import { CART_SERVICE, WISHLIST_SERVICE } from '@app/common/utils/constants/service.constants';
+import {
+  CART_SERVICE,
+  WISHLIST_SERVICE,
+} from '@app/common/utils/constants/service.constants';
 import { Inject, Logger } from '@nestjs/common';
 import { Commands } from '@app/common/utils/types/crud.interface';
 
@@ -23,8 +26,7 @@ export class UserConsumer extends WorkerHost {
 
   private createWishlist(user: string) {
     this.wishlistService.send(Commands.CREATE, user).subscribe({
-      next: () =>
-        this.logger.log(`Wishlist Created for user: ${user}`),
+      next: () => this.logger.log(`Wishlist Created for user: ${user}`),
       error: (error) =>
         this.logger.error(`Wishlist service error: ${error.message}`),
     });

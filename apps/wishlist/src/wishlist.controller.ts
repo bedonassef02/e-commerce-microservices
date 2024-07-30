@@ -1,7 +1,6 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
 import { Commands } from '@app/common/utils/types/crud.interface';
-import { CartDto } from '@app/common/dto/cart/cart.dto';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { AddToWishlistCommand } from './commands/impl/add-to-wishlist.command';
 import { GetWishlistQuery } from './queries/impl/get-wishlist.query';

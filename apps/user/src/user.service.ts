@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from './entities/user.entity';
 import { Model } from 'mongoose';
-import { from, map, Observable } from 'rxjs';
+import { from, Observable } from 'rxjs';
 import { CreateUserDto } from '@app/common/dto/user/create-user.dto';
 import { hash } from '@app/common/utils/helpers/password.helper';
 

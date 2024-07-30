@@ -8,6 +8,7 @@ import { firstValueFrom, map } from 'rxjs';
 import { USER_QUEUE } from '@app/common/utils/constants/queue.constants';
 import { InjectQueue } from '@nestjs/bullmq';
 import { Queue } from 'bullmq';
+import { RpcConflictException } from '@app/common/exceptions/rpc-conflict-exception';
 
 @CommandHandler(CreateUserCommand)
 export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
@@ -24,10 +25,7 @@ export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
     );
     if (user) {
       this.logger.error(`Email ${command.createUserDto.email} already exists`);
-      throw new RpcException({
-        status: HttpStatus.CONFLICT,
-        message: 'Email already exists',
-      });
+      throw new RpcConflictException('Email');
     }
     return firstValueFrom(
       this.userService.create(command.createUserDto).pipe(

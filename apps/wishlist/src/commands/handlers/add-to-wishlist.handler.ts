@@ -8,8 +8,6 @@ import { lastValueFrom, map } from 'rxjs';
 import { Commands } from '@app/common/utils/types/crud.interface';
 import { WishlistDocument } from '../../entities/wishlist.entity';
 import { throwException } from '@app/common/utils/exception/throw-excpetion';
-import { notFoundException } from '@app/common/utils/exception/not-found.exception';
-import { Product } from '../../../../product/src/entities/product.entity';
 
 @CommandHandler(AddToWishlistCommand)
 export class AddToWishlistHandler

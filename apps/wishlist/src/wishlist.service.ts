@@ -2,8 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Wishlist, WishlistDocument } from './entities/wishlist.entity';
 import { Model } from 'mongoose';
-import { from, map, Observable, of } from 'rxjs';
-import { CartDocument } from '../../cart/src/entites/cart.entity';
+import { from, map, Observable } from 'rxjs';
 
 @Injectable()
 export class WishlistService {
