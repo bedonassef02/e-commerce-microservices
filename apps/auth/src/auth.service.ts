@@ -5,7 +5,7 @@ import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { map, Observable } from 'rxjs';
 import { RegisterDto } from '@app/common/dto/auth/register.dto';
 import { User } from '../../user/src/entities/user.entity';
-import { compare } from '@app/common/helpers/password.helper';
+import { compare } from '@app/common/utils/helpers/password.helper';
 import { Role } from '@app/common/utils/constants/constants';
 
 @Injectable()

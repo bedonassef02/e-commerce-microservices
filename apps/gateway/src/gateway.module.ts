@@ -7,9 +7,15 @@ import { OrderModule } from './order/order.module';
 import { WishlistModule } from './wishlist/wishlist.module';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { TimeoutInterceptor } from '@app/common/intercetpors/timeout.interceptor';
+import { registerJwt } from '@app/common/utils/modules/register-jwt.helper';
+import { registerI18n } from '@app/common/utils/modules/register-i18n.helper';
+import { TokenService } from '@app/common/services/token.service';
+import { CustomI18nService } from './utils/services/custom-i18n.service';
 
 @Module({
   imports: [
+    registerJwt(),
+    registerI18n(),
     CategoryModule,
     ProductModule,
     AuthModule,
@@ -23,6 +29,8 @@ import { TimeoutInterceptor } from '@app/common/intercetpors/timeout.interceptor
       provide: APP_INTERCEPTOR,
       useClass: TimeoutInterceptor,
     },
+    TokenService,
+    CustomI18nService,
   ],
 })
 export class GatewayModule {}

@@ -6,19 +6,18 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { authHandlers } from './commands';
 import { CommonModule, UserMP } from '@app/common';
 import { JwtModule } from '@nestjs/jwt';
-import { registerClient } from '@app/common/helpers/register-client.helper';
+import { registerClient } from '@app/common/utils/helpers/register-client.helper';
+import { registerJwt } from '@app/common/utils/modules/register-jwt.helper';
+import { TokenService } from '@app/common/services/token.service';
 
 @Module({
   imports: [
     CommonModule,
     CqrsModule,
+    registerJwt(),
     ClientsModule.register([registerClient(UserMP)]),
-    JwtModule.register({
-      secret: 'secret',
-      signOptions: { expiresIn: '60d' },
-    }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, ...authHandlers],
+  providers: [AuthService, TokenService, ...authHandlers],
 })
 export class AuthModule {}

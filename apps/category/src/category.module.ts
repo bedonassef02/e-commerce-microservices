@@ -7,10 +7,12 @@ import { CategoryController } from './category.controller';
 import { categoryCommands } from './commands';
 import { categoryQueries } from './queries';
 import { CqrsModule } from '@nestjs/cqrs';
+import { connectToMongo } from '@app/common/utils/modules/connect-to-mongo.helper';
 @Module({
   imports: [
     CqrsModule,
     CommonModule,
+    connectToMongo(Category.name),
     MongooseModule.forFeature([
       { name: Category.name, schema: CategorySchema },
     ]),
