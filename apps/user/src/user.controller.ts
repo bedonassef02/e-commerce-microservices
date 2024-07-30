@@ -5,8 +5,6 @@ import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { CreateUserCommand } from './commands/impl/create-user.command';
 import { GetUserByIdCommand } from './queries/impl/get-user-by-id.command';
 import { GetUserByEmailCommand } from './queries/impl/get-user-by-email.command';
-import { from, Observable } from 'rxjs';
-import { User } from './entities/user.entity';
 
 @Controller()
 export class UserController {

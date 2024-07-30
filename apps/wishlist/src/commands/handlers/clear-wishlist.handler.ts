@@ -1,6 +1,5 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { from, map } from 'rxjs';
-import { CreateWishlistCommand } from '../impl/create-wishlist.command';
 import { WishlistService } from '../../wishlist.service';
 import { ClearWishlistCommand } from '../impl/clear-wishlist.command';
 import { WishlistDocument } from '../../entities/wishlist.entity';

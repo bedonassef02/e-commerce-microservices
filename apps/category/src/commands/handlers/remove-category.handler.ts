@@ -2,9 +2,7 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { Category } from '../../entities/category.entity';
 import { from, lastValueFrom, map } from 'rxjs';
 import { RemoveCategoryCommand } from '../impl/remove-category.command';
-import { HttpStatus } from '@nestjs/common';
 import { CategoryService } from '../../category.service';
-import { RpcException } from '@nestjs/microservices';
 import { RpcNotFoundException } from '@app/common/exceptions/rpc-not-found-exception';
 
 @CommandHandler(RemoveCategoryCommand)

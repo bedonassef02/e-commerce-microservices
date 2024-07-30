@@ -31,6 +31,6 @@ import { UserConsumer } from './utils/user.consumer';
     ]),
   ],
   controllers: [UserController],
-  providers: [UserService, UserConsumer,...userQueries, ...userHandlers],
+  providers: [UserService, UserConsumer, ...userQueries, ...userHandlers],
 })
 export class UserModule {}

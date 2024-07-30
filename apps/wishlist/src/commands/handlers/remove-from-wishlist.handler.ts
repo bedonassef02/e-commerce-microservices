@@ -1,12 +1,9 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { WishlistService } from '../../wishlist.service';
-import { AddToWishlistCommand } from '../impl/add-to-wishlist.command';
 import { Inject } from '@nestjs/common';
 import { PRODUCT_SERVICE } from '@app/common/utils/constants/service.constants';
 import { ClientProxy } from '@nestjs/microservices';
-import { lastValueFrom, map, switchMap } from 'rxjs';
-import { Commands } from '@app/common/utils/types/crud.interface';
-import { throwException } from '@app/common/utils/exception/throw-excpetion';
+import { map } from 'rxjs';
 import { WishlistDocument } from '../../entities/wishlist.entity';
 import { RemoveFromWishlistCommand } from '../impl/remove-from-wishlist.command';
 import { notFoundException } from '@app/common/utils/exception/not-found.exception';
