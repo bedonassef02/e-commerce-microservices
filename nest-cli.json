@@ -180,6 +180,21 @@
         },
         "tsConfigPath": "apps/mail/tsconfig.app.json"
       }
+    },
+    "review": {
+      "type": "application",
+      "root": "apps/review",
+      "entryFile": "main",
+      "sourceRoot": "apps/review/src",
+      "compilerOptions": {
+        "builder": {
+          "type": "swc",
+          "options": {
+            "swcrcPath": "infrastructure/.swcrc"
+          }
+        },
+        "tsConfigPath": "apps/review/tsconfig.app.json"
+      }
     }
   }
 }
