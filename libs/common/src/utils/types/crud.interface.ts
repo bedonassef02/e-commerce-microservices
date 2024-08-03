@@ -23,7 +23,7 @@ export const Commands = {
   UPDATE: { cmd: 'update' },
   DELETE: { cmd: 'delete' },
   Auth,
-  Cart: ItemCommands,
+  Cart: { ...ItemCommands, PRICE: { cmd: 'price' } },
   Wishlist: ItemCommands,
   Coupon,
 };

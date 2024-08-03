@@ -8,6 +8,7 @@ import { GetCartQuery } from './queries/impl/get-cart.query';
 import { ClearCartCommand } from './commands/impl/clear-cart.command';
 import { RemoveFromCartCommand } from './commands/impl/remove-from-cart.command';
 import { CreateCartCommand } from './commands/impl/create-cart.command';
+import { GetCartPriceQuery } from './queries/impl/get-cart-price.query';
 
 @Controller()
 export class CartController {
@@ -41,5 +42,10 @@ export class CartController {
   @MessagePattern(Commands.CREATE)
   create(user: string) {
     return this.commandBus.execute(new CreateCartCommand(user));
+  }
+
+  @MessagePattern(Commands.Cart.PRICE)
+  price(user: string) {
+    return this.queryBus.execute(new GetCartPriceQuery(user));
   }
 }

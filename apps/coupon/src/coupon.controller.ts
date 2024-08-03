@@ -1,5 +1,4 @@
 import { Controller } from '@nestjs/common';
-import { CouponService } from './coupon.service';
 import { MessagePattern } from '@nestjs/microservices';
 import { Commands } from '@app/common/utils/types/crud.interface';
 import { CreateCouponDto } from '@app/common/dto/coupon/create-coupon.dto';

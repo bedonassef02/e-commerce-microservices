@@ -5,6 +5,7 @@ import {
   IsNumber,
   IsOptional,
   IsString,
+  Max,
   Min,
 } from 'class-validator';
 
@@ -13,10 +14,10 @@ export class CreateCouponDto {
   code: string;
   @IsInt()
   @Min(1)
+  @Max(85)
   discount: number;
-  @IsOptional()
   @IsNumber()
-  @Min(1)
+  @Min(100)
   minPurchaseAmount: number;
   @IsOptional()
   @IsNumber()

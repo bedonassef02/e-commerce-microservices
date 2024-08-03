@@ -1,15 +1,14 @@
 import { IQueryHandler, QueryBus, QueryHandler } from '@nestjs/cqrs';
-import { from, lastValueFrom, map, Observable, of } from 'rxjs';
-import { GetCouponQuery } from '../impl/get-coupon.query';
-import { Coupon } from 'apps/coupon/src/entities/coupon.entity';
+import { lastValueFrom } from 'rxjs';
 import { CouponService } from 'apps/coupon/src/coupon.service';
 import { CanUseCouponQuery } from '../impl/can-use-coupon.query';
-import { checkCoupon } from '../../utils/helpers/check-coupon.helper';
 import { Commands } from '@app/common/utils/types/crud.interface';
 import { ClientProxy } from '@nestjs/microservices';
-import { CART_SERVICE } from '@app/common/utils/constants/service.constants';
+import {
+  CART_SERVICE,
+} from '@app/common/utils/constants/service.constants';
 import { Inject } from '@nestjs/common';
-import { Cart } from 'apps/cart/src/entites/cart.entity';
+import { RpcBadRequestException } from '@app/common/exceptions/rpc-bad-request-exception';
 
 @QueryHandler(CanUseCouponQuery)
 export class CanUseCouponHandler implements IQueryHandler<CanUseCouponQuery> {
@@ -20,8 +19,8 @@ export class CanUseCouponHandler implements IQueryHandler<CanUseCouponQuery> {
   ) {}
 
   async execute(query: CanUseCouponQuery) {
-    const cart$ = this.cartService.send<Cart, string>(
-      Commands.Cart.FIND_BY_USER,
+    const cartPrice$ = this.cartService.send(
+      Commands.Cart.PRICE,
       query.couponDto.user,
     );
 
@@ -29,16 +28,13 @@ export class CanUseCouponHandler implements IQueryHandler<CanUseCouponQuery> {
       this.couponService.findOne(query.couponDto.code),
     );
 
-    const cart: Cart = await lastValueFrom(cart$);
+    const price: number = await lastValueFrom(cartPrice$);
 
-    if (checkCoupon(coupon)) {
-      if (cart) {
-        return coupon;
-        console.log({ cart });
-      }
-      return cart;
+    if (coupon.minPurchaseAmount > price) {
+      throw new RpcBadRequestException(
+        `Minimum purchase amount of ${coupon.minPurchaseAmount} required to use this coupon`,
+      );
     }
-
-    throw new Error('Coupon cannot be used');
+    return coupon;
   }
 }

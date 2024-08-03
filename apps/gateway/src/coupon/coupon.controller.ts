@@ -42,7 +42,6 @@ export class CouponController {
   @Get(':code/valid')
   canUse(@User('id') user: string, @Param('code') code: string) {
     const couponDto: UseCoupnDto = { code, user };
-
     return this.couponService.send(Commands.Coupon.CAN_USE, couponDto);
   }
 }

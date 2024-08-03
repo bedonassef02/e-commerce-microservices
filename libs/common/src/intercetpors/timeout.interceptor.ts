@@ -1,10 +1,10 @@
 import {
-  Injectable,
-  NestInterceptor,
-  ExecutionContext,
   CallHandler,
-  RequestTimeoutException,
+  ExecutionContext,
+  Injectable,
   Logger,
+  NestInterceptor,
+  RequestTimeoutException,
 } from '@nestjs/common';
 import { CustomI18nService } from 'apps/gateway/src/utils/services/custom-i18n.service';
 import { Observable, throwError, TimeoutError } from 'rxjs';
@@ -17,6 +17,9 @@ export class TimeoutInterceptor implements NestInterceptor {
   private readonly logger = new Logger(TimeoutInterceptor.name);
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     return next.handle().pipe(
+      catchError((err) => {
+        return throwError(err);
+      }),
       timeout(5000),
       catchError((err) => {
         if (err instanceof TimeoutError) {
@@ -37,10 +40,8 @@ export class TimeoutInterceptor implements NestInterceptor {
     const serviceTranslation = this.i18nService.translate(
       `common.services.${service}`,
     );
-    const messageTranslation = this.i18nService.translate(
-      'common.timeout-exception',
-      { args: { service: serviceTranslation } },
-    );
-    return messageTranslation;
+    return this.i18nService.translate('common.timeout-exception', {
+      args: { service: serviceTranslation },
+    });
   }
 }
