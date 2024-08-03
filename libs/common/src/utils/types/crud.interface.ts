@@ -10,6 +10,12 @@ const Auth = {
   LOGIN: { cmd: 'login' },
   REGISTER: { cmd: 'register' },
 };
+
+const Coupon = {
+  CREATE: { cmd: 'findByEmail' },
+  FIND_ONE: { cmd: 'findOne' },
+  CAN_USE: { cmd: 'canUse' },
+};
 export const Commands = {
   FIND_ALL: { cmd: 'findAll' },
   FIND_BY_ID: { cmd: 'findById' },
@@ -19,4 +25,5 @@ export const Commands = {
   Auth,
   Cart: ItemCommands,
   Wishlist: ItemCommands,
+  Coupon,
 };

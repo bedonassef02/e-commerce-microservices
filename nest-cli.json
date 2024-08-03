@@ -16,7 +16,12 @@
       "entryFile": "main",
       "sourceRoot": "apps/category/src",
       "compilerOptions": {
-        "builder": "swc",
+        "builder": {
+          "type": "swc",
+          "options": {
+            "swcrcPath": "infrastructure/.swcrc"
+          }
+        },
         "tsConfigPath": "apps/category/tsconfig.app.json"
       }
     },
@@ -26,10 +31,18 @@
       "entryFile": "main",
       "sourceRoot": "apps/gateway/src",
       "compilerOptions": {
-        "builder": "swc",
+        "builder": {
+          "type": "swc",
+          "options": {
+            "swcrcPath": "infrastructure/.swcrc"
+          }
+        },
         "tsConfigPath": "apps/gateway/tsconfig.app.json",
         "assets": [
-          { "include": "i18n/**/*", "watchAssets": true }
+          {
+            "include": "i18n/**/*",
+            "watchAssets": true
+          }
         ]
       }
     },
@@ -39,7 +52,12 @@
       "entryFile": "index",
       "sourceRoot": "libs/common/src",
       "compilerOptions": {
-        "builder": "swc",
+        "builder": {
+          "type": "swc",
+          "options": {
+            "swcrcPath": "infrastructure/.swcrc"
+          }
+        },
         "tsConfigPath": "libs/common/tsconfig.lib.json"
       }
     },
@@ -49,7 +67,12 @@
       "entryFile": "main",
       "sourceRoot": "apps/product/src",
       "compilerOptions": {
-        "builder": "swc",
+        "builder": {
+          "type": "swc",
+          "options": {
+            "swcrcPath": "infrastructure/.swcrc"
+          }
+        },
         "tsConfigPath": "apps/product/tsconfig.app.json"
       }
     },
@@ -59,7 +82,12 @@
       "entryFile": "main",
       "sourceRoot": "apps/user/src",
       "compilerOptions": {
-        "builder": "swc",
+        "builder": {
+          "type": "swc",
+          "options": {
+            "swcrcPath": "infrastructure/.swcrc"
+          }
+        },
         "tsConfigPath": "apps/user/tsconfig.app.json"
       }
     },
@@ -69,7 +97,12 @@
       "entryFile": "main",
       "sourceRoot": "apps/auth/src",
       "compilerOptions": {
-        "builder": "swc",
+        "builder": {
+          "type": "swc",
+          "options": {
+            "swcrcPath": "infrastructure/.swcrc"
+          }
+        },
         "tsConfigPath": "apps/auth/tsconfig.app.json"
       }
     },
@@ -79,7 +112,12 @@
       "entryFile": "main",
       "sourceRoot": "apps/order/src",
       "compilerOptions": {
-        "builder": "swc",
+        "builder": {
+          "type": "swc",
+          "options": {
+            "swcrcPath": "infrastructure/.swcrc"
+          }
+        },
         "tsConfigPath": "apps/order/tsconfig.app.json"
       }
     },
@@ -89,7 +127,12 @@
       "entryFile": "main",
       "sourceRoot": "apps/cart/src",
       "compilerOptions": {
-        "builder": "swc",
+        "builder": {
+          "type": "swc",
+          "options": {
+            "swcrcPath": "infrastructure/.swcrc"
+          }
+        },
         "tsConfigPath": "apps/cart/tsconfig.app.json"
       }
     },
@@ -99,7 +142,12 @@
       "entryFile": "main",
       "sourceRoot": "apps/wishlist/src",
       "compilerOptions": {
-        "builder": "swc",
+        "builder": {
+          "type": "swc",
+          "options": {
+            "swcrcPath": "infrastructure/.swcrc"
+          }
+        },
         "tsConfigPath": "apps/wishlist/tsconfig.app.json"
       }
     },
@@ -109,8 +157,28 @@
       "entryFile": "main",
       "sourceRoot": "apps/coupon/src",
       "compilerOptions": {
-        "builder": "swc",
+        "builder": {
+          "type": "swc",
+          "options": {
+            "swcrcPath": "infrastructure/.swcrc"
+          }
+        },
         "tsConfigPath": "apps/coupon/tsconfig.app.json"
+      }
+    },
+    "mail": {
+      "type": "application",
+      "root": "apps/mail",
+      "entryFile": "main",
+      "sourceRoot": "apps/mail/src",
+      "compilerOptions": {
+        "builder": {
+          "type": "swc",
+          "options": {
+            "swcrcPath": "infrastructure/.swcrc"
+          }
+        },
+        "tsConfigPath": "apps/mail/tsconfig.app.json"
       }
     }
   }

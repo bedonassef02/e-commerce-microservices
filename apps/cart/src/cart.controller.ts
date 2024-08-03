@@ -35,7 +35,6 @@ export class CartController {
 
   @MessagePattern(Commands.Cart.FIND_BY_USER)
   findOne(user: string) {
-    console.log({ user });
     return this.queryBus.execute(new GetCartQuery(user));
   }
 

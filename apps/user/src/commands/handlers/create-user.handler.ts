@@ -29,7 +29,8 @@ export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
     return firstValueFrom(
       this.userService.create(command.createUserDto).pipe(
         map((user: UserDocument) => {
-          this.queue.add('user', user.id);
+          const data = { id: user.id, email: user.email };
+          this.queue.add('user', data);
           return user;
         }),
       ),

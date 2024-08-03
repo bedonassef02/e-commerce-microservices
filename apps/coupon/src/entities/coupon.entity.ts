@@ -12,8 +12,6 @@ export class Coupon {
   minPurchaseAmount: number;
   @Column({ default: 0 })
   usageCount: number;
-  @Column()
-  usageLimitPerCustomer: number;
   @Column({ default: 100 })
   usageLimit: number;
   @Column({ default: true })

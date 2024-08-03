@@ -9,7 +9,7 @@ export class TokenService {
   constructor(private jwtService: JwtService) {}
 
   generate(user: UserDocument): string {
-    const payload: Payload = { sub: user.id, role: user.role };
+    const payload: Payload = { sub: user.id || user._id, role: user.role };
     return this.jwtService.sign(payload);
   }
 
