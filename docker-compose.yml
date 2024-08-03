@@ -3,39 +3,38 @@ version: '3.8'
 services:
   rabbitmq:
     image: rabbitmq:3-management
+    container_name: rabbitmq
     ports:
       - "5672:5672"
       - "15672:15672"
-    networks:
-      - mynetwork
 
-  mongodb:
+  redis:
+    image: redis:alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+
+  mongo:
     image: mongo:latest
+    container_name: mongo
     ports:
       - "27017:27017"
     volumes:
-      - mongodb_data:/data/db
-    networks:
-      - mynetwork
+      - mongo-data:/data/db
 
-  mysql:
-    image: mysql:8.0
-    environment:
-      MYSQL_ROOT_PASSWORD: root_password
-      MYSQL_DATABASE: my_database
-      MYSQL_USER: my_user
-      MYSQL_PASSWORD: my_password
+  mysql-coupon:
+    image: mysql:latest
+    container_name: mysql-coupon
     ports:
-      - "3306:3306"
+      - "3307:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=coupon
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root
     volumes:
-      - mysql_data:/var/lib/mysql
-    networks:
-      - mynetwork
-
-networks:
-  mynetwork:
-    driver: bridge
+      - mysql-coupon-data:/var/lib/mysql
 
 volumes:
-  mongodb_data:
-  mysql_data:
+  mongo-data:
+  mysql-coupon-data:
