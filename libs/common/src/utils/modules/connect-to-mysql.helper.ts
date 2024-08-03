@@ -5,8 +5,8 @@ export function connectToMysql(name: string, entities = []) {
   return TypeOrmModule.forRoot({
     type: 'mysql',
     host: 'localhost',
-    port: 3307,
-    username: 'root',
+    port: 3306,
+    username: '',
     password: 'root',
     database: name,
     entities,
