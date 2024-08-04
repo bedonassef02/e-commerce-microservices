@@ -1,7 +1,9 @@
 import {
   Body,
-  Controller, Get,
-  Inject, Param,
+  Controller,
+  Get,
+  Inject,
+  Param,
   Post,
   UseGuards,
   UseInterceptors,
@@ -22,18 +24,17 @@ export class ReviewController {
   @Post()
   createOrUpdate(@User('id') user: string, @Body() reviewDto: ReviewDto) {
     reviewDto.user = user;
-    return this.reviewService.send(Commands.CREATE, reviewDto);
+    return this.reviewService.send(Commands.Review.CREATE_OR_UPDATE, reviewDto);
   }
 
   @Get(':product')
-  findOne(@User('id') user: string, @Param('product')product: string){
-    const reviewDto:ReviewDto = {user, product};
+  findOne(@User('id') user: string, @Param('product') product: string) {
+    const reviewDto: ReviewDto = { user, product };
     return this.reviewService.send(Commands.Review.FIND_ONE, reviewDto);
   }
 
   @Get(':product/all')
-  findAll(@Param('product')product: string){
+  findAll(@Param('product') product: string) {
     return this.reviewService.send(Commands.Review.FIND_ALL, product);
   }
-
 }

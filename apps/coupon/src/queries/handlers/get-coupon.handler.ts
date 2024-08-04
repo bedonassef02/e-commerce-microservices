@@ -3,9 +3,6 @@ import { map, Observable } from 'rxjs';
 import { GetCouponQuery } from '../impl/get-coupon.query';
 import { Coupon } from 'apps/coupon/src/entities/coupon.entity';
 import { CouponService } from 'apps/coupon/src/coupon.service';
-import { RpcException } from '@nestjs/microservices';
-import { HttpStatus } from '@nestjs/common';
-import { RpcConflictException } from '@app/common/exceptions/rpc-conflict-exception';
 import { checkCoupon } from '../../utils/helpers/check-coupon.helper';
 
 @QueryHandler(GetCouponQuery)

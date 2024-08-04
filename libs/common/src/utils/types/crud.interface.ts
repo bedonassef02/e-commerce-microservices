@@ -17,13 +17,13 @@ const Coupon = {
   CAN_USE: { cmd: 'canUse' },
 };
 
-const Cart = { ...ItemCommands, PRICE: { cmd: 'price' } }
+const Cart = { ...ItemCommands, PRICE: { cmd: 'price' } };
 
 const Review = {
-  CREATE: { cmd: 'create' },
+  CREATE_OR_UPDATE: { cmd: 'createOrUpdate' },
   FIND_ONE: { cmd: 'findOne' },
   FIND_ALL: { cmd: 'findAll' },
-}
+};
 export const Commands = {
   FIND_ALL: { cmd: 'findAll' },
   FIND_BY_ID: { cmd: 'findById' },

@@ -30,7 +30,7 @@ export class ReviewService {
     );
   }
 
-  findAll(product: string){
-    return from(this.reviewRepository.findAndCountBy({product}));
+  findAll(product: string) {
+    return from(this.reviewRepository.findAndCountBy({ product }));
   }
 }

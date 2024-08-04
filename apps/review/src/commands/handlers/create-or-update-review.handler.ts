@@ -4,7 +4,7 @@ import { ReviewService } from '../../review.service';
 import { Inject } from '@nestjs/common';
 import { PRODUCT_SERVICE } from '@app/common/utils/constants/service.constants';
 import { ClientProxy } from '@nestjs/microservices';
-import { map, switchMap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import { Review } from '../../entities/review.entity';
 import { from, lastValueFrom } from 'rxjs';
 

@@ -14,7 +14,7 @@ export class ReviewController {
     private readonly queryBus: QueryBus,
   ) {}
 
-  @MessagePattern(Commands.Review.CREATE)
+  @MessagePattern(Commands.Review.CREATE_OR_UPDATE)
   create(reviewDto: ReviewDto) {
     return this.commandBus.execute(new CreateOrUpdateReviewCommand(reviewDto));
   }
@@ -25,7 +25,7 @@ export class ReviewController {
   }
 
   @MessagePattern(Commands.Review.FIND_ALL)
-  findAll(product: string){
+  findAll(product: string) {
     return this.queryBus.execute(new GetReviewsQuery(product));
   }
 }
