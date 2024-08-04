@@ -4,9 +4,7 @@ import { CouponService } from 'apps/coupon/src/coupon.service';
 import { CanUseCouponQuery } from '../impl/can-use-coupon.query';
 import { Commands } from '@app/common/utils/types/crud.interface';
 import { ClientProxy } from '@nestjs/microservices';
-import {
-  CART_SERVICE,
-} from '@app/common/utils/constants/service.constants';
+import { CART_SERVICE } from '@app/common/utils/constants/service.constants';
 import { Inject } from '@nestjs/common';
 import { RpcBadRequestException } from '@app/common/exceptions/rpc-bad-request-exception';
 

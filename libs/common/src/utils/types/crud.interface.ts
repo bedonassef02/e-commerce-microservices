@@ -12,18 +12,27 @@ const Auth = {
 };
 
 const Coupon = {
-  CREATE: { cmd: 'findByEmail' },
+  CREATE: { cmd: 'create' },
   FIND_ONE: { cmd: 'findOne' },
   CAN_USE: { cmd: 'canUse' },
 };
+
+const Cart = { ...ItemCommands, PRICE: { cmd: 'price' } }
+
+const Review = {
+  CREATE: { cmd: 'create' },
+  FIND_ONE: { cmd: 'findOne' },
+  FIND_ALL: { cmd: 'findAll' },
+}
 export const Commands = {
   FIND_ALL: { cmd: 'findAll' },
   FIND_BY_ID: { cmd: 'findById' },
   CREATE: { cmd: 'create' },
   UPDATE: { cmd: 'update' },
   DELETE: { cmd: 'delete' },
-  Auth,
-  Cart: { ...ItemCommands, PRICE: { cmd: 'price' } },
   Wishlist: ItemCommands,
+  Auth,
+  Cart,
   Coupon,
+  Review,
 };

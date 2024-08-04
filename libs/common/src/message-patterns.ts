@@ -9,6 +9,7 @@ import {
   USER_SERVICE,
   WISHLIST_SERVICE,
   MAIL_SERVICE,
+  REVIEW_SERVICE,
 } from '@app/common/utils/constants/service.constants';
 import {
   CART_QUEUE,
@@ -19,6 +20,7 @@ import {
   USER_QUEUE,
   WISHLIST_QUEUE,
   MAIL_QUEUE,
+  REVIEW_QUEUE,
 } from '@app/common/utils/constants/queue.constants';
 
 export const UserMP: MessagePatterns = {
@@ -59,4 +61,9 @@ export const CouponMP: MessagePatterns = {
 export const MailMP: MessagePatterns = {
   NAME: MAIL_SERVICE,
   QUEUE: MAIL_QUEUE,
+};
+
+export const ReviewMP: MessagePatterns = {
+  NAME: REVIEW_SERVICE,
+  QUEUE: REVIEW_QUEUE,
 };

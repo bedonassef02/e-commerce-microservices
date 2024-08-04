@@ -9,3 +9,5 @@ export const ORDER_QUEUE: string = 'order-queue';
 export const CART_QUEUE: string = 'cart-queue';
 export const COUPON_QUEUE: string = 'coupon-queue';
 export const MAIL_QUEUE: string = 'mail-queue';
+
+export const REVIEW_QUEUE: string = 'review-queue';
