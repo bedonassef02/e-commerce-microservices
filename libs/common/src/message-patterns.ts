@@ -1,4 +1,3 @@
-import {} from '@app/common/utils/constants/constants';
 import { MessagePatterns } from '@app/common/utils/types/message-pattern.interface';
 import {
   CART_SERVICE,

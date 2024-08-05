@@ -1,4 +1,5 @@
-FROM node
+# Dockerfile
+FROM node:21-alpine
 
 WORKDIR /usr/src/app
 
@@ -10,5 +11,4 @@ COPY . .
 
 EXPOSE 3000
 
-# CMD will be overridden by docker-compose or command line arguments
 CMD ["npm", "run", "start"]
