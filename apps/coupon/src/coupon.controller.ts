@@ -6,7 +6,7 @@ import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { CreateCouponCommand } from './commands/impl/create-coupon.command';
 import { GetCouponQuery } from './queries/impl/get-coupon.query';
 import { CanUseCouponQuery } from './queries/impl/can-use-coupon.query';
-import { UseCoupnDto } from '@app/common/dto/coupon/use-coupon.dto';
+import { UseCouponDto } from '@app/common/dto/coupon/use-coupon.dto';
 
 @Controller()
 export class CouponController {
@@ -25,7 +25,7 @@ export class CouponController {
   }
 
   @MessagePattern(Commands.Coupon.CAN_USE)
-  canUse(couponDto: UseCoupnDto) {
+  canUse(couponDto: UseCouponDto) {
     return this.queryBus.execute(new CanUseCouponQuery(couponDto));
   }
 }

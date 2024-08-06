@@ -17,7 +17,7 @@ import { Roles } from '@app/common/decorators/role.decorator';
 import { Role } from '@app/common/utils/constants/constants';
 import { AuthGuard } from '@app/common/guards/auth.guard';
 import { CreateCouponDto } from '@app/common/dto/coupon/create-coupon.dto';
-import { UseCoupnDto } from '@app/common/dto/coupon/use-coupon.dto';
+import { UseCouponDto } from '@app/common/dto/coupon/use-coupon.dto';
 import { User } from '@app/common/decorators/user.decorator';
 
 @UseInterceptors(RpcExceptionInterceptor)
@@ -39,7 +39,7 @@ export class CouponController {
   }
   @Get(':code/valid')
   canUse(@User('id') user: string, @Param('code') code: string) {
-    const couponDto: UseCoupnDto = { code, user };
+    const couponDto: UseCouponDto = { code, user };
     return this.couponService.send(Commands.Coupon.CAN_USE, couponDto);
   }
 }

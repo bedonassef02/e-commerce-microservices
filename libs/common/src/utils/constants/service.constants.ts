@@ -10,3 +10,4 @@ export const WISHLIST_SERVICE: string = 'WISHLIST_SERVICE';
 export const COUPON_SERVICE: string = 'COUPON_SERVICE';
 export const MAIL_SERVICE: string = 'MAIL_SERVICE';
 export const REVIEW_SERVICE: string = 'REVIEW_SERVICE';
+export const PAYMENT_SERVICE: string = 'PAYMENT_SERVICE';

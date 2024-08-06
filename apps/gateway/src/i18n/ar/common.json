@@ -7,7 +7,8 @@
     "Product": "المنتج",
     "Order": "الطلب",
     "User": "المستخدم",
-    "Wishlist": "قائمة الرغبات"
+    "Wishlist": "قائمة الرغبات",
+    "Payment": "الدفع"
   },
   "timeout-exception": "انتهت مهلة الطلب إلى {service} بعد 5 ثوانٍ."
 }

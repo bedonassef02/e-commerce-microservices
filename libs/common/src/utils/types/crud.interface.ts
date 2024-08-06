@@ -24,6 +24,11 @@ const Review = {
   FIND_ONE: { cmd: 'findOne' },
   FIND_ALL: { cmd: 'findAll' },
 };
+
+const Payment = {
+  CHECKOUT: { cmd: 'checkout' },
+  SUCCESS: { cmd: 'success' },
+};
 export const Commands = {
   FIND_ALL: { cmd: 'findAll' },
   FIND_BY_ID: { cmd: 'findById' },
@@ -35,4 +40,5 @@ export const Commands = {
   Cart,
   Coupon,
   Review,
+  Payment,
 };

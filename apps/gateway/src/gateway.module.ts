@@ -13,6 +13,7 @@ import { TokenService } from '@app/common/services/token.service';
 import { CustomI18nService } from './utils/services/custom-i18n.service';
 import { CouponModule } from './coupon/coupon.module';
 import { ReviewModule } from './review/review.module';
+import { PaymentModule } from './payment/payment.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { ReviewModule } from './review/review.module';
     WishlistModule,
     CouponModule,
     ReviewModule,
+    PaymentModule,
     // TODO: Brand
   ],
   providers: [

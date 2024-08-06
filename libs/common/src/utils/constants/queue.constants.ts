@@ -11,3 +11,4 @@ export const COUPON_QUEUE: string = 'coupon-queue';
 export const MAIL_QUEUE: string = 'mail-queue';
 
 export const REVIEW_QUEUE: string = 'review-queue';
+export const PAYMENT_QUEUE: string = 'payment-queue';

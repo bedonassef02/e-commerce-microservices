@@ -10,16 +10,17 @@ import { throwException } from '@app/common/utils/exception/throw-excpetion';
 
 @QueryHandler(GetReviewsQuery)
 export class GetReviewsHandler implements IQueryHandler<GetReviewsQuery> {
-  constructor(private readonly reviewService: ReviewService,
-              @Inject(PRODUCT_SERVICE) private productService: ClientProxy) {}
+  constructor(
+    private readonly reviewService: ReviewService,
+    @Inject(PRODUCT_SERVICE) private productService: ClientProxy,
+  ) {}
 
   async execute(query: GetReviewsQuery) {
-    return this.productService
-      .send(Commands.FIND_BY_ID, query.product).pipe(
-        map(()=>{
-          return this.reviewService.findAll(query.product);
-        }),
-        throwException,
-      )
+    return this.productService.send(Commands.FIND_BY_ID, query.product).pipe(
+      map(() => {
+        return this.reviewService.findAll(query.product);
+      }),
+      throwException,
+    );
   }
 }
