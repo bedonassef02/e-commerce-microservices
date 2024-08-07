@@ -5,6 +5,7 @@ import { FindOrderDto } from '@app/common/dto/order/find-order.dto';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { GetOrderQuery } from './queries/impl/get-order.query';
 import { GetOrdersQuery } from './queries/impl/get-orders.query';
+import { CreateOrderDto } from '@app/common/dto/order/create-order.dto';
 
 @Controller()
 export class OrderController {
@@ -13,10 +14,10 @@ export class OrderController {
     private readonly queryBus: QueryBus,
   ) {}
 
-  // @MessagePattern(Commands.CREATE)
-  // create(orderDto: CreateOrderDto): Observable<Order> {
-  //   return this.orderService.create(orderDto);
-  // }
+  @MessagePattern(Commands.CREATE)
+  create(orderDto: CreateOrderDto) {
+    // return this.orderService.create(orderDto);
+  }
 
   @MessagePattern(Commands.FIND_ALL)
   findAll(user: string) {

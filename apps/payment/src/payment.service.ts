@@ -18,11 +18,12 @@ export class PaymentService {
 
   checkout(
     cartProducts: CartProduct[],
+    user: string,
     discount: number = 0,
   ): Observable<string> {
     return this.getLineItems(cartProducts, discount).pipe(
       mergeMap((lineItems) =>
-        this.stripeService.createCheckoutSession(lineItems),
+        this.stripeService.createCheckoutSession(lineItems, user),
       ),
     );
   }

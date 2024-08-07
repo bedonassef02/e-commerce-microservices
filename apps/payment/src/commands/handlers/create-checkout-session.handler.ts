@@ -43,13 +43,14 @@ export class CreateCheckoutSessionHandler
               switchMap((coupon: Coupon) => {
                 return this.paymentService.checkout(
                   cart.products,
+                  user,
                   coupon.discount,
                 );
               }),
             );
         }
 
-        return this.paymentService.checkout(cart.products);
+        return this.paymentService.checkout(cart.products, user);
       }),
       throwException,
     );

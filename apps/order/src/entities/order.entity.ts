@@ -3,6 +3,8 @@ import { Document, HydratedDocument, Types } from 'mongoose';
 import mongoose from 'mongoose';
 import { OrderStatus } from '../utils/order-status';
 import { OrderProduct } from '../utils/order-product';
+import { AddressDto } from '@app/common/dto/order/address.dto';
+import { OrderPayment } from '../utils/order-payment';
 
 export type OrderDocument = HydratedDocument<Order>;
 
@@ -27,7 +29,10 @@ export class Order extends Document {
   status: OrderStatus;
 
   @Prop({ required: true })
-  address: string;
+  address: AddressDto;
+
+  @Prop({ type: String, enum: OrderPayment, required: true })
+  payment: OrderPayment;
 }
 
 export const OrderSchema = SchemaFactory.createForClass(Order);

@@ -20,7 +20,7 @@ export class PaymentController {
   }
 
   @MessagePattern(Commands.Payment.SUCCESS)
-  success(){
-    return "";
+  success(user: string) {
+    return user;
   }
 }

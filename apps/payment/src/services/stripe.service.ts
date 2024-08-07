@@ -19,13 +19,14 @@ export class StripeService {
 
   createCheckoutSession(
     items: Stripe.Checkout.SessionCreateParams.LineItem[],
+    user: string,
   ): Observable<string> {
     return from(
       this.stripe.checkout.sessions.create({
         payment_method_types: ['card'],
         line_items: items,
         mode: 'payment',
-        success_url: this.successUrl,
+        success_url: `${this.successUrl}?user=${user}`,
         cancel_url: this.cancelUrl,
       }),
     ).pipe(map((session: Stripe.Checkout.Session) => session.url));

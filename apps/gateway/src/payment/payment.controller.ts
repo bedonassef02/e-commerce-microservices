@@ -4,6 +4,7 @@ import {
   Get,
   Inject,
   Post,
+  Query,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
@@ -14,6 +15,7 @@ import { ClientProxy } from '@nestjs/microservices';
 import { User } from '@app/common/decorators/user.decorator';
 import { CheckoutDto } from '@app/common/dto/payment/checkout.dto';
 import { Commands } from '@app/common/utils/types/crud.interface';
+import { Public } from '@app/common/decorators/public.decorator';
 @UseInterceptors(RpcExceptionInterceptor)
 @UseGuards(AuthGuard)
 @Controller('payment')
@@ -23,5 +25,11 @@ export class PaymentController {
   checkout(@User('id') user: string, @Body() checkoutDto: CheckoutDto) {
     checkoutDto.user = user;
     return this.paymentService.send(Commands.Payment.CHECKOUT, checkoutDto);
+  }
+
+  @Public()
+  @Get('success')
+  success(@Query('user') user: string) {
+    return this.paymentService.send(Commands.Payment.SUCCESS, user);
   }
 }
