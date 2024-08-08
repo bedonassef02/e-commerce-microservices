@@ -1,8 +1,7 @@
-import { IsOptional, IsString } from 'class-validator';
+import { Product } from '../../../../../apps/product/src/entities/product.entity';
 
 export class CheckoutDto {
   user: string;
-  @IsOptional()
-  @IsString()
-  code: string;
+  discount: number;
+  products: Product[];
 }

@@ -1,18 +1,12 @@
-import {
-  IsArray,
-  IsMongoId,
-  IsOptional,
-  IsString,
-  ValidateNested,
-} from 'class-validator';
+import { IsIn, IsOptional, IsString, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
 import { AddressDto } from '@app/common/dto/order/address.dto';
+import { OrderPayment } from '../../../../../apps/order/src/utils/order-payment';
+import { Product } from '../../../../../apps/product/src/entities/product.entity';
 
 export class CreateOrderDto {
   user: string;
-  @IsArray()
-  @IsMongoId({ each: true })
-  products: string[];
+  products: Product[];
   price?: number;
   status: string;
   @IsOptional()
@@ -23,5 +17,7 @@ export class CreateOrderDto {
   @IsString()
   code: string;
   @IsString()
-  payment: string;
+  @IsIn(Object.values(OrderPayment))
+  payment: OrderPayment;
+  url?: string;
 }

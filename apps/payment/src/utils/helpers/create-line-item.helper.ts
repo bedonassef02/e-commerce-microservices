@@ -5,11 +5,10 @@ import { getDescription } from './get-description.helper';
 
 export function createLineItem(
   product: Product,
-  quantity: number,
   discount: number,
 ): Stripe.Checkout.SessionCreateParams.LineItem {
   return {
-    quantity: quantity,
+    quantity: product.stock,
     price_data: {
       currency: 'usd',
       product_data: {

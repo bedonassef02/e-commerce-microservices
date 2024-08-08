@@ -6,6 +6,7 @@ import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { GetOrderQuery } from './queries/impl/get-order.query';
 import { GetOrdersQuery } from './queries/impl/get-orders.query';
 import { CreateOrderDto } from '@app/common/dto/order/create-order.dto';
+import { CreateOrderCommand } from './commands/impl/create-order.command';
 
 @Controller()
 export class OrderController {
@@ -16,7 +17,7 @@ export class OrderController {
 
   @MessagePattern(Commands.CREATE)
   create(orderDto: CreateOrderDto) {
-    // return this.orderService.create(orderDto);
+    return this.commandBus.execute(new CreateOrderCommand(orderDto));
   }
 
   @MessagePattern(Commands.FIND_ALL)

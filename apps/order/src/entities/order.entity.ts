@@ -5,6 +5,7 @@ import { OrderStatus } from '../utils/order-status';
 import { OrderProduct } from '../utils/order-product';
 import { AddressDto } from '@app/common/dto/order/address.dto';
 import { OrderPayment } from '../utils/order-payment';
+import { Product } from '../../../product/src/entities/product.entity';
 
 export type OrderDocument = HydratedDocument<Order>;
 
@@ -13,19 +14,13 @@ export class Order extends Document {
   @Prop({ type: Types.ObjectId, ref: 'User', required: true })
   user: Types.ObjectId;
 
-  @Prop([
-    {
-      product: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
-      quantity: { type: Number, default: 1 },
-      price: { type: Number, default: 0 },
-    },
-  ])
-  products: OrderProduct[];
+  @Prop()
+  products: Product[];
 
   @Prop({ required: true })
-  totalPrice: number;
+  price: number;
 
-  @Prop({ type: String, enum: OrderStatus, required: true })
+  @Prop({ type: String, enum: OrderStatus, default: OrderStatus.PENDING })
   status: OrderStatus;
 
   @Prop({ required: true })
@@ -33,6 +28,9 @@ export class Order extends Document {
 
   @Prop({ type: String, enum: OrderPayment, required: true })
   payment: OrderPayment;
+
+  @Prop({ type: String })
+  url: string;
 }
 
 export const OrderSchema = SchemaFactory.createForClass(Order);
