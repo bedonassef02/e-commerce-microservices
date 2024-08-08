@@ -1,7 +1,7 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { CreateCheckoutSessionCommand } from '../impl/create-checkout-session.command';
 import { PaymentService } from '../../payment.service';
-import { from, map, mergeMap, Observable, of, toArray } from 'rxjs';
+import { from, mergeMap, Observable, of, toArray } from 'rxjs';
 import Stripe from 'stripe';
 import { Product } from '../../../../product/src/entities/product.entity';
 import { createLineItem } from '../../utils/helpers/create-line-item.helper';
@@ -13,9 +13,9 @@ export class CreateCheckoutSessionHandler
   constructor(private readonly paymentService: PaymentService) {}
 
   async execute(command: CreateCheckoutSessionCommand) {
-    const { user, products, discount } = command.checkoutDto;
+    const { order, products, discount } = command.checkoutDto;
     return this.getLineItems(products, discount).pipe(
-      mergeMap((lineItems) => this.paymentService.checkout(lineItems, user)),
+      mergeMap((lineItems) => this.paymentService.checkout(lineItems, order)),
     );
   }
 

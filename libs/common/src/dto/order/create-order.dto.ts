@@ -3,6 +3,7 @@ import { Type } from 'class-transformer';
 import { AddressDto } from '@app/common/dto/order/address.dto';
 import { OrderPayment } from '../../../../../apps/order/src/utils/order-payment';
 import { Product } from '../../../../../apps/product/src/entities/product.entity';
+import { Coupon } from '../../../../../apps/coupon/src/entities/coupon.entity';
 
 export class CreateOrderDto {
   user: string;
@@ -20,4 +21,5 @@ export class CreateOrderDto {
   @IsIn(Object.values(OrderPayment))
   payment: OrderPayment;
   url?: string;
+  coupon?: Coupon;
 }

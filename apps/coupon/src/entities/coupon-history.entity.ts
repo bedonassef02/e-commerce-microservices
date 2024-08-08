@@ -1,5 +1,4 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Cart } from 'apps/cart/src/entites/cart.entity';
 import { HydratedDocument } from 'mongoose';
 
 export type CouponHistoryDocument = HydratedDocument<CouponHistory>;
@@ -11,7 +10,7 @@ export class CouponHistory {
   @Prop()
   user: string;
   @Prop()
-  cart: Cart;
+  order: string;
 }
 
 export const CouponHistorySchema = SchemaFactory.createForClass(CouponHistory);

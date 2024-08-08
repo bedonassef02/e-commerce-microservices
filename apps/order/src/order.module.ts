@@ -18,12 +18,20 @@ import { ClientsModule } from '@nestjs/microservices';
 import { registerClient } from '@app/common/utils/helpers/register-client.helper';
 import { CheckoutService } from './services/checkout.service';
 import { OrderPaymentService } from './services/order-payment.service';
+import {
+  registerBull,
+  registerQueue,
+} from '@app/common/utils/modules/register-bull.helper';
+import { OrderConsumer } from './utils/bull-queue/order.consumer';
+import { ORDER_QUEUE } from '@app/common/utils/constants/queue.constants';
 
 @Module({
   imports: [
     CqrsModule,
     CommonModule,
     connectToMongo(Order.name),
+    registerBull(),
+    registerQueue(ORDER_QUEUE),
     ClientsModule.register([
       registerClient(ProductMP),
       registerClient(CouponMP),
@@ -42,6 +50,7 @@ import { OrderPaymentService } from './services/order-payment.service';
     OrderService,
     CheckoutService,
     OrderPaymentService,
+    OrderConsumer,
     ...orderQueries,
     ...orderHandlers,
   ],

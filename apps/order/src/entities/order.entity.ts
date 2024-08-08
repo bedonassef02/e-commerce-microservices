@@ -1,18 +1,17 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, HydratedDocument, Types } from 'mongoose';
-import mongoose from 'mongoose';
 import { OrderStatus } from '../utils/order-status';
-import { OrderProduct } from '../utils/order-product';
 import { AddressDto } from '@app/common/dto/order/address.dto';
 import { OrderPayment } from '../utils/order-payment';
 import { Product } from '../../../product/src/entities/product.entity';
+import { Coupon } from '../../../coupon/src/entities/coupon.entity';
 
 export type OrderDocument = HydratedDocument<Order>;
 
 @Schema({ timestamps: true })
 export class Order extends Document {
   @Prop({ type: Types.ObjectId, ref: 'User', required: true })
-  user: Types.ObjectId;
+  user: string;
 
   @Prop()
   products: Product[];
@@ -31,6 +30,8 @@ export class Order extends Document {
 
   @Prop({ type: String })
   url: string;
+  @Prop()
+  coupon: Coupon;
 }
 
 export const OrderSchema = SchemaFactory.createForClass(Order);

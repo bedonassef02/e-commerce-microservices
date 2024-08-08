@@ -5,4 +5,5 @@ export class UseCouponDto {
   code: string;
   @IsMongoId()
   user: string;
+  order?: string;
 }

@@ -1,15 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import { Coupon } from './entities/coupon.entity';
 import { CreateCouponDto } from '@app/common/dto/coupon/create-coupon.dto';
-import { from, Observable } from 'rxjs';
+import { from, switchMap, Observable } from 'rxjs';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import { UseCouponDto } from '@app/common/dto/coupon/use-coupon.dto';
+import { InjectModel } from '@nestjs/mongoose';
+import { CouponHistory } from './entities/coupon-history.entity';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class CouponService {
   constructor(
     @InjectRepository(Coupon)
     private readonly couponRepository: Repository<Coupon>,
+    @InjectModel(CouponHistory.name)
+    private readonly couponModel: Model<CouponHistory>,
   ) {}
 
   findOne(code: string): Observable<Coupon> {
@@ -17,6 +23,18 @@ export class CouponService {
   }
 
   create(couponDto: CreateCouponDto): Observable<Coupon> {
-    return from(this.couponRepository.save(couponDto));
+    const newCoupon = this.couponRepository.create(couponDto);
+    return from(this.couponRepository.save(newCoupon));
+  }
+
+  use(couponDto: UseCouponDto): Observable<Coupon> {
+    return from(this.couponRepository.findOneBy({ code: couponDto.code })).pipe(
+      switchMap((coupon: Coupon) => {
+        coupon.usageCount += 1;
+        return from(this.couponModel.create(couponDto)).pipe(
+          switchMap(() => from(this.couponRepository.save(coupon))),
+        );
+      }),
+    );
   }
 }

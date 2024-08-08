@@ -7,6 +7,7 @@ import { CreateCouponCommand } from './commands/impl/create-coupon.command';
 import { GetCouponQuery } from './queries/impl/get-coupon.query';
 import { CanUseCouponQuery } from './queries/impl/can-use-coupon.query';
 import { UseCouponDto } from '@app/common/dto/coupon/use-coupon.dto';
+import { UseCouponCommand } from './commands/impl/use-coupon.command';
 
 @Controller()
 export class CouponController {
@@ -27,5 +28,10 @@ export class CouponController {
   @MessagePattern(Commands.Coupon.CAN_USE)
   canUse(couponDto: UseCouponDto) {
     return this.queryBus.execute(new CanUseCouponQuery(couponDto));
+  }
+
+  @MessagePattern(Commands.Coupon.USE)
+  use(couponDto: UseCouponDto) {
+    return this.commandBus.execute(new UseCouponCommand(couponDto));
   }
 }

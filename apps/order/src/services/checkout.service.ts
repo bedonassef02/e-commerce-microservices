@@ -8,13 +8,11 @@ import {
 } from '@app/common/utils/constants/service.constants';
 import { ClientProxy } from '@nestjs/microservices';
 import { CartProduct } from '../../../cart/src/utils/product-cart';
-import { CheckoutDto } from '@app/common/dto/payment/checkout.dto';
-import { map, of, forkJoin } from 'rxjs';
+import { map, forkJoin } from 'rxjs';
 import { UseCouponDto } from '@app/common/dto/coupon/use-coupon.dto';
 import { Coupon } from '../../../coupon/src/entities/coupon.entity';
 import { CartDocument } from '../../../cart/src/entites/cart.entity';
 import { Product } from '../../../product/src/entities/product.entity';
-import { CreateOrderDto } from '@app/common/dto/order/create-order.dto';
 
 @Injectable()
 export class CheckoutService {
@@ -24,30 +22,11 @@ export class CheckoutService {
     @Inject(PRODUCT_SERVICE) private productService: ClientProxy,
   ) {}
 
-  createDto(orderDto: CreateOrderDto) {
-    const { user, products, code } = orderDto;
-    const checkoutDto: CheckoutDto = { user, products, discount: 0 };
-
-    if (orderDto.code) {
-      return this.getDiscount(user, code).pipe(
-        map((discount: number) => {
-          checkoutDto.discount = discount;
-          return checkoutDto;
-        }),
-      );
-    }
-
-    return of(checkoutDto);
-  }
-
-  private getDiscount(user: string, code: string) {
+  getCoupon(user: string, code: string) {
     const couponDto: UseCouponDto = { user, code };
     return this.couponService
       .send<Coupon>(Commands.Coupon.CAN_USE, couponDto)
-      .pipe(
-        map((coupon: Coupon) => coupon.discount),
-        throwException,
-      );
+      .pipe(throwException);
   }
 
   checkCart(cart: CartDocument) {

@@ -20,7 +20,7 @@ export class PaymentController {
   }
 
   @MessagePattern(Commands.Payment.SUCCESS)
-  success(user: string) {
-    return user;
+  success(order: string) {
+    return order;
   }
 }
