@@ -4,6 +4,7 @@ import { Order, OrderDocument } from './entities/order.entity';
 import { Model } from 'mongoose';
 import { CreateOrderDto } from '@app/common/dto/order/create-order.dto';
 import { from, Observable } from 'rxjs';
+import { UpdateOrderDto } from '@app/common/dto/order/update-order.dto';
 
 @Injectable()
 export class OrderService {
@@ -21,7 +22,7 @@ export class OrderService {
   findById(id: string): Observable<Order> {
     return from(this.orderModel.findById(id).exec());
   }
-  update(id: string, updateOrderDto: CreateOrderDto): Observable<Order> {
+  update(id: string, updateOrderDto: UpdateOrderDto): Observable<Order> {
     return from(
       this.orderModel.findByIdAndUpdate(id, updateOrderDto, {
         new: true,

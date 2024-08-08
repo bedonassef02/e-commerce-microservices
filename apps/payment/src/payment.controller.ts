@@ -4,6 +4,8 @@ import { Commands } from '@app/common/utils/types/crud.interface';
 import { CheckoutDto } from '@app/common/dto/payment/checkout.dto';
 import { CreateCheckoutSessionCommand } from './commands/impl/create-checkout-session.command';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
+import { UpdateOrderStatusCommand } from '../../order/src/commands/impl/update-order-status.command';
+import { SuccessPaymentCommand } from './commands/impl/success-payment.command';
 
 @Controller()
 export class PaymentController {
@@ -21,6 +23,6 @@ export class PaymentController {
 
   @MessagePattern(Commands.Payment.SUCCESS)
   success(order: string) {
-    return order;
+    return this.commandBus.execute(new SuccessPaymentCommand(order));
   }
 }

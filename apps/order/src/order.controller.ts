@@ -1,5 +1,5 @@
 import { Controller } from '@nestjs/common';
-import { MessagePattern } from '@nestjs/microservices';
+import { MessagePattern, Payload } from '@nestjs/microservices';
 import { Commands } from '@app/common/utils/types/crud.interface';
 import { FindOrderDto } from '@app/common/dto/order/find-order.dto';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
@@ -7,6 +7,8 @@ import { GetOrderQuery } from './queries/impl/get-order.query';
 import { GetOrdersQuery } from './queries/impl/get-orders.query';
 import { CreateOrderDto } from '@app/common/dto/order/create-order.dto';
 import { CreateOrderCommand } from './commands/impl/create-order.command';
+import { UpdateOrderDto } from '@app/common/dto/order/update-order.dto';
+import { UpdateOrderStatusCommand } from './commands/impl/update-order-status.command';
 
 @Controller()
 export class OrderController {
@@ -31,13 +33,9 @@ export class OrderController {
     return this.queryBus.execute(new GetOrderQuery(orderDto));
   }
 
-  // @MessagePattern(Commands.UPDATE)
-  // update(id: string, updateOrderDto: CreateOrderDto): Observable<Order> {
-  //   return this.orderService.update(id, updateOrderDto);
-  // }
-
-  // @MessagePattern(Commands.DELETE)
-  // remove(id: string): Observable<Order> {
-  //   return this.orderService.remove(id);
-  // }
+  @MessagePattern(Commands.UPDATE)
+  update(@Payload() data: any) {
+    const { id, status } = data;
+    return this.commandBus.execute(new UpdateOrderStatusCommand(id, status));
+  }
 }
