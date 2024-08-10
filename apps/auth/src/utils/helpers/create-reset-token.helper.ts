@@ -1,8 +1,8 @@
-import crypto from 'crypto';
+import * as crypto from 'crypto';
 
-export function createResetToken() {
-  const resetToken = crypto.randomBytes(20).toString('hex');
+export function createResetToken(): string {
+  const resetToken: string = crypto.randomBytes(20).toString('hex');
   return crypto.createHash('sha256').update(resetToken).digest('hex');
 }
 
-export const resetPasswordExpires = () => Date.now() + 10 * 60 * 1000;
+export const resetPasswordExpires = (): number => Date.now() + 10 * 60 * 1000; // 10 min

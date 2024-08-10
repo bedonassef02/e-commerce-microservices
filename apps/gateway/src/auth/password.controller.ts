@@ -3,6 +3,8 @@ import {
   Controller,
   Get,
   Inject,
+  Param,
+  Patch,
   Post,
   UseGuards,
   UseInterceptors,
@@ -15,6 +17,8 @@ import { ResetPasswordDto } from '@app/common/dto/auth/reset-password.dto';
 import { ChangePasswordDto } from '@app/common/dto/auth/change-password.dto';
 import { AuthGuard } from '@app/common/guards/auth.guard';
 import { User } from '@app/common/decorators/user.decorator';
+import { ForgetPasswordDto } from '@app/common/dto/auth/forget-password.dto';
+import { Public } from '@app/common/decorators/public.decorator';
 
 @UseInterceptors(RpcExceptionInterceptor)
 @UseGuards(AuthGuard)
@@ -32,11 +36,25 @@ export class PasswordController {
       passwordDto,
     );
   }
+
   @Get('reset')
   reset(@Body() resetDto: ResetPasswordDto) {
     return this.passwordService.send(
       Commands.Auth.Password.RESET,
       resetDto.email,
+    );
+  }
+
+  @Public()
+  @Patch('reset/:token')
+  forget(
+    @Param('token') token: string,
+    @Body() passwordDto: ForgetPasswordDto,
+  ) {
+    passwordDto.token = token;
+    return this.passwordService.send(
+      Commands.Auth.Password.FORGET,
+      passwordDto,
     );
   }
 }

@@ -8,6 +8,7 @@ const ItemCommands = {
 const Password = {
   RESET: { cmd: 'reset' },
   CHANGE: { cmd: 'change' },
+  FORGET: { cmd: 'forget' },
 };
 
 const Auth = {

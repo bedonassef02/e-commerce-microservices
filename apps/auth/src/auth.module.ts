@@ -11,12 +11,17 @@ import { TokenService } from '@app/common/services/token.service';
 import { PasswordController } from './utils/controllers/password.controller';
 import { passwordHandlers } from './utils/commands';
 import { PasswordService } from './utils/services/password.service';
+import { connectToMysql } from '@app/common/utils/modules/connect-to-mysql.helper';
+import { Token } from './entities/token.entity';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
   imports: [
     CommonModule,
     CqrsModule,
     registerJwt(),
+    connectToMysql(Token.name, [Token]),
+    TypeOrmModule.forFeature([Token]),
     ClientsModule.register([registerClient(UserMP), registerClient(MailMP)]),
   ],
   controllers: [AuthController, PasswordController],

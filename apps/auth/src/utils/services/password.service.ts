@@ -4,7 +4,6 @@ import { ChangePasswordDto } from '@app/common/dto/auth/change-password.dto';
 import { USER_SERVICE } from '@app/common/utils/constants/service.constants';
 import { ClientProxy } from '@nestjs/microservices';
 import { Commands } from '@app/common/utils/types/crud.interface';
-import { map } from 'rxjs';
 
 @Injectable()
 export class PasswordService {

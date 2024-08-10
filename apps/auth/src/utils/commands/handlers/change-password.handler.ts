@@ -15,7 +15,6 @@ import { Commands } from '@app/common/utils/types/crud.interface';
 import { ChangePasswordCommand } from '../impl/change-password.command';
 import { PasswordService } from '../../services/password.service';
 import { throwException } from '@app/common/utils/exception/throw-excpetion';
-import { TokenService } from '@app/common/services/token.service';
 import { AuthService } from '../../../auth.service';
 
 @CommandHandler(ChangePasswordCommand)
