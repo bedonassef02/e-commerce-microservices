@@ -3,15 +3,23 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { SqlType } from '@app/common/utils/types/sql.type';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
-export function connectToMysql(name: string, entities = []): ReturnType<typeof TypeOrmModule.forRootAsync> {
+export function connectToMysql(
+  name: string,
+  entities = [],
+): ReturnType<typeof TypeOrmModule.forRootAsync> {
   return TypeOrmModule.forRootAsync({
     imports: [ConfigModule],
     inject: [ConfigService],
-    useFactory: (configService: ConfigService): TypeOrmModuleOptions => sqlOptions(name, entities, configService),
+    useFactory: (configService: ConfigService): TypeOrmModuleOptions =>
+      sqlOptions(name, entities, configService),
   });
 }
 
-function sqlOptions(name: string, entities: any[], configService: ConfigService): TypeOrmModuleOptions {
+function sqlOptions(
+  name: string,
+  entities: any[],
+  configService: ConfigService,
+): TypeOrmModuleOptions {
   const sqlType: SqlType = configService.get<SqlType>('SQL_DB_TYPE');
   return {
     type: sqlType,

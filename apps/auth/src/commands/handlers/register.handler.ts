@@ -8,16 +8,12 @@ import { UserDocument } from '../../../../user/src/entities/user.entity';
 
 @CommandHandler(RegisterCommand)
 export class RegisterHandler implements ICommandHandler<RegisterCommand> {
-  constructor(
-    private readonly authService: AuthService,
-    private readonly tokenService: TokenService,
-  ) {}
+  constructor(private readonly authService: AuthService) {}
 
   async execute(command: RegisterCommand) {
     return this.authService.register(command.registerDto).pipe(
       map((user: UserDocument) => {
-        const token = this.tokenService.generate(user);
-        return { token };
+        return this.authService.generateResponse(user);
       }),
       throwException,
     );

@@ -5,10 +5,16 @@ const ItemCommands = {
   FIND_BY_USER: { cmd: 'findByUser' },
 };
 
+const Password = {
+  RESET: { cmd: 'reset' },
+  CHANGE: { cmd: 'change' },
+};
+
 const Auth = {
   FIND_BY_EMAIL: { cmd: 'findByEmail' },
   LOGIN: { cmd: 'login' },
   REGISTER: { cmd: 'register' },
+  Password,
 };
 
 const Coupon = {
@@ -30,6 +36,25 @@ const Payment = {
   CHECKOUT: { cmd: 'checkout' },
   SUCCESS: { cmd: 'success' },
 };
+
+const Crud = {
+  FIND_ALL: { cmd: 'findAll' },
+  FIND_BY_ID: { cmd: 'findById' },
+  CREATE: { cmd: 'create' },
+  UPDATE: { cmd: 'update' },
+  DELETE: { cmd: 'delete' },
+};
+
+const Mail = {
+  SEND: { cmd: 'send' },
+};
+
+const User = {
+  UPDATE_PASSWORD: { cmd: 'updatePassword' },
+  FIND_BY_EMAIL: { cmd: 'findByEmail' },
+};
+
+// TODO: replace with Crud
 export const Commands = {
   FIND_ALL: { cmd: 'findAll' },
   FIND_BY_ID: { cmd: 'findById' },
@@ -42,4 +67,6 @@ export const Commands = {
   Coupon,
   Review,
   Payment,
+  Mail,
+  User,
 };

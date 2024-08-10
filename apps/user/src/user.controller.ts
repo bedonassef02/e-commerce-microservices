@@ -5,6 +5,9 @@ import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { CreateUserCommand } from './commands/impl/create-user.command';
 import { GetUserByIdCommand } from './queries/impl/get-user-by-id.command';
 import { GetUserByEmailCommand } from './queries/impl/get-user-by-email.command';
+import { Commands } from '@app/common/utils/types/crud.interface';
+import { ChangePasswordDto } from '@app/common/dto/auth/change-password.dto';
+import { UpdatePasswordCommand } from './commands/impl/update-password.command';
 
 @Controller()
 export class UserController {
@@ -26,5 +29,10 @@ export class UserController {
   @MessagePattern({ cmd: 'findByEmail' })
   findByEmail(email: string) {
     return this.queryBus.execute(new GetUserByEmailCommand(email));
+  }
+
+  @MessagePattern(Commands.User.UPDATE_PASSWORD)
+  updatePassword(passwordDto: ChangePasswordDto) {
+    return this.commandBus.execute(new UpdatePasswordCommand(passwordDto));
   }
 }

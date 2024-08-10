@@ -13,14 +13,12 @@ import { LoginDto } from '@app/common/dto/auth/login.dto';
 import { RegisterDto } from '@app/common/dto/auth/register.dto';
 import { RpcExceptionInterceptor } from '@app/common/utils/exception/rpc-exception.filter';
 import { Observable } from 'rxjs';
-import { CustomI18nService } from '../utils/services/custom-i18n.service';
 
 @UseInterceptors(RpcExceptionInterceptor)
 @Controller('auth')
 export class AuthController {
   constructor(
     @Inject(AUTH_SERVICE) private readonly authService: ClientProxy,
-    private readonly i18nService: CustomI18nService,
   ) {}
 
   @HttpCode(HttpStatus.OK)

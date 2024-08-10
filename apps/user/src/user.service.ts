@@ -24,4 +24,8 @@ export class UserService {
   findByEmail(email: string): Observable<User> {
     return from(this.userModel.findOne({ email }));
   }
+
+  updatePassword(id: string, password: string) {
+    return from(this.userModel.findByIdAndUpdate(id, { password }));
+  }
 }
