@@ -7,10 +7,12 @@ import { paymentHandlers } from './commands';
 import { StripeService } from './services/stripe.service';
 import { ClientsModule } from '@nestjs/microservices';
 import { registerClient } from '@app/common/utils/helpers/register-client.helper';
+import { configValidation } from '@app/common/utils/helpers/config-validation.helper';
+import { paymentValidation } from '@app/common/utils/validation/services/payment.validation';
 
 @Module({
   imports: [
-    CommonModule,
+    CommonModule.register(configValidation(paymentValidation)),
     CqrsModule,
     ClientsModule.register([registerClient(OrderMP)]),
   ],

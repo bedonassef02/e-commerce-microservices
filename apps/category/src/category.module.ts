@@ -8,10 +8,12 @@ import { categoryCommands } from './commands';
 import { categoryQueries } from './queries';
 import { CqrsModule } from '@nestjs/cqrs';
 import { connectToMongo } from '@app/common/utils/modules/connect-to-mongo.helper';
+import { configValidation } from '@app/common/utils/helpers/config-validation.helper';
+import { mongoValidation } from '@app/common/utils/validation/utils/mongo-db.validation';
 @Module({
   imports: [
     CqrsModule,
-    CommonModule,
+    CommonModule.register(configValidation(mongoValidation)),
     connectToMongo(Category.name),
     MongooseModule.forFeature([
       { name: Category.name, schema: CategorySchema },

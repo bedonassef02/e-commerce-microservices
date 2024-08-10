@@ -10,10 +10,12 @@ import { registerClient } from '@app/common/utils/helpers/register-client.helper
 import { wishlistQueries } from './queries';
 import { wishlistHandlers } from './commands';
 import { connectToMongo } from '@app/common/utils/modules/connect-to-mongo.helper';
+import { configValidation } from '@app/common/utils/helpers/config-validation.helper';
+import { mongoValidation } from '@app/common/utils/validation/utils/mongo-db.validation';
 
 @Module({
   imports: [
-    CommonModule,
+    CommonModule.register(configValidation(mongoValidation)),
     connectToMongo(Wishlist.name),
     CqrsModule,
     ClientsModule.register([registerClient(ProductMP)]),

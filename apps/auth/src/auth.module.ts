@@ -14,10 +14,12 @@ import { PasswordService } from './utils/services/password.service';
 import { connectToMysql } from '@app/common/utils/modules/connect-to-mysql.helper';
 import { Token } from './entities/token.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { authValidation } from '@app/common/utils/validation/services/auth.validation';
+import { configValidation } from '@app/common/utils/helpers/config-validation.helper';
 
 @Module({
   imports: [
-    CommonModule,
+    CommonModule.register(configValidation(authValidation)),
     CqrsModule,
     registerJwt(),
     connectToMysql(Token.name, [Token]),

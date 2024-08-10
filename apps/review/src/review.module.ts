@@ -10,11 +10,13 @@ import { registerClient } from '@app/common/utils/helpers/register-client.helper
 import { Review } from './entities/review.entity';
 import { reviewHandlers } from './commands';
 import { reviewQueries } from './queries';
+import { configValidation } from '@app/common/utils/helpers/config-validation.helper';
+import { sqlValidation } from '@app/common/utils/validation/utils/sql-db.validation';
 
 @Module({
   imports: [
     CqrsModule,
-    CommonModule,
+    CommonModule.register(configValidation(sqlValidation)),
     connectToMysql(Review.name, [Review]),
     TypeOrmModule.forFeature([Review]),
     ClientsModule.register([registerClient(ProductMP)]),

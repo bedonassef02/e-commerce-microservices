@@ -24,11 +24,13 @@ import {
 } from '@app/common/utils/modules/register-bull.helper';
 import { OrderConsumer } from './utils/bull-queue/order.consumer';
 import { ORDER_QUEUE } from '@app/common/utils/constants/queue.constants';
+import { configValidation } from '@app/common/utils/helpers/config-validation.helper';
+import { mongoValidation } from '@app/common/utils/validation/utils/mongo-db.validation';
 
 @Module({
   imports: [
     CqrsModule,
-    CommonModule,
+    CommonModule.register(configValidation(mongoValidation)),
     connectToMongo(Order.name),
     registerBull(),
     registerQueue(ORDER_QUEUE),

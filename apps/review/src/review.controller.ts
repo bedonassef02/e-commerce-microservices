@@ -24,7 +24,7 @@ export class ReviewController {
     return this.queryBus.execute(new GetReviewQuery(reviewDto));
   }
 
-  @MessagePattern(Commands.Review.FIND_ALL)
+  @MessagePattern(Commands.Crud.FIND_ALL)
   findAll(product: string) {
     return this.queryBus.execute(new GetReviewsQuery(product));
   }

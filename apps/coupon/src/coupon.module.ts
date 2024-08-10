@@ -16,11 +16,14 @@ import {
   CouponHistorySchema,
 } from './entities/coupon-history.entity';
 import { MongooseModule } from '@nestjs/mongoose';
+import { configValidation } from '@app/common/utils/helpers/config-validation.helper';
+import { mongoValidation } from '@app/common/utils/validation/utils/mongo-db.validation';
+import { sqlValidation } from '@app/common/utils/validation/utils/sql-db.validation';
 
 @Module({
   imports: [
     CqrsModule,
-    CommonModule,
+    CommonModule.register(configValidation({...mongoValidation, ...sqlValidation})),
     connectToMysql(Coupon.name, [Coupon]),
     connectToMongo(Coupon.name),
     TypeOrmModule.forFeature([Coupon]),

@@ -4,10 +4,12 @@ import { MailService } from './mail.service';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CommonModule } from '@app/common';
+import { configValidation } from '@app/common/utils/helpers/config-validation.helper';
+import { mailValidation } from '@app/common/utils/validation/services/mail.validation';
 
 @Module({
   imports: [
-    CommonModule,
+    CommonModule.register(configValidation(mailValidation)),
     MailerModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],

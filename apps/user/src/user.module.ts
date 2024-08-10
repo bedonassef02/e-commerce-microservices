@@ -16,10 +16,12 @@ import {
 } from '@app/common/utils/modules/register-bull.helper';
 import { USER_QUEUE } from '@app/common/utils/constants/queue.constants';
 import { UserConsumer } from './utils/user.consumer';
+import { configValidation } from '@app/common/utils/helpers/config-validation.helper';
+import { userValidation } from '@app/common/utils/validation/services/user.validation';
 
 @Module({
   imports: [
-    CommonModule,
+    CommonModule.register(configValidation(userValidation)),
     connectToMongo(User.name),
     registerBull(),
     registerQueue(USER_QUEUE),

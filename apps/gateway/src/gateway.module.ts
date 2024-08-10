@@ -14,9 +14,11 @@ import { CustomI18nService } from './utils/services/custom-i18n.service';
 import { CouponModule } from './coupon/coupon.module';
 import { ReviewModule } from './review/review.module';
 import { PaymentModule } from './payment/payment.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({isGlobal: true}),
     registerJwt(),
     registerI18n(),
     CategoryModule,
