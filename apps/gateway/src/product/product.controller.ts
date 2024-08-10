@@ -15,7 +15,7 @@ import { ClientProxy } from '@nestjs/microservices';
 import { CreateProductDto } from '@app/common/dto/product/create-product.dto';
 import { UpdateProductDto } from '@app/common/dto/product/update-product.dto';
 import { RpcExceptionInterceptor } from '@app/common/utils/exception/rpc-exception.filter';
-import { Commands } from '@app/common/utils/types/crud.interface';
+import { Commands } from '@app/common/utils/commands';
 import { PRODUCT_SERVICE } from '@app/common/utils/constants/service.constants';
 import { RoleGuard } from '@app/common/guards/role.guard';
 import { AuthGuard } from '@app/common/guards/auth.guard';
@@ -33,20 +33,20 @@ export class ProductController {
   @Post()
   @Roles(Role.ADMIN)
   create(@Body() createProductDto: CreateProductDto) {
-    return this.productService.send(Commands.CREATE, createProductDto);
+    return this.productService.send(Commands.Crud.CREATE, createProductDto);
   }
 
   @Get()
   @Public()
   findAll() {
-    return this.productService.send(Commands.FIND_ALL, '');
+    return this.productService.send(Commands.Crud.FIND_ALL, '');
   }
 
   @Get(':id')
   @Public()
   @UsePipes(ParseMongoIdPipe)
   findById(@Param('id') id: string) {
-    return this.productService.send(Commands.FIND_BY_ID, id);
+    return this.productService.send(Commands.Crud.FIND_BY_ID, id);
   }
 
   @Patch(':id')
@@ -55,12 +55,15 @@ export class ProductController {
     @Param('id', ParseMongoIdPipe) id: string,
     @Body() updateProductDto: UpdateProductDto,
   ) {
-    return this.productService.send(Commands.UPDATE, { id, updateProductDto });
+    return this.productService.send(Commands.Crud.UPDATE, {
+      id,
+      updateProductDto,
+    });
   }
 
   @Delete(':id')
   @Roles(Role.ADMIN)
   remove(@Param('id', ParseMongoIdPipe) id: string) {
-    return this.productService.send(Commands.DELETE, id);
+    return this.productService.send(Commands.Crud.DELETE, id);
   }
 }

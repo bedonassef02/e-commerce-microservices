@@ -13,7 +13,7 @@ import { AuthGuard } from '@app/common/guards/auth.guard';
 import { User } from '@app/common/decorators/user.decorator';
 import { REVIEW_SERVICE } from '@app/common/utils/constants/service.constants';
 import { ClientProxy } from '@nestjs/microservices';
-import { Commands } from '@app/common/utils/types/crud.interface';
+import { Commands } from '@app/common/utils/commands';
 import { ReviewDto } from '@app/common/dto/review/review.dto';
 
 @UseInterceptors(RpcExceptionInterceptor)
@@ -35,6 +35,6 @@ export class ReviewController {
 
   @Get(':product/all')
   findAll(@Param('product') product: string) {
-    return this.reviewService.send(Commands.Review.FIND_ALL, product);
+    return this.reviewService.send(Commands.Crud.FIND_ALL, product);
   }
 }

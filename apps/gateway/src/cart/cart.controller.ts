@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { CART_SERVICE } from '@app/common/utils/constants/service.constants';
 import { ClientProxy } from '@nestjs/microservices';
-import { Commands } from '@app/common/utils/types/crud.interface';
+import { Commands } from '@app/common/utils/commands';
 import { CartDto } from '@app/common/dto/cart/cart.dto';
 import { User } from '@app/common/decorators/user.decorator';
 import { AuthGuard } from '@app/common/guards/auth.guard';

@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { WISHLIST_SERVICE } from '@app/common/utils/constants/service.constants';
 import { ClientProxy } from '@nestjs/microservices';
-import { Commands } from '@app/common/utils/types/crud.interface';
+import { Commands } from '@app/common/utils/commands';
 import { RpcExceptionInterceptor } from '@app/common/utils/exception/rpc-exception.filter';
 import { AuthGuard } from '@app/common/guards/auth.guard';
 import { User } from '@app/common/decorators/user.decorator';

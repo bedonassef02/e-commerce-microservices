@@ -1,6 +1,6 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
-import { Commands } from '@app/common/utils/types/crud.interface';
+import { Commands } from '@app/common/utils/commands';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { CreateOrUpdateReviewCommand } from './commands/impl/create-or-update-review.command';
 import { ReviewDto } from '@app/common/dto/review/review.dto';

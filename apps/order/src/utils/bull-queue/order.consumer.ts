@@ -11,7 +11,7 @@ import { Order } from '../../entities/order.entity';
 import { UseCouponDto } from '@app/common/dto/coupon/use-coupon.dto';
 import { finalize } from 'rxjs';
 import { CheckoutService } from '../../services/checkout.service';
-import { Commands } from '@app/common/utils/types/crud.interface';
+import { Commands } from '@app/common/utils/commands';
 import { throwException } from '@app/common/utils/exception/throw-excpetion';
 
 @Processor(ORDER_QUEUE)

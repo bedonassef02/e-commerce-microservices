@@ -1,6 +1,6 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
-import { Commands } from '@app/common/utils/types/crud.interface';
+import { Commands } from '@app/common/utils/commands';
 import { CreateCouponDto } from '@app/common/dto/coupon/create-coupon.dto';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { CreateCouponCommand } from './commands/impl/create-coupon.command';

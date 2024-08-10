@@ -1,5 +1,5 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
-import { Commands } from '@app/common/utils/types/crud.interface';
+import { Commands } from '@app/common/utils/commands';
 import { throwException } from '@app/common/utils/exception/throw-excpetion';
 import {
   CART_SERVICE,
@@ -45,7 +45,7 @@ export class CheckoutService {
     this.checkCart(cart);
     const productObservables = cart.products.map((item: CartProduct) => {
       return this.productService
-        .send<Product>(Commands.FIND_BY_ID, item.product)
+        .send<Product>(Commands.Crud.FIND_BY_ID, item.product)
         .pipe(
           map((product: Product) => {
             product.stock = item.quantity;

@@ -6,7 +6,7 @@ import { CATEGORY_SERVICE } from '@app/common/utils/constants/service.constants'
 import { switchMap, of, lastValueFrom } from 'rxjs';
 import { ProductService } from '../../product.service';
 import { throwException } from '@app/common/utils/exception/throw-excpetion';
-import { Commands } from '@app/common/utils/types/crud.interface';
+import { Commands } from '@app/common/utils/commands';
 
 @CommandHandler(CreateProductCommand)
 export class CreateProductHandler
@@ -20,7 +20,7 @@ export class CreateProductHandler
   async execute(command: CreateProductCommand): Promise<any> {
     return lastValueFrom(
       this.categoryService
-        .send(Commands.FIND_BY_ID, command.createProductDto.category)
+        .send(Commands.Crud.FIND_BY_ID, command.createProductDto.category)
         .pipe(
           switchMap(() => {
             return of(this.productService.create(command.createProductDto));

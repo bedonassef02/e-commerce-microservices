@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Commands } from '@app/common/utils/types/crud.interface';
+import { Commands } from '@app/common/utils/commands';
 import { OrderService } from '../order.service';
 import {
   CART_SERVICE,

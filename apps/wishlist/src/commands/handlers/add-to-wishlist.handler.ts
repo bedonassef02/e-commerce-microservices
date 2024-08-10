@@ -5,7 +5,7 @@ import { HttpStatus, Inject } from '@nestjs/common';
 import { PRODUCT_SERVICE } from '@app/common/utils/constants/service.constants';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { lastValueFrom, map } from 'rxjs';
-import { Commands } from '@app/common/utils/types/crud.interface';
+import { Commands } from '@app/common/utils/commands';
 import { WishlistDocument } from '../../entities/wishlist.entity';
 import { throwException } from '@app/common/utils/exception/throw-excpetion';
 
@@ -21,7 +21,7 @@ export class AddToWishlistHandler
   async execute(command: AddToWishlistCommand) {
     return lastValueFrom(
       this.productService
-        .send(Commands.FIND_BY_ID, command.wishlistDto.product)
+        .send(Commands.Crud.FIND_BY_ID, command.wishlistDto.product)
         .pipe(
           map(() => {
             return this.wishlistService

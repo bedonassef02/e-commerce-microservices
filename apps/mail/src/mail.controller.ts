@@ -2,7 +2,7 @@ import { Controller } from '@nestjs/common';
 import { MailService } from './mail.service';
 import { MessagePattern } from '@nestjs/microservices';
 import { MailDto } from '@app/common/dto/mail/mail.dto';
-import { Commands } from '@app/common/utils/types/crud.interface';
+import { Commands } from '@app/common/utils/commands';
 
 @Controller()
 export class MailController {

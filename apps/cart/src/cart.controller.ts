@@ -1,6 +1,6 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
-import { Commands } from '@app/common/utils/types/crud.interface';
+import { Commands } from '@app/common/utils/commands';
 import { CartDto } from '@app/common/dto/cart/cart.dto';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { AddToCartCommand } from './commands/impl/add-to-cart.command';
@@ -39,7 +39,7 @@ export class CartController {
     return this.queryBus.execute(new GetCartQuery(user));
   }
 
-  @MessagePattern(Commands.CREATE)
+  @MessagePattern(Commands.Crud.CREATE)
   create(user: string) {
     return this.commandBus.execute(new CreateCartCommand(user));
   }

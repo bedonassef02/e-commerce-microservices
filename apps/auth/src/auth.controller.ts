@@ -6,7 +6,7 @@ import { CommandBus } from '@nestjs/cqrs';
 import { RegisterCommand } from './commands/impl/register.command';
 import { USER_SERVICE } from '@app/common/utils/constants/service.constants';
 import { LoginCommand } from './commands/impl/login.command';
-import { Commands } from '@app/common/utils/types/crud.interface';
+import { Commands } from '@app/common/utils/commands';
 
 @Controller()
 export class AuthController {

@@ -18,7 +18,7 @@ import { ClientProxy } from '@nestjs/microservices';
 import { CreateCategoryDto } from '@app/common/dto/category/create-category.dto';
 import { UpdateCategoryDto } from '@app/common/dto/category/update-category.dto';
 import { RpcExceptionInterceptor } from '@app/common/utils/exception/rpc-exception.filter';
-import { Commands } from '@app/common/utils/types/crud.interface';
+import { Commands } from '@app/common/utils/commands';
 import { CategoryQuery } from '@app/common/utils/features/category.query';
 import { RoleGuard } from '@app/common/guards/role.guard';
 import { Roles } from '@app/common/decorators/role.decorator';
@@ -35,20 +35,20 @@ export class CategoryController {
   @Post()
   @Roles(Role.ADMIN)
   async create(@Body() createCategoryDto: CreateCategoryDto) {
-    return this.categoryService.send(Commands.CREATE, createCategoryDto);
+    return this.categoryService.send(Commands.Crud.CREATE, createCategoryDto);
   }
 
   @Get()
   @Public()
   async findAll(@Query() query: CategoryQuery) {
-    return this.categoryService.send(Commands.FIND_ALL, query);
+    return this.categoryService.send(Commands.Crud.FIND_ALL, query);
   }
 
   @Get(':id')
   @Public()
   @UsePipes(ParseMongoIdPipe)
   findById(@Param('id') id: string) {
-    return this.categoryService.send(Commands.FIND_BY_ID, id);
+    return this.categoryService.send(Commands.Crud.FIND_BY_ID, id);
   }
 
   @Patch(':id')
@@ -57,7 +57,7 @@ export class CategoryController {
     @Param('id', ParseMongoIdPipe) id: string,
     @Body() updateCategoryDto: UpdateCategoryDto,
   ) {
-    return this.categoryService.send(Commands.UPDATE, {
+    return this.categoryService.send(Commands.Crud.UPDATE, {
       id,
       updateCategoryDto,
     });
@@ -66,6 +66,6 @@ export class CategoryController {
   @Delete(':id')
   @Roles(Role.ADMIN)
   async remove(@Param('id', ParseMongoIdPipe) id: string) {
-    return this.categoryService.send(Commands.DELETE, id);
+    return this.categoryService.send(Commands.Crud.DELETE, id);
   }
 }

@@ -6,11 +6,11 @@ import {
   USER_SERVICE,
 } from '@app/common/utils/constants/service.constants';
 import { ClientProxy } from '@nestjs/microservices';
-import { from, map, mergeMap, tap, catchError, EMPTY, throwError } from 'rxjs';
+import { from, map, mergeMap, tap, throwError } from 'rxjs';
 import { Token } from '../../../entities/token.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Commands } from '@app/common/utils/types/crud.interface';
+import { Commands } from '@app/common/utils/commands';
 import { RpcBadRequestException } from '@app/common/exceptions/rpc-bad-request-exception';
 import { UserDocument } from '../../../../../user/src/entities/user.entity';
 import { PasswordService } from '../../services/password.service';

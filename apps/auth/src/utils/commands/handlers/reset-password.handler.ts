@@ -14,7 +14,7 @@ import {
 import { Token } from '../../../entities/token.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Commands } from '@app/common/utils/types/crud.interface';
+import { Commands } from '@app/common/utils/commands';
 import { MailDto } from '@app/common/dto/mail/mail.dto';
 import { throwException } from '@app/common/utils/exception/throw-excpetion';
 

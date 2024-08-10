@@ -2,7 +2,7 @@ import { IQueryHandler, QueryBus, QueryHandler } from '@nestjs/cqrs';
 import { lastValueFrom } from 'rxjs';
 import { CouponService } from 'apps/coupon/src/coupon.service';
 import { CanUseCouponQuery } from '../impl/can-use-coupon.query';
-import { Commands } from '@app/common/utils/types/crud.interface';
+import { Commands } from '@app/common/utils/commands';
 import { ClientProxy } from '@nestjs/microservices';
 import { CART_SERVICE } from '@app/common/utils/constants/service.constants';
 import { Inject } from '@nestjs/common';

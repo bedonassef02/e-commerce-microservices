@@ -1,6 +1,6 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
-import { Commands } from '@app/common/utils/types/crud.interface';
+import { Commands } from '@app/common/utils/commands';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { AddToWishlistCommand } from './commands/impl/add-to-wishlist.command';
 import { GetWishlistQuery } from './queries/impl/get-wishlist.query';
@@ -36,7 +36,7 @@ export class WishlistController {
     return this.queryBus.execute(new GetWishlistQuery(user));
   }
 
-  @MessagePattern(Commands.CREATE)
+  @MessagePattern(Commands.Crud.CREATE)
   create(user: string) {
     return this.commandBus.execute(new CreateWishlistCommand(user));
   }

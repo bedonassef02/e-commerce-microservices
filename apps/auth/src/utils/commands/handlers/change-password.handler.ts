@@ -1,17 +1,13 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import {
-  Inject,
-  UnauthorizedException,
-  NotFoundException,
-} from '@nestjs/common';
+import { Inject, UnauthorizedException } from '@nestjs/common';
 import { USER_SERVICE } from '@app/common/utils/constants/service.constants';
-import { ClientProxy, RpcException } from '@nestjs/microservices';
-import { map, catchError, switchMap, throwError, Observable } from 'rxjs';
+import { ClientProxy } from '@nestjs/microservices';
+import { map, switchMap } from 'rxjs';
 import {
   User,
   UserDocument,
 } from '../../../../../user/src/entities/user.entity';
-import { Commands } from '@app/common/utils/types/crud.interface';
+import { Commands } from '@app/common/utils/commands';
 import { ChangePasswordCommand } from '../impl/change-password.command';
 import { PasswordService } from '../../services/password.service';
 import { throwException } from '@app/common/utils/exception/throw-excpetion';
@@ -29,7 +25,7 @@ export class ChangePasswordHandler
 
   async execute(command: ChangePasswordCommand) {
     return this.userService
-      .send<User>(Commands.FIND_BY_ID, command.passwordDto.id)
+      .send<User>(Commands.Crud.FIND_BY_ID, command.passwordDto.id)
       .pipe(
         switchMap((user: User) => {
           this.isAuth(user, command.passwordDto.password);

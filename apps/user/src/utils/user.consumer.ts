@@ -8,7 +8,7 @@ import {
   WISHLIST_SERVICE,
 } from '@app/common/utils/constants/service.constants';
 import { Inject, Logger } from '@nestjs/common';
-import { Commands } from '@app/common/utils/types/crud.interface';
+import { Commands } from '@app/common/utils/commands';
 import { MailDto } from '@app/common/dto/mail/mail.dto';
 
 @Processor(USER_QUEUE)
@@ -29,7 +29,7 @@ export class UserConsumer extends WorkerHost {
   }
 
   private createWishlist(user: string) {
-    this.wishlistService.send(Commands.CREATE, user).subscribe({
+    this.wishlistService.send(Commands.Crud.CREATE, user).subscribe({
       next: () => this.logger.log(`Wishlist Created for user: ${user}`),
       error: (error) =>
         this.logger.error(`Wishlist service error: ${error.message}`),
@@ -37,7 +37,7 @@ export class UserConsumer extends WorkerHost {
   }
 
   private createCart(user: string) {
-    this.cartService.send(Commands.CREATE, user).subscribe({
+    this.cartService.send(Commands.Crud.CREATE, user).subscribe({
       next: () => this.logger.log(`Cart Created for user: ${user}`),
       error: (error) =>
         this.logger.error(`Cart service error: ${error.message}`),
@@ -46,7 +46,7 @@ export class UserConsumer extends WorkerHost {
 
   private sendMail(email: string) {
     const mail: MailDto = { to: email, subject: 'Register', text: 'Welcome' };
-    this.mailService.send({ cmd: 'SEND' }, mail).subscribe({
+    this.mailService.send(Commands.Mail.SEND, mail).subscribe({
       next: () => this.logger.log(`Mail sent for user: ${email}`),
       error: (error) =>
         this.logger.error(`Mail service error: ${error.message}`),

@@ -8,7 +8,7 @@ import { RemoveCategoryCommand } from './commands/impl/remove-category.command';
 import { CreateCategoryDto } from '@app/common/dto/category/create-category.dto';
 import { GetCategoriesQuery } from './queries/impl/get-categories.query';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import { Commands } from '@app/common/utils/types/crud.interface';
+import { Commands } from '@app/common/utils/commands';
 import { CategoryQuery } from '@app/common/utils/features/category.query';
 
 @Controller()
@@ -18,24 +18,24 @@ export class CategoryController {
     private readonly queryBus: QueryBus,
   ) {}
 
-  @MessagePattern(Commands.CREATE)
+  @MessagePattern(Commands.Crud.CREATE)
   async create(createCategoryDto: CreateCategoryDto): Promise<Category> {
     return this.commandBus.execute(
       new CreateCategoryCommand(createCategoryDto),
     );
   }
 
-  @MessagePattern(Commands.FIND_ALL)
+  @MessagePattern(Commands.Crud.FIND_ALL)
   async findAll(query: CategoryQuery) {
     return this.queryBus.execute(new GetCategoriesQuery(query));
   }
 
-  @MessagePattern(Commands.FIND_BY_ID)
+  @MessagePattern(Commands.Crud.FIND_BY_ID)
   async findById(id: string): Promise<Category> {
     return this.queryBus.execute(new GetCategoryQuery(id));
   }
 
-  @MessagePattern(Commands.UPDATE)
+  @MessagePattern(Commands.Crud.UPDATE)
   async update(@Payload() data: any): Promise<Category> {
     const { id = null, updateCategoryDto = null } = { ...data };
     return this.commandBus.execute(
@@ -43,7 +43,7 @@ export class CategoryController {
     );
   }
 
-  @MessagePattern(Commands.DELETE)
+  @MessagePattern(Commands.Crud.DELETE)
   async remove(id: string): Promise<Category> {
     return this.commandBus.execute(new RemoveCategoryCommand(id));
   }

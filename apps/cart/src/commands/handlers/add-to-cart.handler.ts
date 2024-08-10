@@ -6,7 +6,7 @@ import { CartDocument } from '../../entites/cart.entity';
 import { Inject } from '@nestjs/common';
 import { PRODUCT_SERVICE } from '@app/common/utils/constants/service.constants';
 import { ClientProxy } from '@nestjs/microservices';
-import { Commands } from '@app/common/utils/types/crud.interface';
+import { Commands } from '@app/common/utils/commands';
 import { throwException } from '@app/common/utils/exception/throw-excpetion';
 
 @CommandHandler(AddToCartCommand)
@@ -19,7 +19,7 @@ export class AddToCartHandler implements ICommandHandler<AddToCartCommand> {
   async execute(command: AddToCartCommand): Promise<any> {
     return lastValueFrom(
       this.productService
-        .send(Commands.FIND_BY_ID, command.cartDto.product)
+        .send(Commands.Crud.FIND_BY_ID, command.cartDto.product)
         .pipe(
           switchMap(() => {
             return this.cartService.findUserCart(command.cartDto.user).pipe(

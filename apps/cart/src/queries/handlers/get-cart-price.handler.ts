@@ -4,7 +4,7 @@ import { map, mergeMap, reduce } from 'rxjs/operators';
 import { Inject } from '@nestjs/common';
 import { PRODUCT_SERVICE } from '@app/common/utils/constants/service.constants';
 import { ClientProxy } from '@nestjs/microservices';
-import { Commands } from '@app/common/utils/types/crud.interface';
+import { Commands } from '@app/common/utils/commands';
 import { GetCartPriceQuery } from '../impl/get-cart-price.query';
 import { from, lastValueFrom } from 'rxjs';
 import { Product } from '../../../../product/src/entities/product.entity';
@@ -23,7 +23,7 @@ export class GetCartPriceHandler implements IQueryHandler<GetCartPriceQuery> {
         from(cart.products).pipe(
           mergeMap((p) =>
             this.productService
-              .send<Product, string>(Commands.FIND_BY_ID, p.product)
+              .send<Product, string>(Commands.Crud.FIND_BY_ID, p.product)
               .pipe(map((product) => p.quantity * product.price)),
           ),
           reduce((acc, price) => acc + price, 0),

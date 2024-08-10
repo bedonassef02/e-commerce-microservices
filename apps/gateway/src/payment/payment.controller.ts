@@ -10,7 +10,7 @@ import { RpcExceptionInterceptor } from '@app/common/utils/exception/rpc-excepti
 import { AuthGuard } from '@app/common/guards/auth.guard';
 import { PAYMENT_SERVICE } from '@app/common/utils/constants/service.constants';
 import { ClientProxy } from '@nestjs/microservices';
-import { Commands } from '@app/common/utils/types/crud.interface';
+import { Commands } from '@app/common/utils/commands';
 import { Public } from '@app/common/decorators/public.decorator';
 @UseInterceptors(RpcExceptionInterceptor)
 @UseGuards(AuthGuard)

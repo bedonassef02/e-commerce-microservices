@@ -13,6 +13,7 @@ import { LoginDto } from '@app/common/dto/auth/login.dto';
 import { RegisterDto } from '@app/common/dto/auth/register.dto';
 import { RpcExceptionInterceptor } from '@app/common/utils/exception/rpc-exception.filter';
 import { Observable } from 'rxjs';
+import { Commands } from '@app/common/utils/commands';
 
 @UseInterceptors(RpcExceptionInterceptor)
 @Controller('auth')
@@ -24,11 +25,11 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @Post('login')
   login(@Body() loginDto: LoginDto): Observable<any> {
-    return this.authService.send({ cmd: 'login' }, loginDto);
+    return this.authService.send(Commands.Auth.LOGIN, loginDto);
   }
 
   @Post('register')
   register(@Body() registerDto: RegisterDto): Observable<any> {
-    return this.authService.send({ cmd: 'register' }, registerDto);
+    return this.authService.send(Commands.Auth.REGISTER, registerDto);
   }
 }

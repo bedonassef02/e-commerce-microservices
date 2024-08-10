@@ -1,10 +1,8 @@
 import { Controller, Inject } from '@nestjs/common';
-import { ClientProxy, MessagePattern, Payload } from '@nestjs/microservices';
-import { LoginDto } from '@app/common/dto/auth/login.dto';
-import { RegisterDto } from '@app/common/dto/auth/register.dto';
+import { ClientProxy, MessagePattern } from '@nestjs/microservices';
 import { CommandBus } from '@nestjs/cqrs';
 import { USER_SERVICE } from '@app/common/utils/constants/service.constants';
-import { Commands } from '@app/common/utils/types/crud.interface';
+import { Commands } from '@app/common/utils/commands';
 import { ResetPasswordCommand } from '../commands/impl/reset-password.command';
 import { ChangePasswordDto } from '@app/common/dto/auth/change-password.dto';
 import { ChangePasswordCommand } from '../commands/impl/change-password.command';
