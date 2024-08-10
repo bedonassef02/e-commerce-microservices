@@ -28,7 +28,6 @@ import { PaymentModule } from './payment/payment.module';
     CouponModule,
     ReviewModule,
     PaymentModule,
-    // TODO: Brand
   ],
   providers: [
     {
