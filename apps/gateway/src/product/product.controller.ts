@@ -9,7 +9,7 @@ import {
   Inject,
   UseInterceptors,
   UseGuards,
-  UsePipes,
+  UsePipes, Query,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { CreateProductDto } from '@app/common/dto/product/create-product.dto';
@@ -23,6 +23,7 @@ import { Public } from '@app/common/decorators/public.decorator';
 import { Role } from '@app/common/utils/constants/constants';
 import { Roles } from '@app/common/decorators/role.decorator';
 import { ParseMongoIdPipe } from '@app/common/pipes/parse-mongo-id.pipe';
+import { ProductQuery } from '@app/common/utils/features/product.query';
 
 @UseInterceptors(RpcExceptionInterceptor)
 @UseGuards(AuthGuard, RoleGuard)
@@ -38,8 +39,8 @@ export class ProductController {
 
   @Get()
   @Public()
-  findAll() {
-    return this.productService.send(Commands.Crud.FIND_ALL, '');
+  findAll(@Query() query: ProductQuery) {
+    return this.productService.send(Commands.Crud.FIND_ALL, query);
   }
 
   @Get(':id')

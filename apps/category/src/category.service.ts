@@ -49,7 +49,6 @@ export class CategoryService implements IPagination {
   }
 
   handleQuery(query: CategoryQuery): Promise<Category[]> {
-    this.logger.log(this.filter(query));
     return this.categoryModel
       .find(this.filter(query))
       .select(query.fields)

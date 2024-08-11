@@ -1,9 +1,10 @@
 import { Expose, Type } from 'class-transformer';
 import { QueryFeature } from '@app/common/utils/features/query.feature';
 import { OrderFilter } from '@app/common/utils/filters/order.filter';
-import { IsIn, IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsIn, IsMongoId, IsNumber, IsOptional, IsString } from 'class-validator';
 import { OrderStatus } from '../../../../../apps/order/src/utils/order-status';
 import { OrderPayment } from '../../../../../apps/order/src/utils/order-payment';
+import { ProductFilter } from '@app/common/utils/filters/product.filter';
 
 export class ProductQuery extends QueryFeature {
   user: string;
@@ -12,10 +13,18 @@ export class ProductQuery extends QueryFeature {
     return (this.page - 1) * this.limit;
   }
 
+  @Expose({ name: 'searchQuery' })
+  get searchQuery(): any[] {
+    return [
+      { name: { $regex: this.search, $options: 'i' } },
+      { description: { $regex: this.search, $options: 'i' } },
+    ];
+  }
+
   fields: string = 'name price images category';
   limit = 12;
 
-  filter: OrderFilter;
+  filter: ProductFilter;
   @IsOptional()
   @Type(() => Number)
   @IsNumber()
@@ -25,14 +34,6 @@ export class ProductQuery extends QueryFeature {
   @IsNumber()
   max_price: number;
   @IsOptional()
-  @IsString()
-  @IsIn(Object.values(OrderStatus))
-  status: OrderStatus;
-  @IsOptional()
-  @IsString()
-  has_coupon: boolean;
-  @IsOptional()
-  @IsString()
-  @IsIn(Object.values(OrderPayment))
-  payment: OrderPayment;
+  @IsMongoId()
+  category: string;
 }

@@ -8,13 +8,15 @@ import { CreateProductCommand } from './commands/impl/create-product.command';
 import { UpdateProductCommand } from './commands/impl/update-product.command';
 import { RemoveProductCommand } from './commands/impl/remove-product.command';
 import { Commands } from '@app/common/utils/commands';
+import { ProductQuery } from '@app/common/utils/features/product.query';
 
 @Controller('product')
 export class ProductController {
   constructor(
     private readonly commandBus: CommandBus,
     private readonly queryBus: QueryBus,
-  ) {}
+  ) {
+  }
 
   @MessagePattern(Commands.Crud.CREATE)
   create(@Body() createProductDto: CreateProductDto) {
@@ -22,8 +24,8 @@ export class ProductController {
   }
 
   @MessagePattern(Commands.Crud.FIND_ALL)
-  findAll() {
-    return this.queryBus.execute(new GetProductsQuery());
+  findAll(query: ProductQuery) {
+    return this.queryBus.execute(new GetProductsQuery(query));
   }
 
   @MessagePattern(Commands.Crud.FIND_BY_ID)
