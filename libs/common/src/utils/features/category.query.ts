@@ -1,7 +1,7 @@
 import { Expose } from 'class-transformer';
 import { QueryFeature } from '@app/common/utils/features/query.feature';
 import { IsMongoId, IsOptional } from 'class-validator';
-import { CategoryFilter } from '@app/common/utils/types/category/category-filter.type';
+import { CategoryFilter } from '@app/common/utils/filters/category.filter';
 
 export class CategoryQuery extends QueryFeature {
   @Expose({ name: 'skip' })
@@ -16,12 +16,10 @@ export class CategoryQuery extends QueryFeature {
   parent: string;
 
   @Expose({ name: 'searchQuery' })
-  get searchQuery(): any {
+  get searchQuery(): any[] {
     return [
-      {
-        name: { $regex: this.search, $options: 'i' },
-        description: { $regex: this.search, $options: 'i' },
-      },
+      { name: { $regex: this.search, $options: 'i' } },
+      { description: { $regex: this.search, $options: 'i' } },
     ];
   }
 

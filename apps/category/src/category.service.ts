@@ -1,4 +1,4 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Category } from './entities/category.entity';
 import { Model } from 'mongoose';
@@ -6,9 +6,13 @@ import { from, Observable } from 'rxjs';
 import { CreateCategoryDto } from '@app/common/dto/category/create-category.dto';
 import { UpdateCategoryDto } from '@app/common/dto/category/update-category.dto';
 import { CategoryQuery } from '@app/common/utils/features/category.query';
-import { CategoryFilter } from '@app/common/utils/types/category/category-filter.type';
+import { IPagination } from '@app/common/utils/interfaces/pagination.interface';
+import { categoryFilter } from './utils/helpers/category-filter.helper';
+
 @Controller()
-export class CategoryService {
+export class CategoryService implements IPagination {
+  private logger = new Logger(CategoryService.name);
+
   constructor(
     @InjectModel(Category.name) private readonly categoryModel: Model<Category>,
   ) {}
@@ -44,7 +48,8 @@ export class CategoryService {
     return from(this.categoryModel.findByIdAndDelete(id));
   }
 
-  private handleQuery(query: CategoryQuery): Promise<Category[]> {
+  handleQuery(query: CategoryQuery): Promise<Category[]> {
+    this.logger.log(this.filter(query));
     return this.categoryModel
       .find(this.filter(query))
       .select(query.fields)
@@ -55,14 +60,10 @@ export class CategoryService {
   }
 
   countDocuments(query: CategoryQuery): Observable<number> {
-    return from(this.categoryModel.countDocuments(this.handleQuery(query)));
+    return from(this.categoryModel.countDocuments(query.filter));
   }
 
-  private filter(query: CategoryQuery): CategoryFilter {
-    const filter: CategoryFilter = {};
-    if (query.parent) {
-      filter.parent = query.parent;
-    }
-    return filter;
+  filter(query: CategoryQuery) {
+    return categoryFilter(query);
   }
 }

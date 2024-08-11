@@ -1,7 +1,7 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { GetCategoriesQuery } from '../impl/get-categories.query';
 import { CategoryService } from '../../category.service';
-import { CategoryFilter } from '@app/common/utils/types/category/category-filter.type';
+import { CategoryFilter } from '@app/common/utils/filters/category.filter';
 import { PaginationResponse } from '@app/common/utils/types/pagination-response.type';
 import { Category } from '../../entities/category.entity';
 import { forkJoin, map } from 'rxjs';
@@ -15,16 +15,8 @@ export class GetCategoriesHandler implements IQueryHandler<GetCategoriesQuery> {
     categoriesQuery: GetCategoriesQuery,
   ): Promise<PaginationResponse> {
     const query: CategoryQuery = categoriesQuery.query;
-    query.filter = this.filter(query);
+    query.filter = this.categoryService.filter(query);
     return this.paginate(query).toPromise();
-  }
-
-  private filter(query: CategoryQuery): CategoryFilter {
-    const filter: CategoryFilter = {};
-    if (query.parent) {
-      filter.parent = query.parent;
-    }
-    return filter;
   }
 
   private paginate(query: CategoryQuery) {

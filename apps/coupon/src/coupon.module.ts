@@ -23,7 +23,9 @@ import { sqlValidation } from '@app/common/utils/validation/utils/sql-db.validat
 @Module({
   imports: [
     CqrsModule,
-    CommonModule.register(configValidation({...mongoValidation, ...sqlValidation})),
+    CommonModule.register(
+      configValidation({ ...mongoValidation, ...sqlValidation }),
+    ),
     connectToMysql(Coupon.name, [Coupon]),
     connectToMongo(Coupon.name),
     TypeOrmModule.forFeature([Coupon]),

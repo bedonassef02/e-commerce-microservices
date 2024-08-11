@@ -8,4 +8,4 @@ export const authValidation = {
   // Google OAuth
   GOOGLE_CLIENT_ID: Joi.string().required(),
   GOOGLE_CLIENT_SECRET: Joi.string().required(),
-}
+};

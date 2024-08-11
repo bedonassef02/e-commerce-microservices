@@ -4,6 +4,7 @@ import { RMQ_URL } from '@app/common/utils/constants/constants';
 import { LoggingInterceptor } from '@app/common/intercetpors/logging.interceptor';
 import { MAIL_QUEUE } from '@app/common/utils/constants/queue.constants';
 import { MailModule } from './mail.module';
+import { CustomLoggerService } from '@app/common/utils/logger/logger.service';
 
 async function bootstrap() {
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
@@ -17,6 +18,7 @@ async function bootstrap() {
     },
   );
   app.useGlobalInterceptors(new LoggingInterceptor());
+  app.useLogger(new CustomLoggerService('Mail'));
   app.listen();
 }
 bootstrap();

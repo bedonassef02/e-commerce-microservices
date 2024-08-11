@@ -5,6 +5,7 @@ import {
   Inject,
   Param,
   Post,
+  Query,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
@@ -17,6 +18,7 @@ import { User } from '@app/common/decorators/user.decorator';
 import { FindOrderDto } from '@app/common/dto/order/find-order.dto';
 import { ParseMongoIdPipe } from '@app/common/pipes/parse-mongo-id.pipe';
 import { CreateOrderDto } from '@app/common/dto/order/create-order.dto';
+import { OrderQuery } from '@app/common/utils/features/order.query';
 
 @UseInterceptors(RpcExceptionInterceptor)
 @UseGuards(AuthGuard)
@@ -31,8 +33,9 @@ export class OrderController {
   }
 
   @Get()
-  findAll(@User('id') user: string) {
-    return this.orderService.send(Commands.Crud.FIND_ALL, user);
+  findAll(@User('id') user: string, @Query() query: OrderQuery) {
+    query.user = user;
+    return this.orderService.send(Commands.Crud.FIND_ALL, query);
   }
 
   @Get(':id')

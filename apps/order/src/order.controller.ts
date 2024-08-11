@@ -8,6 +8,7 @@ import { GetOrdersQuery } from './queries/impl/get-orders.query';
 import { CreateOrderDto } from '@app/common/dto/order/create-order.dto';
 import { CreateOrderCommand } from './commands/impl/create-order.command';
 import { UpdateOrderStatusCommand } from './commands/impl/update-order-status.command';
+import { OrderQuery } from '@app/common/utils/features/order.query';
 
 @Controller()
 export class OrderController {
@@ -22,9 +23,8 @@ export class OrderController {
   }
 
   @MessagePattern(Commands.Crud.FIND_ALL)
-  findAll(user: string) {
-    console.log({ user });
-    return this.queryBus.execute(new GetOrdersQuery(user));
+  findAll(query: OrderQuery) {
+    return this.queryBus.execute(new GetOrdersQuery(query));
   }
 
   @MessagePattern(Commands.Crud.FIND_BY_ID)

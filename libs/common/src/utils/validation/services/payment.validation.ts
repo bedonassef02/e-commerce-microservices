@@ -5,4 +5,4 @@ export const paymentValidation = {
   STRIPE_SECRET_KEY: Joi.string(),
   STRIPE_SUCCESS_URL: Joi.string().uri(),
   STRIPE_CANCEL_URL: Joi.string().uri(),
-}
+};

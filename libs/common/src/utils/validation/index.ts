@@ -17,4 +17,4 @@ export const validationSchema = {
 
   // Nest Debug
   NEST_DEBUG: Joi.boolean().optional(),
-}
+};
