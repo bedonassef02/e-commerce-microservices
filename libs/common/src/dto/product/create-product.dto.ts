@@ -1,26 +1,29 @@
 import {
-  IsArray,
   IsMongoId,
   IsNumber,
+  IsOptional,
   IsPositive,
   IsString,
 } from 'class-validator';
+import { Type } from 'class-transformer';
 
 export class CreateProductDto {
   @IsString()
   name: string;
   @IsString()
   description: string;
+  @Type(() => Number)
   @IsNumber()
   @IsPositive()
   price: number;
+  @Type(() => Number)
   @IsNumber()
   @IsPositive()
   stock: number;
-  @IsArray()
-  @IsString({ each: true })
-  @IsArray()
-  images: string[];
   @IsMongoId()
   category: string;
+  @IsOptional()
+  cover?: string;
+  @IsOptional()
+  images?: string[];
 }

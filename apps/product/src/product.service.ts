@@ -10,7 +10,7 @@ import { IPagination } from '@app/common/utils/interfaces/pagination.interface';
 import { productFilter } from './utils/helpers/product-filter.helper';
 
 @Injectable()
-export class ProductService implements IPagination{
+export class ProductService implements IPagination {
   constructor(
     @InjectModel(Product.name) private readonly productModel: Model<Product>,
   ) {}
@@ -51,7 +51,7 @@ export class ProductService implements IPagination{
     return productFilter(query);
   }
 
-  handleQuery(query: any){
+  handleQuery(query: any) {
     return this.productModel
       .find(this.filter(query))
       .select(query.fields)

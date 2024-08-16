@@ -12,11 +12,16 @@ import { registerClient } from '@app/common/utils/helpers/register-client.helper
 import { connectToMongo } from '@app/common/utils/modules/connect-to-mongo.helper';
 import { configValidation } from '@app/common/utils/helpers/config-validation.helper';
 import { mongoValidation } from '@app/common/utils/validation/utils/mongo-db.validation';
+import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
   imports: [
     CommonModule.register(configValidation(mongoValidation)),
     connectToMongo(Product.name),
+    MulterModule.register({
+      dest: './upload',
+      // storage: storageConfig(),
+    }),
     CqrsModule,
     ClientsModule.register([registerClient(CategoryMP)]),
     MongooseModule.forFeature([{ name: Product.name, schema: ProductSchema }]),

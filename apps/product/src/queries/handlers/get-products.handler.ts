@@ -11,7 +11,7 @@ import { ProductQuery } from '@app/common/utils/features/product.query';
 export class GetProductsHandler implements IQueryHandler<GetProductsQuery> {
   constructor(private readonly productService: ProductService) {}
 
-  async execute(productsQuery: GetProductsQuery){
+  async execute(productsQuery: GetProductsQuery) {
     const query: ProductQuery = productsQuery.query;
     query.filter = this.productService.filter(query);
     return this.paginate(query).toPromise();

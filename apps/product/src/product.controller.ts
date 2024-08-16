@@ -15,8 +15,7 @@ export class ProductController {
   constructor(
     private readonly commandBus: CommandBus,
     private readonly queryBus: QueryBus,
-  ) {
-  }
+  ) {}
 
   @MessagePattern(Commands.Crud.CREATE)
   create(@Body() createProductDto: CreateProductDto) {

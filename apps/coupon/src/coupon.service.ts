@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { Coupon } from './entities/coupon.entity';
 import { CreateCouponDto } from '@app/common/dto/coupon/create-coupon.dto';
-import { from, switchMap, Observable } from 'rxjs';
-import { Repository } from 'typeorm';
+import { from, switchMap, Observable, map } from 'rxjs';
+import { LessThan, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UseCouponDto } from '@app/common/dto/coupon/use-coupon.dto';
 import { InjectModel } from '@nestjs/mongoose';
@@ -35,6 +35,16 @@ export class CouponService {
           switchMap(() => from(this.couponRepository.save(coupon))),
         );
       }),
+    );
+  }
+
+  removeMany(): Observable<number> {
+    const currentDate = new Date();
+
+    return from(
+      this.couponRepository.delete({ expirationDate: LessThan(currentDate) }),
+    ).pipe(
+      map((result) => result.affected || 0), // Return the number of deleted coupons
     );
   }
 }

@@ -19,10 +19,13 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { configValidation } from '@app/common/utils/helpers/config-validation.helper';
 import { mongoValidation } from '@app/common/utils/validation/utils/mongo-db.validation';
 import { sqlValidation } from '@app/common/utils/validation/utils/sql-db.validation';
+import { ScheduleModule } from '@nestjs/schedule';
+import { CouponTaskService } from './utils/services/coupon-task.service';
 
 @Module({
   imports: [
     CqrsModule,
+    ScheduleModule.forRoot(),
     CommonModule.register(
       configValidation({ ...mongoValidation, ...sqlValidation }),
     ),
@@ -35,6 +38,11 @@ import { sqlValidation } from '@app/common/utils/validation/utils/sql-db.validat
     ClientsModule.register([registerClient(CartMP)]),
   ],
   controllers: [CouponController],
-  providers: [CouponService, ...couponQueries, ...couponHandlers],
+  providers: [
+    CouponService,
+    CouponTaskService,
+    ...couponQueries,
+    ...couponHandlers,
+  ],
 })
 export class CouponModule {}

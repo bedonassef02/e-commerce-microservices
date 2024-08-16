@@ -14,7 +14,9 @@ export class Product {
   price: number;
   @Prop({ default: 0 })
   stock: number;
-  @Prop()
+  @Prop({ required: true })
+  cover: string[];
+  @Prop({ required: true })
   images: string[];
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Category' })
   category: string;

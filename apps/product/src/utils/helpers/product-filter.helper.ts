@@ -4,7 +4,7 @@ import { ProductQuery } from '@app/common/utils/features/product.query';
 export function productFilter(query: ProductQuery): ProductFilter {
   const filter: ProductFilter = {};
 
-  if (query.category){
+  if (query.category) {
     filter.category = query.category;
   }
 

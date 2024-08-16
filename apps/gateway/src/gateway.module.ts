@@ -5,7 +5,7 @@ import { AuthModule } from './auth/auth.module';
 import { CartModule } from './cart/cart.module';
 import { OrderModule } from './order/order.module';
 import { WishlistModule } from './wishlist/wishlist.module';
-import { APP_INTERCEPTOR } from '@nestjs/core';
+import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { TimeoutInterceptor } from '@app/common/intercetpors/timeout.interceptor';
 import { registerJwt } from '@app/common/utils/modules/register-jwt.helper';
 import { registerI18n } from '@app/common/utils/modules/register-i18n.helper';
@@ -15,6 +15,7 @@ import { CouponModule } from './coupon/coupon.module';
 import { ReviewModule } from './review/review.module';
 import { PaymentModule } from './payment/payment.module';
 import { ConfigModule } from '@nestjs/config';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
   imports: [
@@ -30,11 +31,21 @@ import { ConfigModule } from '@nestjs/config';
     CouponModule,
     ReviewModule,
     PaymentModule,
+    ThrottlerModule.forRoot([
+      {
+        ttl: 60000,
+        limit: 10,
+      },
+    ]),
   ],
   providers: [
     {
       provide: APP_INTERCEPTOR,
       useClass: TimeoutInterceptor,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
     },
     TokenService,
     CustomI18nService,
