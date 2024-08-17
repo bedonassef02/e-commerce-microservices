@@ -12,6 +12,7 @@ import {
   UsePipes,
   Query,
   UploadedFiles,
+  ParseFilePipe,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { CreateProductDto } from '@app/common/dto/product/create-product.dto';
@@ -41,10 +42,10 @@ export class ProductController {
   @Roles(Role.ADMIN)
   @UseInterceptors(
     imageUploadInterceptor(productFields, '5MB', ['png', 'jpg']),
-    new ImagesInterceptor(),
+    new ImagesInterceptor(true),
   )
   create(
-    @UploadedFiles()
+    @UploadedFiles(new ParseFilePipe({ fileIsRequired: true }))
     files: { cover: File[]; images: File[] },
     @Body() createProductDto: CreateProductDto,
   ) {

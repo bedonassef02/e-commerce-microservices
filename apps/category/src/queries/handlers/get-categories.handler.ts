@@ -1,7 +1,6 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { GetCategoriesQuery } from '../impl/get-categories.query';
 import { CategoryService } from '../../category.service';
-import { CategoryFilter } from '@app/common/utils/filters/category.filter';
 import { PaginationResponse } from '@app/common/utils/types/pagination-response.type';
 import { Category } from '../../entities/category.entity';
 import { forkJoin, map } from 'rxjs';

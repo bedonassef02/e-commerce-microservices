@@ -1,15 +1,6 @@
 import { Expose, Type } from 'class-transformer';
 import { QueryFeature } from '@app/common/utils/features/query.feature';
-import { OrderFilter } from '@app/common/utils/filters/order.filter';
-import {
-  IsIn,
-  IsMongoId,
-  IsNumber,
-  IsOptional,
-  IsString,
-} from 'class-validator';
-import { OrderStatus } from '../../../../../apps/order/src/utils/order-status';
-import { OrderPayment } from '../../../../../apps/order/src/utils/order-payment';
+import { IsMongoId, IsNumber, IsOptional } from 'class-validator';
 import { ProductFilter } from '@app/common/utils/filters/product.filter';
 
 export class ProductQuery extends QueryFeature {

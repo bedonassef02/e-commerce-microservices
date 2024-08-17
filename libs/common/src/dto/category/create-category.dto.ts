@@ -9,4 +9,6 @@ export class CreateCategoryDto {
   @IsOptional()
   @IsMongoId()
   parent: string;
+  @IsOptional()
+  cover?: string;
 }

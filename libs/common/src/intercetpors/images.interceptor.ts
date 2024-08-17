@@ -4,22 +4,35 @@ import {
   ExecutionContext,
   CallHandler,
 } from '@nestjs/common';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
+import { Request } from 'express';
 
 @Injectable()
 export class ImagesInterceptor implements NestInterceptor {
-  intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
-    const request = context.switchToHttp().getRequest();
+  constructor(private readonly hasImages: boolean = false) {}
 
-    const cover = request.files['cover'];
-    const images = request.files['images'];
+  intercept(
+    context: ExecutionContext,
+    next: CallHandler<any>,
+  ): Observable<any> {
+    const request = context.switchToHttp().getRequest<Request>();
+
+    const cover = request.files?.['cover'];
     if (cover) {
       request.body['cover'] = cover[0].filename;
     }
-    if (images) {
-      request.body['images'] = images.map((image) => image.filename);
+
+    if (this.hasImages) {
+      this.handleImages(request);
     }
 
-    return next.handle();
+    return next.handle().pipe(tap(() => {}));
+  }
+
+  private handleImages(request: Request): void {
+    const images = request.files?.['images'];
+    if (images) {
+      request.body['images'] = images.map((image: any) => image.filename);
+    }
   }
 }

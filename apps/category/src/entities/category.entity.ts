@@ -11,6 +11,8 @@ export class Category extends Document {
   parent: string;
   @Prop()
   description: string;
+  @Prop()
+  cover: string;
 }
 
 export const CategorySchema = SchemaFactory.createForClass(Category);

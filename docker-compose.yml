@@ -2,18 +2,18 @@ version: '3.8'
 
 services:
 
-  mysql-coupon:
-    image: mysql
-    container_name: mysql-coupon
-    ports:
-      - "3307:3306"
-    environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=coupon
-      - MYSQL_USER=root
-      - MYSQL_PASSWORD=root
-    volumes:
-      - coupon-mysql-data:/var/lib/mysql
+#  mysql-coupon:
+#    image: mysql
+#    container_name: mysql-coupon
+#    ports:
+#      - "3307:3306"
+#    environment:
+#      - MYSQL_ROOT_PASSWORD=root
+#      - MYSQL_DATABASE=coupon
+#      - MYSQL_USER=root
+#      - MYSQL_PASSWORD=root
+#    volumes:
+#      - coupon-mysql-data:/var/lib/mysql
 
   rabbitmq:
     image: rabbitmq:3-management
@@ -28,11 +28,11 @@ services:
     ports:
       - "6379:6379"
 
-  mongo:
-    image: mongo
-    container_name: mongo
-    ports:
-      - "27017:27017"
+#  mongo:
+#    image: mongo
+#    container_name: mongo
+#    ports:
+#      - "27017:27017"
 
-volumes:
-  coupon-mysql-data:
+#volumes:
+#  coupon-mysql-data:

@@ -1,10 +1,8 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { forkJoin, map, Observable } from 'rxjs';
+import { forkJoin, map } from 'rxjs';
 import { OrderService } from '../../order.service';
 import { Order } from '../../entities/order.entity';
 import { GetOrdersQuery } from '../impl/get-orders.query';
-import { CategoryQuery } from '@app/common/utils/features/category.query';
-import { Category } from '../../../../category/src/entities/category.entity';
 import { OrderQuery } from '@app/common/utils/features/order.query';
 
 @QueryHandler(GetOrdersQuery)

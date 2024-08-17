@@ -11,6 +11,8 @@ import {
   UseGuards,
   Query,
   UsePipes,
+  UploadedFiles,
+  ParseFilePipe,
 } from '@nestjs/common';
 import { ParseMongoIdPipe } from '@app/common/pipes/parse-mongo-id.pipe';
 import { CATEGORY_SERVICE } from '@app/common/utils/constants/service.constants';
@@ -25,6 +27,10 @@ import { Roles } from '@app/common/decorators/role.decorator';
 import { Role } from '@app/common/utils/constants/constants';
 import { AuthGuard } from '@app/common/guards/auth.guard';
 import { Public } from '@app/common/decorators/public.decorator';
+import { File } from '@app/common/utils/types/file.type';
+import { imageUploadInterceptor } from '@app/common/intercetpors/image-upload.interceptor';
+import { ImagesInterceptor } from '@app/common/intercetpors/images.interceptor';
+import { categoryFields } from '@app/common/utils/files/fields/category.fields';
 
 @UseInterceptors(RpcExceptionInterceptor)
 @UseGuards(AuthGuard, RoleGuard)
@@ -34,7 +40,15 @@ export class CategoryController {
 
   @Post()
   @Roles(Role.ADMIN)
-  async create(@Body() createCategoryDto: CreateCategoryDto) {
+  @UseInterceptors(
+    imageUploadInterceptor(categoryFields, '5MB', ['png', 'jpg']),
+    new ImagesInterceptor(),
+  )
+  async create(
+    @UploadedFiles(new ParseFilePipe({ fileIsRequired: true }))
+    files: { cover: File[] },
+    @Body() createCategoryDto: CreateCategoryDto,
+  ) {
     return this.categoryService.send(Commands.Crud.CREATE, createCategoryDto);
   }
 

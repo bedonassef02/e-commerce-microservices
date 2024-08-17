@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Product } from './entities/product.entity';
-import { Model, Promise } from 'mongoose';
+import { Model } from 'mongoose';
 import { from, Observable } from 'rxjs';
 import { CreateProductDto } from '@app/common/dto/product/create-product.dto';
 import { UpdateProductDto } from '@app/common/dto/product/update-product.dto';
