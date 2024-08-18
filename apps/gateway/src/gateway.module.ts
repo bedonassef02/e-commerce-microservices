@@ -16,6 +16,8 @@ import { ReviewModule } from './review/review.module';
 import { PaymentModule } from './payment/payment.module';
 import { ConfigModule } from '@nestjs/config';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -37,6 +39,10 @@ import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
         limit: 10,
       },
     ]),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '../../../', 'uploads'),
+      serveRoot: '/static',
+    }),
   ],
   providers: [
     {

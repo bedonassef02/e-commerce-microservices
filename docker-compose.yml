@@ -1,19 +1,25 @@
 version: '3.8'
 
 services:
+  gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: gateway
+    ports:
+      - "3000:3000"
+    command: npm run start:dev gateway # Run the gateway service
 
-#  mysql-coupon:
-#    image: mysql
-#    container_name: mysql-coupon
-#    ports:
-#      - "3307:3306"
-#    environment:
-#      - MYSQL_ROOT_PASSWORD=root
-#      - MYSQL_DATABASE=coupon
-#      - MYSQL_USER=root
-#      - MYSQL_PASSWORD=root
-#    volumes:
-#      - coupon-mysql-data:/var/lib/mysql
+  product:
+    build:
+      context: .
+      dockerfile: Dockerfile.product  # Specify the correct Dockerfile for product
+    container_name: product
+    command: npm run start:dev product # Run the product service
+    environment:
+      - DATABASE_USERNAME=bedo
+      - DATABASE_PASSWORD=bedonassef71
+      - DATABASE_URI=mongodb+srv://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@cluster0.pyyzclc.mongodb.net
 
   rabbitmq:
     image: rabbitmq:3-management
@@ -27,6 +33,20 @@ services:
     container_name: redis
     ports:
       - "6379:6379"
+
+# Uncomment the following if you need MySQL, MongoDB, etc.
+#  mysql-coupon:
+#    image: mysql
+#    container_name: mysql-coupon
+#    ports:
+#      - "3307:3306"
+#    environment:
+#      - MYSQL_ROOT_PASSWORD=root
+#      - MYSQL_DATABASE=coupon
+#      - MYSQL_USER=root
+#      - MYSQL_PASSWORD=root
+#    volumes:
+#      - coupon-mysql-data:/var/lib/mysql
 
 #  mongo:
 #    image: mongo
