@@ -34,9 +34,9 @@ import { ImagesInterceptor } from '@app/common/intercetpors/images.interceptor';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('product')
-@Controller('product')
 @UseGuards(AuthGuard, RoleGuard)
 @UseInterceptors(RpcExceptionInterceptor)
+@Controller({ path: 'product', version: '1' })
 export class ProductController {
   constructor(@Inject(PRODUCT_SERVICE) private productService: ClientProxy) {}
 

@@ -7,6 +7,7 @@ import { RegisterCommand } from './commands/impl/register.command';
 import { USER_SERVICE } from '@app/common/utils/constants/service.constants';
 import { LoginCommand } from './commands/impl/login.command';
 import { Commands } from '@app/common/utils/commands';
+import { RefreshTokenCommand } from './commands/impl/refresh-token.command';
 
 @Controller()
 export class AuthController {
@@ -23,5 +24,10 @@ export class AuthController {
   @MessagePattern(Commands.Auth.REGISTER)
   register(registerDto: RegisterDto) {
     return this.commandBus.execute(new RegisterCommand(registerDto));
+  }
+
+  @MessagePattern(Commands.Auth.REFRESH_TOKEN)
+  refreshToken(refreshToken: string) {
+    return this.commandBus.execute(new RefreshTokenCommand(refreshToken));
   }
 }

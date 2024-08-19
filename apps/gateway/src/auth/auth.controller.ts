@@ -17,7 +17,7 @@ import { Commands } from '@app/common/utils/commands';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('auth')
-@Controller('auth')
+@Controller({ path: 'auth', version: '1' })
 @UseInterceptors(RpcExceptionInterceptor)
 export class AuthController {
   constructor(
@@ -33,5 +33,10 @@ export class AuthController {
   @Post('register')
   register(@Body() registerDto: RegisterDto): Observable<any> {
     return this.authService.send(Commands.Auth.REGISTER, registerDto);
+  }
+
+  @Post('refresh')
+  refreshToken(@Body('refreshToken') refreshToken: string): Observable<any> {
+    return this.authService.send(Commands.Auth.REFRESH_TOKEN, refreshToken);
   }
 }

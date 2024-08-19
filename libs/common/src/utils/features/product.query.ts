@@ -10,14 +10,6 @@ export class ProductQuery extends QueryFeature {
     return (this.page - 1) * this.limit;
   }
 
-  @Expose({ name: 'searchQuery' })
-  get searchQuery(): any[] {
-    return [
-      { name: { $regex: this.search, $options: 'i' } },
-      { description: { $regex: this.search, $options: 'i' } },
-    ];
-  }
-
   fields: string = 'name price images category';
   limit = 12;
 

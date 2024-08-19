@@ -14,10 +14,11 @@ import { CustomI18nService } from './utils/services/custom-i18n.service';
 import { CouponModule } from './coupon/coupon.module';
 import { ReviewModule } from './review/review.module';
 import { PaymentModule } from './payment/payment.module';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { DevtoolsModule } from '@nestjs/devtools-integration';
 
 @Module({
   imports: [
@@ -42,6 +43,9 @@ import { join } from 'path';
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '../../../', 'uploads'),
       serveRoot: '/static',
+    }),
+    DevtoolsModule.register({
+      http: true,
     }),
   ],
   providers: [

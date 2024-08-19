@@ -22,8 +22,8 @@ import { Public } from '@app/common/decorators/public.decorator';
 import { ApiTags } from '@nestjs/swagger';
 
 @UseGuards(AuthGuard)
-@ApiTags('auth/password')
-@Controller('auth/password')
+@ApiTags('password')
+@Controller({ path: 'auth/password', version: '1' })
 @UseInterceptors(RpcExceptionInterceptor)
 export class PasswordController {
   constructor(

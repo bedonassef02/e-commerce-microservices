@@ -19,8 +19,8 @@ import { ApiTags } from '@nestjs/swagger';
 
 @UseGuards(AuthGuard)
 @ApiTags('wishlist')
-@Controller('wishlist')
 @UseInterceptors(RpcExceptionInterceptor)
+@Controller({ path: 'wishlist', version: '1' })
 export class WishlistController {
   constructor(@Inject(WISHLIST_SERVICE) private wishlistService: ClientProxy) {}
   @Get()

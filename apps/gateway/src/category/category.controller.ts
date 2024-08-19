@@ -35,9 +35,9 @@ import { ApiTags } from '@nestjs/swagger';
 import { CategorySwagger } from '../utils/swagger/category/category.swagger';
 
 @ApiTags('category')
-@Controller('category')
 @UseGuards(AuthGuard, RoleGuard)
 @UseInterceptors(RpcExceptionInterceptor)
+@Controller({ path: 'category', version: '1' })
 export class CategoryController {
   constructor(@Inject(CATEGORY_SERVICE) private categoryService: ClientProxy) {}
 

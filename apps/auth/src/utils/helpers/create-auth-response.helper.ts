@@ -3,12 +3,14 @@ import { AuthResponse } from '../types/auth-response.type';
 
 export function createAuthResponse(
   user: UserDocument,
-  token: string,
+  access_token: string,
+  refresh_token: string,
 ): AuthResponse {
   return {
     id: user._id || user.id,
     name: user.name,
     role: user.role,
-    token,
+    access_token,
+    refresh_token,
   };
 }

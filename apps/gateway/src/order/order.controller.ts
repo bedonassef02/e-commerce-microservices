@@ -23,8 +23,8 @@ import { ApiTags } from '@nestjs/swagger';
 
 @UseGuards(AuthGuard)
 @ApiTags('order')
-@Controller('order')
 @UseInterceptors(RpcExceptionInterceptor)
+@Controller({ path: 'order', version: '1' })
 export class OrderController {
   constructor(@Inject(ORDER_SERVICE) private orderService: ClientProxy) {}
 

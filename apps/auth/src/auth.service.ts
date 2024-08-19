@@ -39,7 +39,8 @@ export class AuthService {
   }
 
   generateResponse(user: UserDocument): AuthResponse {
-    const token: string = this.tokenService.generate(user);
-    return createAuthResponse(user, token);
+    const access_token: string = this.tokenService.generate(user);
+    const refresh_token: string = this.tokenService.generate(user, '7d');
+    return createAuthResponse(user, access_token, refresh_token);
   }
 }

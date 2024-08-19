@@ -19,8 +19,8 @@ import { ApiTags } from '@nestjs/swagger';
 
 @UseGuards(AuthGuard)
 @ApiTags('review')
-@Controller('review')
 @UseInterceptors(RpcExceptionInterceptor)
+@Controller({ path: 'review', version: '1' })
 export class ReviewController {
   constructor(@Inject(REVIEW_SERVICE) private reviewService: ClientProxy) {}
   @Post()

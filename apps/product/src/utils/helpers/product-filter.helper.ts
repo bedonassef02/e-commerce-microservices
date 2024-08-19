@@ -17,7 +17,8 @@ export function productFilter(query: ProductQuery): ProductFilter {
   }
 
   if (query.search) {
-    filter.$or = query.searchQuery;
+    // filter.$text = query.search;
+    // filter.score = { score: { $meta: 'textScore' } };
   }
 
   return filter;

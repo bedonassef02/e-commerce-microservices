@@ -4,5 +4,6 @@ export type AuthResponse = {
   id: string;
   name: string;
   role: Role;
-  token: string;
+  access_token: string;
+  refresh_token: string;
 };

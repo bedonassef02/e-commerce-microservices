@@ -23,8 +23,8 @@ import { ApiTags } from '@nestjs/swagger';
 
 @UseGuards(AuthGuard)
 @ApiTags('coupon')
-@Controller('coupon')
 @UseInterceptors(RpcExceptionInterceptor)
+@Controller({ path: 'coupon', version: '1' })
 export class CouponController {
   constructor(@Inject(COUPON_SERVICE) private couponService: ClientProxy) {}
 

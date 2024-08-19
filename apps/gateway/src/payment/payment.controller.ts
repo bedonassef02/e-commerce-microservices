@@ -16,8 +16,8 @@ import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('payment')
 @UseGuards(AuthGuard)
-@Controller('payment')
 @UseInterceptors(RpcExceptionInterceptor)
+@Controller({ path: 'payment', version: '1' })
 export class PaymentController {
   constructor(@Inject(PAYMENT_SERVICE) private paymentService: ClientProxy) {}
 

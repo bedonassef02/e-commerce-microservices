@@ -1,4 +1,4 @@
-import { Controller, Logger } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Category } from './entities/category.entity';
 import { Model } from 'mongoose';
@@ -11,8 +11,6 @@ import { categoryFilter } from './utils/helpers/category-filter.helper';
 
 @Controller()
 export class CategoryService implements IPagination {
-  private logger = new Logger(CategoryService.name);
-
   constructor(
     @InjectModel(Category.name) private readonly categoryModel: Model<Category>,
   ) {}

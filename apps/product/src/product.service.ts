@@ -43,21 +43,29 @@ export class ProductService implements IPagination {
     return this.productModel.findByIdAndDelete(id);
   }
 
-  countDocuments(query: any): Observable<number> {
-    return from(this.productModel.countDocuments(query.filter));
+  countDocuments(query: ProductQuery): Observable<number> {
+    return from(
+      this.productModel
+        .countDocuments({ ...this.textSearch(query.search), ...query.filter })
+        .exec(),
+    );
   }
 
-  filter(query: any): any {
+  filter(query: ProductQuery): any {
     return productFilter(query);
   }
 
-  handleQuery(query: any) {
+  handleQuery(query: ProductQuery) {
     return this.productModel
-      .find(this.filter(query))
+      .find({ ...this.textSearch(query.search), ...query.filter })
       .select(query.fields)
       .limit(query.limit)
       .skip(query.skip)
-      .sort(query.sort)
+      .sort(query.search ? { score: { $meta: 'textScore' } } : query.sort)
       .exec();
+  }
+
+  private textSearch(search: string) {
+    return search ? { $text: { $search: search } } : {};
   }
 }

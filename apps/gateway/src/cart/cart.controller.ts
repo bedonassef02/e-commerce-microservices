@@ -19,7 +19,7 @@ import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('cart')
 @UseGuards(AuthGuard)
-@Controller('cart')
+@Controller({ path: 'cart', version: '1' })
 @UseInterceptors(RpcExceptionInterceptor)
 export class CartController {
   constructor(@Inject(CART_SERVICE) private cartService: ClientProxy) {}

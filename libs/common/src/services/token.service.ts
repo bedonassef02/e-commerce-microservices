@@ -8,9 +8,9 @@ import { Payload } from '@app/common/utils/types/payload.type';
 export class TokenService {
   constructor(private jwtService: JwtService) {}
 
-  generate(user: UserDocument): string {
+  generate(user: UserDocument, expiresIn: string = '15m'): string {
     const payload: Payload = { sub: user.id || user._id, role: user.role };
-    return this.jwtService.sign(payload);
+    return this.jwtService.sign(payload, { expiresIn });
   }
 
   extract(request: JwtFromRequestFunction): string {
