@@ -19,10 +19,12 @@ import { AuthGuard } from '@app/common/guards/auth.guard';
 import { User } from '@app/common/decorators/user.decorator';
 import { ForgetPasswordDto } from '@app/common/dto/auth/forget-password.dto';
 import { Public } from '@app/common/decorators/public.decorator';
+import { ApiTags } from '@nestjs/swagger';
 
-@UseInterceptors(RpcExceptionInterceptor)
 @UseGuards(AuthGuard)
+@ApiTags('auth/password')
 @Controller('auth/password')
+@UseInterceptors(RpcExceptionInterceptor)
 export class PasswordController {
   constructor(
     @Inject(AUTH_SERVICE) private readonly passwordService: ClientProxy,

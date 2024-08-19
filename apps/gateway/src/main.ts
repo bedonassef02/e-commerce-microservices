@@ -3,6 +3,9 @@ import { GatewayModule } from './gateway.module';
 import { ValidationPipe } from '@nestjs/common';
 import { LoggerMiddleware } from '@app/common/middlewares/logger.middleware';
 import helmet from 'helmet';
+import * as compression from 'compression';
+import { SwaggerModule } from '@nestjs/swagger';
+import { swaggerConfig } from './utils/helpers/swagger.helper';
 
 async function bootstrap() {
   const app = await NestFactory.create(GatewayModule);
@@ -13,8 +16,12 @@ async function bootstrap() {
     new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }),
   );
 
+  app.use(compression());
   app.use(helmet());
   app.enableCors();
+
+  const document = SwaggerModule.createDocument(app, swaggerConfig);
+  SwaggerModule.setup('api', app, document);
 
   await app.listen(3000);
 }

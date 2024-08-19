@@ -15,10 +15,12 @@ import { REVIEW_SERVICE } from '@app/common/utils/constants/service.constants';
 import { ClientProxy } from '@nestjs/microservices';
 import { Commands } from '@app/common/utils/commands';
 import { ReviewDto } from '@app/common/dto/review/review.dto';
+import { ApiTags } from '@nestjs/swagger';
 
-@UseInterceptors(RpcExceptionInterceptor)
 @UseGuards(AuthGuard)
+@ApiTags('review')
 @Controller('review')
+@UseInterceptors(RpcExceptionInterceptor)
 export class ReviewController {
   constructor(@Inject(REVIEW_SERVICE) private reviewService: ClientProxy) {}
   @Post()

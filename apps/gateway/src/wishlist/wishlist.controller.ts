@@ -15,10 +15,12 @@ import { RpcExceptionInterceptor } from '@app/common/utils/exception/rpc-excepti
 import { AuthGuard } from '@app/common/guards/auth.guard';
 import { User } from '@app/common/decorators/user.decorator';
 import { WishlistDto } from '@app/common/dto/wishlist/wishlist.dto';
+import { ApiTags } from '@nestjs/swagger';
 
-@UseInterceptors(RpcExceptionInterceptor)
 @UseGuards(AuthGuard)
+@ApiTags('wishlist')
 @Controller('wishlist')
+@UseInterceptors(RpcExceptionInterceptor)
 export class WishlistController {
   constructor(@Inject(WISHLIST_SERVICE) private wishlistService: ClientProxy) {}
   @Get()

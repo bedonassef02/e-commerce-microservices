@@ -31,10 +31,12 @@ import { File } from '@app/common/utils/types/file.type';
 import { imageUploadInterceptor } from '@app/common/intercetpors/image-upload.interceptor';
 import { productFields } from '@app/common/utils/files/fields/product.fields';
 import { ImagesInterceptor } from '@app/common/intercetpors/images.interceptor';
+import { ApiTags } from '@nestjs/swagger';
 
-@UseInterceptors(RpcExceptionInterceptor)
-@UseGuards(AuthGuard, RoleGuard)
+@ApiTags('product')
 @Controller('product')
+@UseGuards(AuthGuard, RoleGuard)
+@UseInterceptors(RpcExceptionInterceptor)
 export class ProductController {
   constructor(@Inject(PRODUCT_SERVICE) private productService: ClientProxy) {}
 

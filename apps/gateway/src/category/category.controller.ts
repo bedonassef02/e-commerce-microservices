@@ -31,10 +31,13 @@ import { File } from '@app/common/utils/types/file.type';
 import { imageUploadInterceptor } from '@app/common/intercetpors/image-upload.interceptor';
 import { ImagesInterceptor } from '@app/common/intercetpors/images.interceptor';
 import { categoryFields } from '@app/common/utils/files/fields/category.fields';
+import { ApiTags } from '@nestjs/swagger';
+import { CategorySwagger } from '../utils/swagger/category/category.swagger';
 
-@UseInterceptors(RpcExceptionInterceptor)
-@UseGuards(AuthGuard, RoleGuard)
+@ApiTags('category')
 @Controller('category')
+@UseGuards(AuthGuard, RoleGuard)
+@UseInterceptors(RpcExceptionInterceptor)
 export class CategoryController {
   constructor(@Inject(CATEGORY_SERVICE) private categoryService: ClientProxy) {}
 
@@ -44,6 +47,7 @@ export class CategoryController {
     imageUploadInterceptor(categoryFields, '5MB', ['png', 'jpg']),
     new ImagesInterceptor(),
   )
+  @CategorySwagger.create()
   async create(
     @UploadedFiles(new ParseFilePipe({ fileIsRequired: true }))
     files: { cover: File[] },
@@ -54,6 +58,7 @@ export class CategoryController {
 
   @Get()
   @Public()
+  @CategorySwagger.findAll()
   async findAll(@Query() query: CategoryQuery) {
     return this.categoryService.send(Commands.Crud.FIND_ALL, query);
   }
@@ -61,12 +66,14 @@ export class CategoryController {
   @Get(':id')
   @Public()
   @UsePipes(ParseMongoIdPipe)
+  @CategorySwagger.findById()
   findById(@Param('id') id: string) {
     return this.categoryService.send(Commands.Crud.FIND_BY_ID, id);
   }
 
   @Patch(':id')
   @Roles(Role.ADMIN)
+  @CategorySwagger.update()
   async update(
     @Param('id', ParseMongoIdPipe) id: string,
     @Body() updateCategoryDto: UpdateCategoryDto,
@@ -79,6 +86,7 @@ export class CategoryController {
 
   @Delete(':id')
   @Roles(Role.ADMIN)
+  @CategorySwagger.remove()
   async remove(@Param('id', ParseMongoIdPipe) id: string) {
     return this.categoryService.send(Commands.Crud.DELETE, id);
   }

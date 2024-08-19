@@ -19,10 +19,12 @@ import { AuthGuard } from '@app/common/guards/auth.guard';
 import { CreateCouponDto } from '@app/common/dto/coupon/create-coupon.dto';
 import { UseCouponDto } from '@app/common/dto/coupon/use-coupon.dto';
 import { User } from '@app/common/decorators/user.decorator';
+import { ApiTags } from '@nestjs/swagger';
 
-@UseInterceptors(RpcExceptionInterceptor)
 @UseGuards(AuthGuard)
+@ApiTags('coupon')
 @Controller('coupon')
+@UseInterceptors(RpcExceptionInterceptor)
 export class CouponController {
   constructor(@Inject(COUPON_SERVICE) private couponService: ClientProxy) {}
 

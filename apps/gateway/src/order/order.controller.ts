@@ -19,10 +19,12 @@ import { FindOrderDto } from '@app/common/dto/order/find-order.dto';
 import { ParseMongoIdPipe } from '@app/common/pipes/parse-mongo-id.pipe';
 import { CreateOrderDto } from '@app/common/dto/order/create-order.dto';
 import { OrderQuery } from '@app/common/utils/features/order.query';
+import { ApiTags } from '@nestjs/swagger';
 
-@UseInterceptors(RpcExceptionInterceptor)
 @UseGuards(AuthGuard)
+@ApiTags('order')
 @Controller('order')
+@UseInterceptors(RpcExceptionInterceptor)
 export class OrderController {
   constructor(@Inject(ORDER_SERVICE) private orderService: ClientProxy) {}
 

@@ -15,10 +15,12 @@ import { CartDto } from '@app/common/dto/cart/cart.dto';
 import { User } from '@app/common/decorators/user.decorator';
 import { AuthGuard } from '@app/common/guards/auth.guard';
 import { RpcExceptionInterceptor } from '@app/common/utils/exception/rpc-exception.filter';
+import { ApiTags } from '@nestjs/swagger';
 
-@UseInterceptors(RpcExceptionInterceptor)
+@ApiTags('cart')
 @UseGuards(AuthGuard)
 @Controller('cart')
+@UseInterceptors(RpcExceptionInterceptor)
 export class CartController {
   constructor(@Inject(CART_SERVICE) private cartService: ClientProxy) {}
   @Post()

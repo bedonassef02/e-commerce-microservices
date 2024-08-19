@@ -12,9 +12,12 @@ import { PAYMENT_SERVICE } from '@app/common/utils/constants/service.constants';
 import { ClientProxy } from '@nestjs/microservices';
 import { Commands } from '@app/common/utils/commands';
 import { Public } from '@app/common/decorators/public.decorator';
-@UseInterceptors(RpcExceptionInterceptor)
+import { ApiTags } from '@nestjs/swagger';
+
+@ApiTags('payment')
 @UseGuards(AuthGuard)
 @Controller('payment')
+@UseInterceptors(RpcExceptionInterceptor)
 export class PaymentController {
   constructor(@Inject(PAYMENT_SERVICE) private paymentService: ClientProxy) {}
 

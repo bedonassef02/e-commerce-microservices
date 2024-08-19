@@ -14,9 +14,11 @@ import { RegisterDto } from '@app/common/dto/auth/register.dto';
 import { RpcExceptionInterceptor } from '@app/common/utils/exception/rpc-exception.filter';
 import { Observable } from 'rxjs';
 import { Commands } from '@app/common/utils/commands';
+import { ApiTags } from '@nestjs/swagger';
 
-@UseInterceptors(RpcExceptionInterceptor)
+@ApiTags('auth')
 @Controller('auth')
+@UseInterceptors(RpcExceptionInterceptor)
 export class AuthController {
   constructor(
     @Inject(AUTH_SERVICE) private readonly authService: ClientProxy,
