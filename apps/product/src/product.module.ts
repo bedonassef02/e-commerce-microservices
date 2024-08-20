@@ -13,6 +13,8 @@ import { connectToMongo } from '@app/common/utils/modules/connect-to-mongo.helpe
 import { configValidation } from '@app/common/utils/helpers/config-validation.helper';
 import { mongoValidation } from '@app/common/utils/validation/utils/mongo-db.validation';
 import { MulterModule } from '@nestjs/platform-express';
+import { productBackup } from './utils/helpers/product-backup.helper';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -27,6 +29,11 @@ import { MulterModule } from '@nestjs/platform-express';
     MongooseModule.forFeature([{ name: Product.name, schema: ProductSchema }]),
   ],
   controllers: [ProductController],
-  providers: [ProductService, ...productQueries, ...productCommands],
+  providers: [
+    ProductService,
+    productBackup,
+    ...productQueries,
+    ...productCommands,
+  ],
 })
 export class ProductModule {}

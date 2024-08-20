@@ -5,6 +5,8 @@
 /documentation
 /uploads
 
+/backups
+
 # Logs
 logs
 *.log

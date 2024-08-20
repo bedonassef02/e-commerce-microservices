@@ -9,11 +9,12 @@ import { AUTH_QUEUE } from '@app/common/utils/constants/queue.constants';
 import { PasswordController } from './password.controller';
 import { registerJwt } from '@app/common/utils/modules/register-jwt.helper';
 import { TokenService } from '@app/common/services/token.service';
+import { GoogleStrategy } from './utils/strategies/google.strategy';
 
 @Module({
   imports: [
-    PassportModule,
     CommonModule,
+    PassportModule,
     registerJwt(),
     ClientsModule.register([
       {
@@ -27,6 +28,6 @@ import { TokenService } from '@app/common/services/token.service';
     ]),
   ],
   controllers: [AuthController, PasswordController],
-  providers: [TokenService],
+  providers: [TokenService, GoogleStrategy],
 })
 export class AuthModule {}

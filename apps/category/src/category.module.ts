@@ -10,6 +10,8 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { connectToMongo } from '@app/common/utils/modules/connect-to-mongo.helper';
 import { configValidation } from '@app/common/utils/helpers/config-validation.helper';
 import { mongoValidation } from '@app/common/utils/validation/utils/mongo-db.validation';
+import { categoryBackup } from './utils/helpers/category.backup';
+
 @Module({
   imports: [
     CqrsModule,
@@ -19,7 +21,12 @@ import { mongoValidation } from '@app/common/utils/validation/utils/mongo-db.val
       { name: Category.name, schema: CategorySchema },
     ]),
   ],
-  providers: [CategoryService, ...categoryCommands, ...categoryQueries],
+  providers: [
+    CategoryService,
+    categoryBackup,
+    ...categoryCommands,
+    ...categoryQueries,
+  ],
   controllers: [CategoryController],
 })
 export class CategoryModule {}

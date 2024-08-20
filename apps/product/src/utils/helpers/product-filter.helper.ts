@@ -16,10 +16,5 @@ export function productFilter(query: ProductQuery): ProductFilter {
     filter.price = { ...filter.price, $lte: query.max_price };
   }
 
-  if (query.search) {
-    // filter.$text = query.search;
-    // filter.score = { score: { $meta: 'textScore' } };
-  }
-
   return filter;
 }

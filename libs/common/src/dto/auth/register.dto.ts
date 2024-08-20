@@ -6,4 +6,7 @@ export class RegisterDto extends LoginDto {
   @MinLength(3)
   @MaxLength(20)
   name: string;
+
+  provider?: string;
+  providerId?: string;
 }

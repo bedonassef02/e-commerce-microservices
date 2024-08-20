@@ -6,4 +6,8 @@ export const AuthCommands = {
   REGISTER: { cmd: 'register' },
   Password: PasswordCommands,
   REFRESH_TOKEN: { cmd: 'refreshToken' },
+  OAuth: {
+    Google: { cmd: 'googleLoginOrRegister' },
+    Github: { cmd: 'githubLoginOrRegister' },
+  },
 };

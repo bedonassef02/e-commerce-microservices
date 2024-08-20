@@ -8,6 +8,7 @@ import { USER_SERVICE } from '@app/common/utils/constants/service.constants';
 import { LoginCommand } from './commands/impl/login.command';
 import { Commands } from '@app/common/utils/commands';
 import { RefreshTokenCommand } from './commands/impl/refresh-token.command';
+import { LoginOrRegisterCommand } from './commands/impl/login-or-register.command';
 
 @Controller()
 export class AuthController {
@@ -30,4 +31,11 @@ export class AuthController {
   refreshToken(refreshToken: string) {
     return this.commandBus.execute(new RefreshTokenCommand(refreshToken));
   }
+
+  @MessagePattern(Commands.Auth.OAuth.Google)
+  loginOrRegister(registerDto: RegisterDto) {
+    return this.commandBus.execute(new LoginOrRegisterCommand(registerDto));
+  }
+
+
 }
