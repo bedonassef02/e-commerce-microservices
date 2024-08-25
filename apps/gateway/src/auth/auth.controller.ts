@@ -1,10 +1,13 @@
 import {
   Body,
-  Controller, Get,
+  Controller,
+  Get,
   HttpCode,
   HttpStatus,
   Inject,
-  Post, Req, UseGuards,
+  Post,
+  Req,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { AUTH_SERVICE } from '@app/common/utils/constants/service.constants';
@@ -23,8 +26,7 @@ import { AuthGuard } from '@nestjs/passport';
 export class AuthController {
   constructor(
     @Inject(AUTH_SERVICE) private readonly authService: ClientProxy,
-  ) {
-  }
+  ) {}
 
   @HttpCode(HttpStatus.OK)
   @Post('login')
@@ -44,8 +46,7 @@ export class AuthController {
 
   @Get('google')
   @UseGuards(AuthGuard('google'))
-  async googleAuth(@Req() req) {
-  }
+  async googleAuth(@Req() req) {}
 
   @Get('google/callback')
   @UseGuards(AuthGuard('google'))

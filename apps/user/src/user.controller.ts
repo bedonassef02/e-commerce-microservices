@@ -8,6 +8,9 @@ import { GetUserByEmailCommand } from './queries/impl/get-user-by-email.command'
 import { Commands } from '@app/common/utils/commands';
 import { ChangePasswordDto } from '@app/common/dto/auth/change-password.dto';
 import { UpdatePasswordCommand } from './commands/impl/update-password.command';
+import { Generate2FASecretCommand } from '../../auth/src/commands/impl/generate-2fa-secret.command';
+import { TwoFactorCommand } from './commands/impl/two-factor.command';
+import { TwoFactorDto } from '@app/common/dto/auth/two-factor.dto';
 
 @Controller()
 export class UserController {
@@ -34,5 +37,10 @@ export class UserController {
   @MessagePattern(Commands.User.UPDATE_PASSWORD)
   updatePassword(passwordDto: ChangePasswordDto) {
     return this.commandBus.execute(new UpdatePasswordCommand(passwordDto));
+  }
+
+  @MessagePattern(Commands.User.TWO_FA)
+  twoFA(twoFactorDto: TwoFactorDto) {
+    return this.commandBus.execute(new TwoFactorCommand(twoFactorDto));
   }
 }

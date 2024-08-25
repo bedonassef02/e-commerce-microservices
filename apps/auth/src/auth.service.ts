@@ -16,8 +16,7 @@ export class AuthService {
   constructor(
     @Inject(USER_SERVICE) private readonly userService: ClientProxy,
     private readonly tokenService: TokenService,
-  ) {
-  }
+  ) {}
 
   login(loginDto: LoginDto): Observable<User> {
     return this.userService
@@ -40,15 +39,17 @@ export class AuthService {
   }
 
   loginOrRegister(registerDto: RegisterDto) {
-    return this.userService.send(Commands.User.FIND_BY_EMAIL, registerDto.email).pipe(
-      map((user: User) => {
-        if (user) {
-          return user;
-        } else {
-          return this.register(registerDto);
-        }
-      }),
-    );
+    return this.userService
+      .send(Commands.User.FIND_BY_EMAIL, registerDto.email)
+      .pipe(
+        map((user: User) => {
+          if (user) {
+            return user;
+          } else {
+            return this.register(registerDto);
+          }
+        }),
+      );
   }
 
   generateResponse(user: UserDocument): AuthResponse {

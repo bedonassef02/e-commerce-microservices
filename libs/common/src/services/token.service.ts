@@ -9,7 +9,12 @@ export class TokenService {
   constructor(private jwtService: JwtService) {}
 
   generate(user: UserDocument, expiresIn: string = '15m'): string {
-    const payload: Payload = { sub: user.id || user._id, role: user.role };
+    const payload: Payload = {
+      sub: user.id || user._id,
+      role: user.role,
+      isTwoFactorEnabled: user.isTwoFactorEnabled,
+      isTwoFactorAuthenticated: false,
+    };
     return this.jwtService.sign(payload, { expiresIn });
   }
 

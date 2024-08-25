@@ -10,6 +10,7 @@ import { PasswordController } from './password.controller';
 import { registerJwt } from '@app/common/utils/modules/register-jwt.helper';
 import { TokenService } from '@app/common/services/token.service';
 import { GoogleStrategy } from './utils/strategies/google.strategy';
+import { TwoFactorController } from './two-factor.controller';
 
 @Module({
   imports: [
@@ -27,7 +28,7 @@ import { GoogleStrategy } from './utils/strategies/google.strategy';
       },
     ]),
   ],
-  controllers: [AuthController, PasswordController],
+  controllers: [AuthController, PasswordController, TwoFactorController],
   providers: [TokenService, GoogleStrategy],
 })
 export class AuthModule {}

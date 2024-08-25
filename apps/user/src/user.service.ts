@@ -5,6 +5,7 @@ import { Model } from 'mongoose';
 import { from, Observable } from 'rxjs';
 import { CreateUserDto } from '@app/common/dto/user/create-user.dto';
 import { hash } from '@app/common/utils/helpers/password.helper';
+import { TwoFactorDto } from '@app/common/dto/auth/two-factor.dto';
 
 @Injectable()
 export class UserService {
@@ -27,5 +28,11 @@ export class UserService {
 
   updatePassword(id: string, password: string) {
     return from(this.userModel.findByIdAndUpdate(id, { password }));
+  }
+
+  update2FA(twoFactorDto: TwoFactorDto) {
+    return this.userModel.findByIdAndUpdate(twoFactorDto.user, twoFactorDto, {
+      new: true,
+    });
   }
 }

@@ -5,6 +5,10 @@ export const AuthCommands = {
   LOGIN: { cmd: 'login' },
   REGISTER: { cmd: 'register' },
   Password: PasswordCommands,
+  TWO_FACTOR: {
+    GENERATE_SECRET: 'generateSecret',
+    VERIFY: 'verify',
+  },
   REFRESH_TOKEN: { cmd: 'refreshToken' },
   OAuth: {
     Google: { cmd: 'googleLoginOrRegister' },

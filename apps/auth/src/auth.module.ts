@@ -16,6 +16,7 @@ import { Token } from './entities/token.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { authValidation } from '@app/common/utils/validation/services/auth.validation';
 import { configValidation } from '@app/common/utils/helpers/config-validation.helper';
+import { TwoFactorService } from './utils/services/two-factor-auth.service';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { configValidation } from '@app/common/utils/helpers/config-validation.he
     AuthService,
     TokenService,
     PasswordService,
+    TwoFactorService,
     ...authHandlers,
     ...passwordHandlers,
   ],

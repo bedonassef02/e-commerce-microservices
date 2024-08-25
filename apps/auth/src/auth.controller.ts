@@ -9,6 +9,9 @@ import { LoginCommand } from './commands/impl/login.command';
 import { Commands } from '@app/common/utils/commands';
 import { RefreshTokenCommand } from './commands/impl/refresh-token.command';
 import { LoginOrRegisterCommand } from './commands/impl/login-or-register.command';
+import { Generate2FASecretCommand } from './commands/impl/generate-2fa-secret.command';
+import { TwoFactorDto } from '@app/common/dto/auth/two-factor.dto';
+import { Verify2faCommand } from './commands/impl/verify-2fa.command';
 
 @Controller()
 export class AuthController {
@@ -37,5 +40,13 @@ export class AuthController {
     return this.commandBus.execute(new LoginOrRegisterCommand(registerDto));
   }
 
+  @MessagePattern(Commands.Auth.TWO_FACTOR.GENERATE_SECRET)
+  generateSecret(email: string) {
+    return this.commandBus.execute(new Generate2FASecretCommand(email));
+  }
 
+  @MessagePattern(Commands.Auth.TWO_FACTOR.VERIFY)
+  verify2FA(twoFactorDto: TwoFactorDto) {
+    return this.commandBus.execute(new Verify2faCommand(twoFactorDto));
+  }
 }
