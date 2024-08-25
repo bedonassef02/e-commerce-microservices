@@ -1,9 +1,7 @@
-Here’s an updated `README.md` that includes a Mail microservice, RxJS, dynamic modules, validation, security with role-based access, pagination, logging, and clean code practices:
-
 ```markdown
 # Microservice Application
 
-This project is a microservice-based application built with Nest.js. It uses various technologies like Docker, Mongoose, MySQL, RabbitMQ, Redis, BullMQ, and CQRS for scalable and efficient service management. Additionally, it includes a Mail microservice, utilizes RxJS, dynamic modules, validation, role-based security, pagination, logging, and adheres to clean code principles.
+This project is a microservice-based application built with Nest.js. It uses various technologies like Docker, Mongoose, MySQL, RabbitMQ, Redis, BullMQ, and CQRS for scalable and efficient service management. Additionally, it includes a Mail microservice, 2FA, backup database, OAuth2 Google, refresh tokens, and reset password functionalities. The application also utilizes RxJS, dynamic modules, validation, role-based security, pagination, logging, and adheres to clean code principles.
 
 ## Table of Contents
 
@@ -18,7 +16,6 @@ This project is a microservice-based application built with Nest.js. It uses var
 - [Logging](#logging)
 - [Clean Code Practices](#clean-code-practices)
 - [Contributing](#contributing)
-- [License](#license)
 
 ## Features
 
@@ -29,6 +26,11 @@ This project is a microservice-based application built with Nest.js. It uses var
 - **Redis and BullMQ for Queue Management**: Uses Redis and BullMQ for background processing and task queues.
 - **CQRS Pattern**: Implements the CQRS pattern for handling commands and queries separately.
 - **Mail Microservice**: A dedicated microservice for handling email operations.
+- **2FA (Two-Factor Authentication)**: Enhances security by requiring a second authentication factor.
+- **Database Backup**: Regular database backup functionality for disaster recovery.
+- **OAuth2 with Google**: Supports OAuth2 authentication via Google.
+- **Refresh Tokens**: Implements refresh token functionality for maintaining session validity.
+- **Reset Password**: Allows users to reset their password securely.
 - **RxJS Integration**: Reactive programming using RxJS for handling asynchronous operations.
 - **Dynamic Modules**: Dynamic module loading for flexibility and scalability.
 - **Validation**: Input validation using class-validator and custom validation pipes.
@@ -117,10 +119,16 @@ JWT_EXPIRES_IN=30d
 GOOGLE_CLIENT_ID=your_google_client_id
 GOOGLE_CLIENT_SECRET=your_google_client_secret
 
-# Strip Payment
+# Stripe Payment
 STRIPE_SECRET_KEY=yourstripe_secret
 STRIPE_SUCCESS_URL=http://localhost:3000/payment/success
 STRIPE_CANCEL_URL=http://localhost:3000/payment/cancel
+
+# 2FA
+TWO_FACTOR_AUTHENTICATION_APP_NAME=YourAppName
+
+# Backup
+BACKUP_SCHEDULE=0 0 * * * # Daily at midnight
 
 APP_URL=http://localhost:3000
 
@@ -138,7 +146,7 @@ The application is divided into multiple microservices, each handling a specific
 - **Gateway**: Acts as the entry point to the application.
 - **Category Service**: Manages product categories.
 - **Product Service**: Manages products.
-- **Auth Service**: Handles authentication and authorization.
+- **Auth Service**: Handles authentication, authorization, 2FA, OAuth2, and refresh tokens.
 - **Cart Service**: Manages user carts.
 - **Order Service**: Processes and manages orders.
 - **Wishlist Service**: Manages user wishlists.
@@ -146,12 +154,13 @@ The application is divided into multiple microservices, each handling a specific
 - **Review Service**: Manages product reviews.
 - **Payment Service**: Handles payment processing.
 - **Mail Service**: Manages email notifications and communications.
+- **Backup Service**: Manages regular database backups.
 
 ## Modules Overview
 
 - **CategoryModule**: Manages product categories.
 - **ProductModule**: Handles products data and operations.
-- **AuthModule**: Provides authentication and authorization.
+- **AuthModule**: Provides authentication, authorization, 2FA, OAuth2, refresh tokens, and password reset functionalities.
 - **CartModule**: Manages user carts.
 - **OrderModule**: Processes orders and manages order history.
 - **WishlistModule**: Manages user wishlists.
@@ -159,6 +168,7 @@ The application is divided into multiple microservices, each handling a specific
 - **ReviewModule**: Handles product reviews.
 - **PaymentModule**: Integrates payment gateways and processes payments.
 - **MailModule**: Manages sending emails, including dynamic templates and background processing.
+- **BackupModule**: Manages database backups and restore operations.
 
 ### Example Dynamic Module with RxJS
 
@@ -169,9 +179,13 @@ The application is divided into multiple microservices, each handling a specific
 
 ## Custom Services
 
-- **TokenService**: Manages JWT tokens and related operations.
-- **CustomI18nService**: Handles internationalization and localization.
+- **TokenService**: Manages JWT tokens, refresh tokens, and related operations.
+- **TwoFactorService**: Handles 2FA secret generation, validation, and QR code creation.
+- **GoogleOAuthService**: Manages OAuth2 authentication with Google.
+- **PasswordService**: Handles password reset operations securely.
+- **BackupService**: Manages database backup and restore operations.
 - **MailService**: Sends emails using predefined templates and dynamic data.
+- **CustomI18nService**: Handles internationalization and localization.
 
 ## Validation
 
@@ -179,7 +193,7 @@ The application uses `class-validator` for validation. Example usage:
 
 ## Security
 
-The application uses Passport.js for authentication and role-based security:
+The application uses Passport.js for authentication, role-based security, 2FA, and OAuth2 with Google:
 
 ## Pagination
 
@@ -205,17 +219,6 @@ Contributions are welcome! Please follow the standard GitHub workflow for contri
 
 1. Fork the repository.
 2. Create a new branch (`git checkout -b feature/your-feature`).
-3. Commit your changes (`git commit -m '
-
-
-
-Add your feature'`).
+3. Commit your changes (`git commit -m 'Add your feature'`).
 4. Push to the branch (`git push origin feature/your-feature`).
 5. Open a pull request.
-
-## License
-
-This project is licensed under the MIT License.
-```
-
-This `README.md` provides a comprehensive overview of your Nest.js microservice application, including all requested features and practices. You can customize it further to match your project's specific details.
